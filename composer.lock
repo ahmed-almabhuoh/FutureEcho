@@ -2022,6 +2022,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v11.24.1",
             "source": {
                 "type": "git",
@@ -2032,6 +2033,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/e063fa80ac5818099f45a3a57dd803476c8f3a2a",
                 "reference": "e063fa80ac5818099f45a3a57dd803476c8f3a2a",
+=======
+            "version": "v11.23.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "16b31ab0e1dad5cb2ed6dcc1818c02f02fc48453"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/16b31ab0e1dad5cb2ed6dcc1818c02f02fc48453",
+                "reference": "16b31ab0e1dad5cb2ed6dcc1818c02f02fc48453",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "shasum": ""
             },
             "require": {
@@ -2050,7 +2063,11 @@
                 "fruitcake/php-cors": "^1.3",
                 "guzzlehttp/guzzle": "^7.8",
                 "guzzlehttp/uri-template": "^1.0",
+<<<<<<< HEAD
                 "laravel/prompts": "^0.1.18|^0.2.0",
+=======
+                "laravel/prompts": "^0.1.18",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "laravel/serializable-closure": "^1.3",
                 "league/commonmark": "^2.2.1",
                 "league/flysystem": "^3.8.0",
@@ -2136,7 +2153,11 @@
                 "league/flysystem-sftp-v3": "^3.0",
                 "mockery/mockery": "^1.6",
                 "nyholm/psr7": "^1.2",
+<<<<<<< HEAD
                 "orchestra/testbench-core": "^9.5",
+=======
+                "orchestra/testbench-core": "^9.4.0",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "pda/pheanstalk": "^5.0",
                 "phpstan/phpstan": "^1.11.5",
                 "phpunit/phpunit": "^10.5|^11.0",
@@ -2195,7 +2216,10 @@
                     "src/Illuminate/Filesystem/functions.php",
                     "src/Illuminate/Foundation/helpers.php",
                     "src/Illuminate/Log/functions.php",
+<<<<<<< HEAD
                     "src/Illuminate/Support/functions.php",
+=======
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                     "src/Illuminate/Support/helpers.php"
                 ],
                 "psr-4": {
@@ -2227,7 +2251,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+<<<<<<< HEAD
             "time": "2024-09-25T07:21:24+00:00"
+=======
+            "time": "2024-09-13T13:36:30+00:00"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
         },
         {
             "name": "laravel/prompts",
@@ -2289,6 +2317,7 @@
         },
         {
             "name": "laravel/serializable-closure",
+<<<<<<< HEAD
             "version": "v1.3.5",
             "source": {
                 "type": "git",
@@ -2299,6 +2328,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/1dc4a3dbfa2b7628a3114e43e32120cce7cdda9c",
                 "reference": "1dc4a3dbfa2b7628a3114e43e32120cce7cdda9c",
+=======
+            "version": "v1.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/serializable-closure.git",
+                "reference": "61b87392d986dc49ad5ef64e75b1ff5fee24ef81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/61b87392d986dc49ad5ef64e75b1ff5fee24ef81",
+                "reference": "61b87392d986dc49ad5ef64e75b1ff5fee24ef81",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "shasum": ""
             },
             "require": {
@@ -2346,6 +2387,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
+<<<<<<< HEAD
             "time": "2024-09-23T13:33:08+00:00"
         },
         {
@@ -2360,6 +2402,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/tinker/zipball/ba4d51eb56de7711b3a37d63aa0643e99a339ae5",
                 "reference": "ba4d51eb56de7711b3a37d63aa0643e99a339ae5",
+=======
+            "time": "2024-08-02T07:48:17+00:00"
+        },
+        {
+            "name": "laravel/tinker",
+            "version": "v2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/tinker.git",
+                "reference": "502e0fe3f0415d06d5db1f83a472f0f3b754bafe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/502e0fe3f0415d06d5db1f83a472f0f3b754bafe",
+                "reference": "502e0fe3f0415d06d5db1f83a472f0f3b754bafe",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "shasum": ""
             },
             "require": {
@@ -2410,9 +2468,15 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/laravel/tinker/tree/v2.10.0"
             },
             "time": "2024-09-23T13:32:56+00:00"
+=======
+                "source": "https://github.com/laravel/tinker/tree/v2.9.0"
+            },
+            "time": "2024-01-04T16:10:04+00:00"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
         },
         {
             "name": "league/commonmark",
@@ -3698,6 +3762,7 @@
         },
         {
             "name": "openspout/openspout",
+<<<<<<< HEAD
             "version": "v4.26.0",
             "source": {
                 "type": "git",
@@ -3708,6 +3773,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/openspout/openspout/zipball/a49b947c0c109f4fd112f9b5c6d6cb3e6baf8b50",
                 "reference": "a49b947c0c109f4fd112f9b5c6d6cb3e6baf8b50",
+=======
+            "version": "v4.24.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/openspout/openspout.git",
+                "reference": "393299ae21153f042f48b185f2adeb4b157d1d93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/393299ae21153f042f48b185f2adeb4b157d1d93",
+                "reference": "393299ae21153f042f48b185f2adeb4b157d1d93",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "shasum": ""
             },
             "require": {
@@ -3717,6 +3794,7 @@
                 "ext-libxml": "*",
                 "ext-xmlreader": "*",
                 "ext-zip": "*",
+<<<<<<< HEAD
                 "php": "~8.2.0 || ~8.3.0 || ~8.4.0"
             },
             "require-dev": {
@@ -3728,6 +3806,19 @@
                 "phpstan/phpstan-phpunit": "^1.4.0",
                 "phpstan/phpstan-strict-rules": "^1.6.1",
                 "phpunit/phpunit": "^11.3.6"
+=======
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+            },
+            "require-dev": {
+                "ext-zlib": "*",
+                "friendsofphp/php-cs-fixer": "^3.60.0",
+                "infection/infection": "^0.29.6",
+                "phpbench/phpbench": "^1.3.1",
+                "phpstan/phpstan": "^1.11.8",
+                "phpstan/phpstan-phpunit": "^1.4.0",
+                "phpstan/phpstan-strict-rules": "^1.6.0",
+                "phpunit/phpunit": "^10.5.20 || ^11.2.8"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
             },
             "suggest": {
                 "ext-iconv": "To handle non UTF-8 CSV files (if \"php-mbstring\" is not already installed or is too limited)",
@@ -3775,7 +3866,11 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/openspout/openspout/tree/v4.26.0"
+=======
+                "source": "https://github.com/openspout/openspout/tree/v4.24.5"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
             },
             "funding": [
                 {
@@ -3787,7 +3882,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2024-09-24T14:04:43+00:00"
+=======
+            "time": "2024-07-26T05:48:04+00:00"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
         },
         {
             "name": "phpoption/phpoption",
@@ -7729,6 +7828,7 @@
         },
         {
             "name": "laravel/pint",
+<<<<<<< HEAD
             "version": "v1.18.1",
             "source": {
                 "type": "git",
@@ -7739,6 +7839,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/pint/zipball/35c00c05ec43e6b46d295efc0f4386ceb30d50d9",
                 "reference": "35c00c05ec43e6b46d295efc0f4386ceb30d50d9",
+=======
+            "version": "v1.17.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pint.git",
+                "reference": "9d77be916e145864f10788bb94531d03e1f7b482"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/9d77be916e145864f10788bb94531d03e1f7b482",
+                "reference": "9d77be916e145864f10788bb94531d03e1f7b482",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "shasum": ""
             },
             "require": {
@@ -7791,6 +7903,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
+<<<<<<< HEAD
             "time": "2024-09-24T17:22:50+00:00"
         },
         {
@@ -7805,6 +7918,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sail/zipball/d54af9d5745e3680d8a6463ffd9f314aa53eb2d1",
                 "reference": "d54af9d5745e3680d8a6463ffd9f314aa53eb2d1",
+=======
+            "time": "2024-09-03T15:00:28+00:00"
+        },
+        {
+            "name": "laravel/sail",
+            "version": "v1.32.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sail.git",
+                "reference": "4a7e41d280861ca7e35710cea011a07669b4003b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/4a7e41d280861ca7e35710cea011a07669b4003b",
+                "reference": "4a7e41d280861ca7e35710cea011a07669b4003b",
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
                 "shasum": ""
             },
             "require": {
@@ -7854,7 +7983,11 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
+<<<<<<< HEAD
             "time": "2024-09-22T19:04:21+00:00"
+=======
+            "time": "2024-09-11T20:14:29+00:00"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
         },
         {
             "name": "mockery/mockery",
@@ -9691,5 +9824,9 @@
         "php": "^8.2"
     },
     "platform-dev": [],
+<<<<<<< HEAD
     "plugin-api-version": "2.6.0"
+=======
+    "plugin-api-version": "2.3.0"
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
 }

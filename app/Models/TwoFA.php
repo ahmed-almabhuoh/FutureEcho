@@ -10,9 +10,16 @@ class TwoFA extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'code',
+        'user_id',
+    ];
+
+
     // Relations
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    
 }

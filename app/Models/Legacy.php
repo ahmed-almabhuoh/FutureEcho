@@ -11,6 +11,18 @@ class Legacy extends Model
 {
     use HasFactory, SoftDeletes;
 
+<<<<<<< HEAD
+=======
+    protected $guarded = [];
+
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string|null
+     */
+    const UPDATED_AT = null;
+
+>>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
     const STATUS = ['pending', 'accepted', 'rejected'];
 
     // Relations

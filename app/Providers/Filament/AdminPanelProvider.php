@@ -28,11 +28,15 @@ class AdminPanelProvider extends PanelProvider
             ->path('dashboard')
             ->login()
             ->darkMode(true)
-            ->brandLogo(asset('images/logo-no-background.svg'))
-            ->brandLogoHeight('2.5rem')
-            ->favicon(asset('images/logo-no-background.svg'))
+            ->brandLogo(asset('images/LOGO.png'))
+            ->brandLogoHeight('2.9rem')
+            ->favicon(asset('images/LOGO.png'))
             ->colors([
-                'primary' => Color::Teal,
+                // 'primary' => 'rgb(0,31,63)',
+                'primary' => 'rgb(58, 109, 140)',
+                // 'primary' => 'rgb(106, 154, 176)',
+                // 'primary' => 'rgb(234, 216, 177)',
+
             ])
             ->font(family: 'Roboto')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

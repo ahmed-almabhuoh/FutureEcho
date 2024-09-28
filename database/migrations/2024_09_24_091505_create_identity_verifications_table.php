@@ -16,9 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('file');
             $table->enum('status', IdentityVerification::STATUS);
-
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
-
             $table->timestamp('submitted_at')->nullable();
             $table->timestamp('deleted_at')->nullable();
         });

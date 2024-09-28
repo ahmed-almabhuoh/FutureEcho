@@ -13,6 +13,16 @@ class IdentityVerification extends Model
 
     const STATUS = ['pending', 'verified', 'rejected'];
 
+    protected $fillable = [
+        'file',
+        'status',
+        'submitted_at',
+        'deleted_at',
+        'user_id',
+
+    ];
+
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
