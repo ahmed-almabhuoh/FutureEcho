@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\IdentityVerificationResource\Pages;
 use App\Filament\Resources\IdentityVerificationResource\RelationManagers;
 use App\Models\IdentityVerification;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -40,9 +41,11 @@ class IdentityVerificationResource extends Resource
                 Section::make('Identity Verification')
                     ->description('User Identity Verification')
                     ->schema([
-
-                        BelongsToSelect::make('user_id')->relationship('user', 'name')->required(),
-
+                        Select::make('user_id')
+                            ->label('User')
+                            ->options(User::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required(),
                         Select::make('status')
                             ->label('Status')
                             ->options([
@@ -51,14 +54,13 @@ class IdentityVerificationResource extends Resource
                                 'rejected' => 'Rejected',
                             ])->default('pending')
                             ->required(),
-
-                        FileUpload::make('file')
-                            ->downloadable()
+                        FileUpload::make('file')->required()->columnSpanFull(),
+                        DateTimePicker::make('submitted_at')
+                            ->label('Submission Date')
+                            ->default(now())
+                            ->disabled()
                             ->required(),
 
-                        DateTimePicker::make('submitted_at')->required(),
-
-                        DateTimePicker::make('deleted_at')->nullable(),
 
                     ])->columns(2)
 
@@ -80,10 +82,7 @@ class IdentityVerificationResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->searchable(),
+
 
                 //
             ])
