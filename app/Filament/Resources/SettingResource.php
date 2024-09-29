@@ -41,6 +41,7 @@ class SettingResource extends Resource
                         ->required()
                         ->disk('public')
                         ->directory('logos')
+                        ->image()
                         ->maxSize(1024)
                         ->enableOpen()
                         ->columnSpanFull(),
@@ -67,11 +68,14 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('logo'),
+                Tables\Columns\ImageColumn::make('logo'),
+
                 Tables\Columns\ToggleColumn::make('sign_up')
                     ->label('Sign up'),
+
                 Tables\Columns\ToggleColumn::make('sign_in')
                     ->label('Login'),
+
                 //
             ])
             ->filters([
