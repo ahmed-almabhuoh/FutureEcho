@@ -82,10 +82,7 @@ class IdentityVerificationResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->searchable(),
+
 
                 //
             ])
