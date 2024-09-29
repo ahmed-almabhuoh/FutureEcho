@@ -19,9 +19,21 @@ class IdentityVerification extends Model
         'submitted_at',
         'deleted_at',
         'user_id',
-
     ];
 
+    /**
+     * The name of the "created at" column.
+     *
+     * @var string|null
+     */
+    const CREATED_AT = 'submitted_at';
+
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string|null
+     */
+    const UPDATED_AT = null;
 
     public function user(): BelongsTo
     {
