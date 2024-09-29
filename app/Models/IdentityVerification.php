@@ -19,7 +19,6 @@ class IdentityVerification extends Model
         'submitted_at',
         'deleted_at',
         'user_id',
-
     ];
 
     /**

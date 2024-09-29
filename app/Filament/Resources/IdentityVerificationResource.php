@@ -40,7 +40,9 @@ class IdentityVerificationResource extends Resource
                 Section::make('Identity Verification')
                     ->description('User Identity Verification')
                     ->schema([
+
                         BelongsToSelect::make('user_id')->relationship('user', 'name')->required(),
+
                         Select::make('status')
                         ->label('Status')
                         ->options([
@@ -49,8 +51,11 @@ class IdentityVerificationResource extends Resource
                             'rejected' => 'Rejected',
                         ])->default('pending')
                         ->required(),
+
                         FileUpload::make('file')->required(),
+
                         DateTimePicker::make('submitted_at')->required(),
+
                         DateTimePicker::make('deleted_at')->nullable(),
 
                     ])->columns(2)
