@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\LegacyAddedNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,19 @@ class Legacy extends Model
     const UPDATED_AT = null;
 
     const STATUS = ['pending', 'accepted', 'rejected'];
+
+    protected static function booted()
+    {
+        static::created(function ($legacy) {
+            // This will queue the notification
+            $user = User::where('email', $legacy->email)->first();
+
+            if ($user)
+                if ($code = generate2FA($user)) {
+                    $user->notify(new LegacyAddedNotification($user, $code));
+                }
+        });
+    }
 
     // Relations
     public function user(): BelongsTo
