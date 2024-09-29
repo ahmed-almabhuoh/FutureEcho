@@ -44,15 +44,17 @@ class IdentityVerificationResource extends Resource
                         BelongsToSelect::make('user_id')->relationship('user', 'name')->required(),
 
                         Select::make('status')
-                        ->label('Status')
-                        ->options([
-                            'pending' => 'Pending',
-                            'verified' => 'Verified',
-                            'rejected' => 'Rejected',
-                        ])->default('pending')
-                        ->required(),
+                            ->label('Status')
+                            ->options([
+                                'pending' => 'Pending',
+                                'verified' => 'Verified',
+                                'rejected' => 'Rejected',
+                            ])->default('pending')
+                            ->required(),
 
-                        FileUpload::make('file')->required(),
+                        FileUpload::make('file')
+                            ->downloadable()
+                            ->required(),
 
                         DateTimePicker::make('submitted_at')->required(),
 
@@ -97,9 +99,9 @@ class IdentityVerificationResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                ->label('Delete actions')
-                ->color('danger')
-                ->button(),
+                    ->label('Delete actions')
+                    ->color('danger')
+                    ->button(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
