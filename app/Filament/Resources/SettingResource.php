@@ -19,11 +19,17 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
-    protected static ?string $navigationGroup = 'Settings';
+
+    protected static ?string $navigationGroup = 'Website Configuration';
 
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
+
+    public static function canCreate(): bool
+    {
+        return ! Setting::count() == 1;
+    }
 
     public static function form(Form $form): Form
     {
@@ -63,9 +69,9 @@ class SettingResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('logo'),
                 Tables\Columns\ToggleColumn::make('sign_up')
-                ->label('Sign up'),
+                    ->label('Sign up'),
                 Tables\Columns\ToggleColumn::make('sign_in')
-                ->label('Login'),
+                    ->label('Login'),
                 //
             ])
             ->filters([
