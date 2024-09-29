@@ -11,8 +11,6 @@ class Legacy extends Model
 {
     use HasFactory, SoftDeletes;
 
-<<<<<<< HEAD
-=======
     protected $guarded = [];
 
     /**
@@ -22,7 +20,6 @@ class Legacy extends Model
      */
     const UPDATED_AT = null;
 
->>>>>>> 0b82bd5957c42dde83842c16e4945048b95ae50d
     const STATUS = ['pending', 'accepted', 'rejected'];
 
     // Relations
