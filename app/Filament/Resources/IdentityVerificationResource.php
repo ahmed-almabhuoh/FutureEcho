@@ -54,12 +54,16 @@ class IdentityVerificationResource extends Resource
                                 'rejected' => 'Rejected',
                             ])->default('pending')
                             ->required(),
-                        FileUpload::make('file')->required()->columnSpanFull(),
+
                         DateTimePicker::make('submitted_at')
                             ->label('Submission Date')
                             ->default(now())
                             ->disabled()
-                            ->required(),
+                            ->required()
+                            ->columnSpanFull(),
+
+                        FileUpload::make('file')->required()->columnSpanFull(),
+
 
 
                     ])->columns(2)
