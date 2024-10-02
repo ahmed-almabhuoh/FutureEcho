@@ -10,6 +10,8 @@ class Contributor extends Model
 {
     use HasFactory;
 
+
+
     const Permissions = ['r', 'w'];
 
     // Relations

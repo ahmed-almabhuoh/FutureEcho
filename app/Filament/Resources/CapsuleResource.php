@@ -5,7 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CapsuleResource\Pages;
 use App\Filament\Resources\CapsuleResource\RelationManagers;
 use App\Models\Capsule;
+use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,18 +20,25 @@ class CapsuleResource extends Resource
 {
     protected static ?string $model = Capsule::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required(),
-                // ->maxLength(255),
-                // Forms\Components\Select::make('user_id')
-                //     ->relationship('users', 'name')
-                //     ->required()
+                Section::make('Capsule')
+                    ->label('')
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->label('Capsule Title')
+                            ->required(),
+                        Select::make('user_id')
+                            ->label('User')
+                            ->options(User::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required(),
+
+                    ])
 
             ]);
     }
@@ -37,13 +47,34 @@ class CapsuleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Capsule Title'),
+
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('User Name'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime(),
+
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated At')
+                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+                ])
+                    ->label('Delete actions')
+                    ->color('danger')
+                    ->button(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
