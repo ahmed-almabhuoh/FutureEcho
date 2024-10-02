@@ -11,6 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Capsule extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'user_id',
+        'deleted_at'
+    ];
+
 
     // Relations
     public function owner(): BelongsTo

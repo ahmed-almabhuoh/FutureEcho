@@ -50,13 +50,21 @@ class SettingResource extends Resource
                         ->label('Enable Sign Up')
                         ->onIcon('heroicon-m-bolt')
                         ->offIcon('heroicon-m-user')
-                        ->default(true),
+                        ->default(true)
+                        ->required(),
 
                     Forms\Components\Toggle::make('sign_in')
                         ->label('Enable Login')
                         ->onIcon('heroicon-m-bolt')
                         ->offIcon('heroicon-m-user')
-                        ->default(true),
+                        ->default(true)
+                        ->required()
+                        ->reactive(),
+                    Forms\Components\Toggle::make('maintenance')
+                        ->label('Maintenance Mode')
+                        ->onIcon('heroicon-m-bolt')
+                        ->default(true)
+                        ->required(),
                     //
                 ])
 
@@ -76,6 +84,8 @@ class SettingResource extends Resource
                 Tables\Columns\ToggleColumn::make('sign_in')
                     ->label('Login'),
 
+                Tables\Columns\ToggleColumn::make('maintenance')
+                    ->label('Maintenance Mode'),
                 //
             ])
             ->filters([
