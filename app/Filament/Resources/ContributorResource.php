@@ -21,12 +21,14 @@ class ContributorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-heart';
 
+    protected static ?string $navigationGroup = 'Content Management - CM -';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make('Create Contributor')
-                   
+
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')

@@ -26,12 +26,11 @@ class IdentityVerificationResource extends Resource
 {
     protected static ?string $model = IdentityVerification::class;
 
-
     protected static ?string $navigationIcon = 'heroicon-o-identification';
-    protected static ?string $navigationGroup = 'Management';
+
+    protected static ?string $navigationGroup = 'Content Management - CM -';
 
     protected static ?int $navigationSort = 1;
-
 
     public static function form(Form $form): Form
     {
@@ -46,6 +45,7 @@ class IdentityVerificationResource extends Resource
                             ->options(User::all()->pluck('name', 'id'))
                             ->searchable()
                             ->required(),
+
                         Select::make('status')
                             ->label('Status')
                             ->options([

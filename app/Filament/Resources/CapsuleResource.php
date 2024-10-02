@@ -22,19 +22,23 @@ class CapsuleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
+    protected static ?string $navigationGroup = 'Content Management - CM -';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make('Capsule')
-                    ->label('')
+                    ->label('Name & Contributors')
                     ->schema([
+
                         Forms\Components\TextInput::make('title')
                             ->label('Capsule Title')
                             ->required(),
+
                         Select::make('user_id')
-                            ->label('User')
-                            ->options(User::all()->pluck('name', 'id'))
+                            ->relationship('owner', 'name')
+                            ->label('Owner')
                             ->searchable()
                             ->required(),
 
@@ -50,8 +54,9 @@ class CapsuleResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->label('Capsule Title'),
 
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('User Name'),
+                Tables\Columns\TextColumn::make('owner.name')
+                    ->label('Owner'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created At')
                     ->dateTime(),
