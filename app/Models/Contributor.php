@@ -10,9 +10,13 @@ class Contributor extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = [
+        'user_id',
+        'capsule_id',
+    ];
 
     const Permissions = ['r', 'w'];
+    const UPDATED_AT = null;
 
     // Relations
     public function user(): BelongsTo
