@@ -8,6 +8,7 @@ use App\Models\Contact;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\View\Components\Modal;
@@ -21,33 +22,48 @@ class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-envelope-open';
+
+    protected static ?string $navigationGroup = 'Website Configuration';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->disabled()
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('email')->disabled()
-                    ->email()
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('message')->disabled()
-                    ->required()
-                    ->maxLength(191),
-                Section::make('Visibility')->schema([
-                       Select::make('STATUS')
-                             ->label('Status')
-                             ->options([
-                                 'submitted' => __('Submitted'),
-                                 'viewed' => __('Viewed'),
-                                 'rejected' => __('Rejected'),
 
-                             ])
-                             ->required(),
-                     ]),
+                Section::make('Details')->schema([
+
+                    Forms\Components\TextInput::make('name')->disabled()
+                        ->required()
+                        ->maxLength(191)
+                        ->disabled(),
+
+                    Forms\Components\TextInput::make('email')->disabled()
+                        ->email()
+                        ->required()
+                        ->maxLength(191)
+                        ->disabled(),
+
+                    Textarea::make('message')->disabled()
+                        ->required()
+                        ->disabled()
+                        ->maxLength(191)
+                        ->columnSpanFull(),
+
+                ])->columns(2),
+
+                Section::make('Visibility')->schema([
+
+                    Select::make('STATUS')
+                        ->label('Status')
+                        ->options([
+                            'submitted' => __('Submitted'),
+                            'viewed' => __('Viewed'),
+                            'rejected' => __('Rejected'),
+                        ])
+                        ->required(),
+
+                ]),
             ]);
     }
 
@@ -55,28 +71,44 @@ class ContactResource extends Resource
     {
         return $table
             ->columns([
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('message')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('STATUS'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+                ])
+                    ->label('Delete actions')
+                    ->color('danger')
+                    ->button(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -101,21 +133,14 @@ class ContactResource extends Resource
             'edit' => Pages\EditContact::route('/{record}/edit'),
         ];
     }
-    public static function canCreate():bool{
 
-
+    public static function canCreate(): bool
+    {
         return false;
     }
-    public static function canEdit(Model $record):bool{
 
-
+    public static function canEdit(Model $record): bool
+    {
         return true;
     }
-    public static function canDelete(Model $record):bool{
-
-
-        return false;
-    }
-    
-
 }
