@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->enum('status', User::STATUS);
             $table->string('timezone')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp(column: 'email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

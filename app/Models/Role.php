@@ -13,7 +13,15 @@ class Role extends Model
     use HasFactory, SoftDeletes;
 
     const STATUS = ['active', 'inactive'];
+    protected $fillable = [
+        'role_ar',
+        'role_en',
+        'deleted_at',
+        'updated_at',
+        'created_at',
 
+        'status'
+    ];
     // Relations
     public function users(): BelongsToMany
     {

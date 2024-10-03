@@ -48,4 +48,7 @@ class Capsule extends Model
     {
         return $this->hasMany(Message::class, 'capsule_id', 'id');
     }
+    public function contributorPermission(){
+        return $this->hasMany(ContributorPermission::class);
+    }
 }
