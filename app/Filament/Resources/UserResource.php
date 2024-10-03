@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+
 use Filament\Forms\Components\Section;
 use App\Enum\UserStatus;
 
@@ -8,7 +9,10 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +26,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Expr\Ternary;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Unique;
 
 class UserResource extends Resource
 {
@@ -29,56 +35,86 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
+    protected static ?string $navigationGroup = 'Human Resources - HR -';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 //
 
-                Section::make('User Information')->schema([
+                Group::make()->schema([
 
-                Forms\Components\TextInput::make('name')
-                ->required()
-                ->maxLength(255)->label('Name'),
-                Forms\Components\TextInput::make('email')
-                ->email()
-                ->required()->unique()
-                ->maxLength(255)->label('Email'),
+                    Section::make('General Info')->schema([
 
-                Forms\Components\TextInput::make('phone')
-                ->required()
-                ->maxLength(255),
-                Select::make('timezone')->options(config('timezones'))->default('UTC')->label('TimeZone')
-                    ->required(),])->collapsible(),
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('User - Full name')
+                            ->columnSpanFull(),
 
-                Section::make("Setting")->schema([
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->unique()
+                            ->maxLength(255)
+                            ->email()
+                            // ->unique(User::class, modifyRuleUsing: function (Unique $rule) {
+                            //     return $rule->where('is_active', 1);
+                            // })
+                            ->label('E-mail'),
 
-                    Forms\Components\DateTimePicker::make('email_verified_at'),
-                    Toggle::make('is_admin')->label('Admin')->required()->helperText('Enable or disbale Admin Visibility')->default(true),
-                    Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Phone NO.')
+                            ->helperText('NO. for Number')
+                            ->minValue(7)
+                            ->maxValue(25),
 
-                ])->collapsible(),
+                        Select::make('status')->options([
+                            'active' => ucfirst(__(UserStatus::ACTIVE->value)),
+                            'inactive' => ucfirst(__(UserStatus::INACTIVE->value)),
+                        ])
+                            ->columnSpanFull()
+                            ->required()
+                            ->in(['active', 'inactive']),
 
+                    ])
+                        ->collapsible()
+                        ->columns(2),
 
-               Section::make('Status')->schema([
+                ])->columns(2),
 
-                Select ::make('status')->options([
-                    'active'=> UserStatus::ACTIVE->value   ,
-                    'inactive'=>UserStatus ::INACTIVE->value   ,
+                Group::make()->schema([
 
+                    Section::make("Account Settings")->schema([
+
+                        DateTimePicker::make('email_verified_at'),
+
+                        Select::make('timezone')
+                            ->options(config('timezones'))
+                            ->default('UTC')
+                            ->label('TimeZone')
+                            ->helperText('Account language & time will set up depending on timezone.')
+                            ->required()
+                            ->searchable(),
+
+                        // TextInput::make('password')
+                        //     ->password()
+                        //     ->minValue(8)
+                        //     ->maxValue(191)
+                        //     // ->default(Str::random(10))
+                        //     ->columnSpanFull(),
+
+                        Toggle::make('is_admin')
+                            ->label('Admin')
+                            ->required()
+                            ->helperText('Admin users will have full permissions!')
+                            ->default(false),
+
+                    ])
+                        ->collapsible()
+                        ->columns(2),
                 ]),
-
-               ])->columns(4)
-
-
-
-
-
-
-
             ]);
     }
 
@@ -88,18 +124,18 @@ class UserResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('name')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('email')
-                ->searchable(),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('timezone')
+                Tables\Columns\TextColumn::make('timezone')
                     ->searchable(),
-                   BooleanColumn ::make('is_admin') ->colors([
-                        'success' => 1,
-                        'danger' => 0,
-                    ]),
-                    IconColumn::make('status')
+                BooleanColumn::make('is_admin')->colors([
+                    'success' => 1,
+                    'danger' => 0,
+                ]),
+                IconColumn::make('status')
                     ->label('Status')
                     ->options([
                         'heroicon-o-check-circle' => 'active',
@@ -112,36 +148,36 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-            Tables\Columns\TextColumn::make('email_verified_at')
-                ->dateTime()
-                ->sortable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime()
+                    ->sortable()->toggleable(isToggledHiddenByDefault: true),
 
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
-                ->dateTime()
-                ->sortable()
-                ->searchable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->dateTime()
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
             ])
             ->filters([
                 //
-               SelectFilter::make('status')
-                ->options([
-                    'active' => 'Active',
-                    'inactive' => 'Inactive',
-                ])
-                ->label('Status'),
+                SelectFilter::make('status')
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
+                    ])
+                    ->label('Status'),
 
-            Tables\Filters\TrashedFilter::make(),
-            TernaryFilter ::make('is_admin')->label('Admin'),
+                Tables\Filters\TrashedFilter::make(),
+                TernaryFilter::make('is_admin')->label('Admin'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
