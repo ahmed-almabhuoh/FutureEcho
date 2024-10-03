@@ -7,7 +7,9 @@ use App\Filament\Resources\ContributorResource\RelationManagers;
 use App\Models\Contributor;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,23 +30,22 @@ class ContributorResource extends Resource
         return $form
             ->schema([
                 Section::make('Create Contributor')
-
                     ->schema([
+
+                        Forms\Components\Select::make('capsule_id') // Correct the key here
+                            ->relationship('capsule', 'title')
+                            ->label('Capsule')
+                            ->searchable()
+                            ->required(),
+
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')
                             ->label('Contributor')
-                            ->required()
                             ->searchable()
-                            ->preload()
-                            ->options(User::where('is_admin', false)
-                                ->pluck('name', 'id')),
-
-                        Forms\Components\Select::make('capsules_id')
-                            ->relationship('capsule', 'title')
-                            ->label('Capsule')
                             ->required(),
-                    ])->columns(2)
 
+                    ])
+                    ->columns(2)
             ]);
     }
 

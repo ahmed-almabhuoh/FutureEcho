@@ -10,13 +10,23 @@ class Contributor extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'capsule_id',
-    ];
+    // protected $fillable = [
+    //     'user_id',
+    //     'capsule_id',
+    // ];
+
+    protected $guarded = [];
 
     const Permissions = ['r', 'w'];
     const UPDATED_AT = null;
+
+    /**
+     * The name of the "created at" column.
+     *
+     * @var string|null
+     */
+    const CREATED_AT = 'added_at';
+
 
     // Relations
     public function user(): BelongsTo
