@@ -23,13 +23,16 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
+
+    protected static ?string $navigationGroup = 'Roles & Permissions';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make('Details')->schema([
+
                     TextInput::make('role_ar')
                         ->label('Arabic  Role')
                         ->required()
@@ -43,18 +46,20 @@ class RoleResource extends Resource
                         ->minValue(2)
                         ->maxValue(191)
                         ->maxLength(191),
+
                 ])->columns(2),
 
-                    Section::make('Visibility')->schema([
-                       Select::make('status')
-                            ->label('Status')
-                            ->options([
-                                'active' => __('Active'),
-                                'inactive' => __('Inactive'),
-                            ])
-                            ->required(),
-                    ]),
-    
+                Section::make('Visibility')->schema([
+                    Select::make('status')
+                        ->label('Status')
+                        ->options([
+                            'active' => __('Active'),
+                            'inactive' => __('Inactive'),
+                        ])
+                        ->required(),
+
+                ]),
+
             ]);
     }
 
@@ -62,52 +67,58 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-               TextColumn ::make('role_ar')
-                ->label('Arabic Role')
-                ->sortable()
-                ->searchable(),
 
-            TextColumn::make('role_en')
-                ->label('English Role')
-                ->sortable()
-                ->searchable(),
+                TextColumn::make('role_ar')
+                    ->label('Arabic Role')
+                    ->sortable()
+                    ->searchable(),
 
-                  IconColumn::make('status')
-                ->label('Status')
-                ->options([
-                    'heroicon-o-check-circle' => 'active',
-                    'heroicon-o-x-circle' => 'inactive',
-                ])
-                ->colors([
-                    'success' => 'active',
-                    'danger' => 'inactive',
-                ])
-                ->sortable()
-                ->searchable(),
+                TextColumn::make('role_en')
+                    ->label('English Role')
+                    ->sortable()
+                    ->searchable(),
+
+                IconColumn::make('status')
+                    ->label('Status')
+                    ->options([
+                        'heroicon-o-check-circle' => 'active',
+                        'heroicon-o-x-circle' => 'inactive',
+                    ])
+                    ->colors([
+                        'success' => 'active',
+                        'danger' => 'inactive',
+                    ])
+                    ->sortable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //
-           SelectFilter::make('status')
-                ->options([
-                    'active' => 'Active',
-                    'inactive' => 'Inactive',
-                ])
-                ->label('Status'),
+                SelectFilter::make('status')
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
+                    ])
+                    ->label('Status'),
 
-            Tables\Filters\TrashedFilter::make(),
+                Tables\Filters\TrashedFilter::make(),
+
             ])
             ->actions([
+
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                
+
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\ForceDeleteAction::make(),
@@ -116,6 +127,7 @@ class RoleResource extends Resource
                     ->label('Delete actions')
                     ->color('danger')
                     ->button(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
