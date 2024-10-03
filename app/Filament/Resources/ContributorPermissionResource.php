@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ContributorPermissionResource\Pages;
 use App\Filament\Resources\ContributorPermissionResource\RelationManagers;
 use App\Models\Capsule;
+use App\Models\Contributor;
 use App\Models\ContributorPermission;
 use App\Models\User;
 use Filament\Forms;
@@ -93,6 +94,11 @@ class ContributorPermissionResource extends Resource
                     ->label("Contributor")
                     ->formatStateUsing(fn($record) => User::where('id', $record->contributor_id)->first()->name)
                     ->sortable(),
+
+                // TextColumn::make('contributor.user.name')
+                //     ->label("Contributor")
+                //     // ->formatStateUsing(fn($record) => User::where('id', $record->contributor_id)->first()->name)
+                //     ->sortable(),
 
                 Tables\Columns\TextColumn::make('capsule.title')
                     ->label("Capsule")

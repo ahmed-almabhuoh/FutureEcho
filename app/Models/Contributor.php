@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Contributor extends Model
 {
@@ -38,5 +39,9 @@ class Contributor extends Model
     {
         return $this->belongsTo(Capsule::class, 'capsule_id', 'id');
     }
-    
+
+    public function permissions(): HasMany
+    { // Contributor has more than one permission on a specific capsule
+        return $this->hasMany(ContributorPermission::class, 'contributor_id', 'id');
+    }
 }
