@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('capsule_id')->nullable()->constrained('capsules', 'id')->cascadeOnDelete();
 
             $table->timestamps();
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

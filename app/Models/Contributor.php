@@ -22,4 +22,5 @@ class Contributor extends Model
     {
         return $this->belongsTo(Capsule::class, 'capsule_id', 'id');
     }
+    
 }
