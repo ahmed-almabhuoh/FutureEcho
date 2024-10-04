@@ -17,6 +17,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\BooleanColumn;
@@ -208,6 +209,11 @@ class UserResource extends Resource
                         ->action(function ($record): void {
                             // Change password logic here
                             $record->notify(new ChangeUserPasswordNotification($record->name, generateToken($record->id)));
+
+                            Notification::make()
+                                ->title('Sent Successfully')
+                                ->success()
+                                ->send();
                         })
                         ->icon('heroicon-m-lock-closed')
                         ->label('Recover Password')
@@ -217,6 +223,11 @@ class UserResource extends Resource
                     Tables\Actions\Action::make('Re-Send 2FA')
                         ->action(function ($record): void {
                             $record->notify(new ResendTwoFANotification($record->name, generate2FA($record->id)));
+
+                            Notification::make()
+                                ->title('Sent Successfully')
+                                ->success()
+                                ->send();
                         })
                         ->icon('heroicon-m-hashtag')
                         ->label('Recover Password')
