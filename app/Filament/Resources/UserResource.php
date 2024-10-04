@@ -8,6 +8,7 @@ use App\Enum\UserStatus;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Notifications\ChangeUserPasswordNotification;
 use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
@@ -125,16 +126,21 @@ class UserResource extends Resource
                 //
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('timezone')
                     ->searchable(),
+
                 BooleanColumn::make('is_admin')->colors([
                     'success' => 1,
                     'danger' => 0,
                 ]),
+
                 IconColumn::make('status')
                     ->label('Status')
                     ->options([
@@ -156,10 +162,12 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -177,6 +185,7 @@ class UserResource extends Resource
                     ->label('Status'),
 
                 Tables\Filters\TrashedFilter::make(),
+
                 TernaryFilter::make('is_admin')->label('Admin'),
             ])
             ->actions([
@@ -190,6 +199,31 @@ class UserResource extends Resource
                 ])
                     ->label('Delete actions')
                     ->color('danger')
+                    ->button(),
+
+                Tables\Actions\ActionGroup::make([
+
+                    Tables\Actions\Action::make('Change Password')
+                        ->action(function ($record): void {
+                            // Change password logic here
+                            $record->notify(new ChangeUserPasswordNotification($record->name, generateToken($record->id)));
+                        })
+                        ->icon('heroicon-m-lock-closed')
+                        ->label('Recover Password')
+                        ->color('warning')
+                        ->requiresConfirmation(),
+
+                    Tables\Actions\Action::make('Re-Send 2FA')
+                        ->action(function (): void {
+
+                        })
+                        ->icon('heroicon-m-hashtag')
+                        ->label('Recover Password')
+                        ->color('danger')
+                        ->requiresConfirmation(),
+                ])
+                    ->label('Authentication')
+                    ->color('primary')
                     ->button(),
             ])
             ->bulkActions([
