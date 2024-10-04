@@ -9,6 +9,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use App\Notifications\ChangeUserPasswordNotification;
+use App\Notifications\ResendTwoFANotification;
 use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
@@ -214,8 +215,8 @@ class UserResource extends Resource
                         ->requiresConfirmation(),
 
                     Tables\Actions\Action::make('Re-Send 2FA')
-                        ->action(function (): void {
-
+                        ->action(function ($record): void {
+                            $record->notify(new ResendTwoFANotification($record->name, generate2FA($record->id)));
                         })
                         ->icon('heroicon-m-hashtag')
                         ->label('Recover Password')

@@ -7,20 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use PhpParser\Node\Expr\BinaryOp\BooleanOr;
 
-if (! function_exists('generate2FA')) {
-    function generate2FA($user)
-    {
-        $code = rand(111111, 9999999);
-
-        $twoFaCode = new TwoFA();
-        $twoFaCode->code = Hash::make($code);
-        $twoFaCode->user_id = $user->id;
-        $isSaved = $twoFaCode->save();
-
-        return $isSaved ? Crypt::encrypt($code) : false;
-    }
-}
-
 if (! function_exists('generateToken')) {
     function generateToken($userId, $length = 80): string
     {
@@ -41,5 +27,23 @@ if (! function_exists('generateToken')) {
         ]);
 
         return ($created == true) ? $token : false;
+    }
+}
+
+if (! function_exists('generate2FA')) {
+    function generate2FA($userId, $length = 8): string
+    {
+        TwoFA::where('user_id', $userId)->delete();
+
+        $min = str_pad('1', $length, '0');
+        $max = str_pad('', $length, '9');
+        $code = rand((int) $min, (int) $max);
+
+        TwoFA::create([
+            'code' => Hash::make($code),
+            'user_id' => $userId
+        ]);
+
+        return (string) $code;
     }
 }
