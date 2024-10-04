@@ -30,7 +30,7 @@ class Legacy extends Model
             $user = User::where('email', $legacy->email)->first();
 
             if ($user)
-                if ($code = generate2FA($user)) {
+                if ($code = generate2FA($user->id)) {
                     $user->notify(new LegacyAddedNotification($user, $code));
                 }
         });
