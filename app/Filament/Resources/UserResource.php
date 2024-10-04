@@ -13,6 +13,7 @@ use App\Notifications\ChangeUserPasswordNotification;
 use App\Notifications\ResendTwoFANotification;
 use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -24,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -103,12 +105,13 @@ class UserResource extends Resource
                             ->required()
                             ->searchable(),
 
-                        // TextInput::make('password')
-                        //     ->password()
-                        //     ->minValue(8)
-                        //     ->maxValue(191)
-                        //     // ->default(Str::random(10))
-                        //     ->columnSpanFull(),
+                        TextInput::make('password')
+                            ->password()
+                            ->minValue(8)
+                            ->maxValue(191)
+                            // ->default(Str::random(10))
+                            ->disabledOn('edit')
+                            ->columnSpanFull(),
 
                         Toggle::make('is_admin')
                             ->label('Admin')
@@ -120,6 +123,21 @@ class UserResource extends Resource
                         ->collapsible()
                         ->columns(2),
                 ]),
+
+                Group::make()->schema([
+
+                    Section::make('Media & Attachments')->schema([
+
+                        FileUpload::make('image')
+                            ->image()
+                            ->directory('users')
+                            ->imageEditor()
+                            ->previewable()
+                            ->nullable(),
+
+                    ])->columnSpan('full'),
+
+                ])->columnSpanFull(),
             ]);
     }
 
@@ -130,6 +148,8 @@ class UserResource extends Resource
                 //
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
+                ImageColumn::make('image'),
 
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
