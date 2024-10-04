@@ -8,6 +8,7 @@ use App\Enum\UserStatus;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Notifications\AdvertisementNotification;
 use App\Notifications\ChangeUserPasswordNotification;
 use App\Notifications\ResendTwoFANotification;
 use Filament\Forms;
@@ -20,6 +21,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -244,7 +246,25 @@ class UserResource extends Resource
 
                 ]),
 
+                BulkAction::make('Send Advertisement')
+                    ->form([
+                        Forms\Components\Textarea::make('advertisement_text')
+                            ->label('Advertisement Text')
+                            ->required()
+                            ->placeholder('Enter the advertisement text here...')
+                    ])
+                    ->action(function ($records, array $data): void {
+                        $advertisementText = $data['advertisement_text'];
 
+                        foreach ($records as $user) {
+                            $user->notify(new AdvertisementNotification($advertisementText, $user->name));
+                        }
+
+                        Notification::make()
+                            ->title('Sent Successfully')
+                            ->success()
+                            ->send();
+                    }),
             ]);
     }
 
