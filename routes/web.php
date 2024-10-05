@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Livewire\LoginComponent;
+use App\Livewire\RegistrationComponent;
 use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('auth')->group(function () {
     Route::get('login', LoginComponent::class)->name('users.login');
+    Route::get('reg', RegistrationComponent::class)->name('users.reg');
 });
 
 Route::prefix('u')->middleware(['auth:web'])->group(function () {
@@ -22,3 +24,7 @@ Route::prefix('u')->middleware(['auth:web'])->group(function () {
 Route::get('/', function () {
     dd('Home');
 })->name('home');
+
+Route::get('test', function () {
+    dd(getUserTimezone('196.10.32.155'));
+});

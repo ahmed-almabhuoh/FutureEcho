@@ -2,6 +2,7 @@
 
 use App\Models\Token;
 use App\Models\TwoFA;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -45,5 +46,29 @@ if (! function_exists('generate2FA')) {
         ]);
 
         return (string) $code;
+    }
+}
+
+if (!function_exists('getUserTimezone')) {
+    function getUserTimezone($ipAddress = null)
+    {
+        if (!$ipAddress) {
+            $ipAddress = request()->ip();
+        }
+
+        try {
+            $client = new Client();
+            $response = $client->get("http://ipinfo.io/{$ipAddress}/json");
+
+            if ($response->getStatusCode() == 200) {
+                $data = json_decode($response->getBody(), true);
+
+                return $data['timezone'] ?? 'UTC';
+            }
+        } catch (\Exception $e) {
+            return 'UTC';
+        }
+
+        return 'UTC';
     }
 }

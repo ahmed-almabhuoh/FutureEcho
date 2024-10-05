@@ -7,10 +7,24 @@
             alt="Future Echo Logo">
     </div>
     <div class="right-section">
-        <h5>{{ __('Welcome back!') }}</h5>
-        <p>{{ __('Log in to access your account and continue where you left off.') }}</p>
+        <h5>{{ __('Join us today!') }}</h5>
+        <p>{{ __('Create your account and start exploring all the features we have to offer.') }}</p>
 
         <form>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">{{ __('Name') }}</label>
+                <input type="text"
+                    class="form-control
+                    @error('name')
+                        is-invalid
+                    @enderror"
+                    id="name" placeholder="{{ __('Enter your name') }}" wire:model="name">
+                @error('name')
+                    <small style="color: red;">{{ __($message) }}</small>
+                @enderror
+            </div>
+
             <div class="mb-3">
                 <label for="email" class="form-label">{{ __('Email') }}</label>
                 <input type="email"
@@ -22,7 +36,6 @@
                 @error('email')
                     <small style="color: red;">{{ __($message) }}</small>
                 @enderror
-                <a href="#">{{ __('Cannot access to my email?') }}</a>
             </div>
 
             <div class="mb-3">
@@ -35,13 +48,12 @@
                 @error('password')
                     <small style="color: red;">{{ __($message) }}</small>
                 @enderror
-                <a href="#">{{ __('Forget password?') }}</a>
             </div>
 
-            <button type="button" wire:click="login" class="btn btn-primary w-100">{{ __('Login') }}</button>
+            <button type="button" wire:click="signup" class="btn btn-primary w-100">{{ __('Sign Up') }}</button>
 
             <p class="mt-3 text-center">
-                <a href="{{ route('users.reg') }}">{{ __('I do not have an account!') }}</a>
+                <a href="{{ route('users.login') }}">{{ __('Already have an account?') }}</a>
             </p>
 
         </form>
