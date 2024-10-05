@@ -10,6 +10,12 @@
         <h5>{{ __('Welcome back!') }}</h5>
         <p>{{ __('Log in to access your account and continue where you left off.') }}</p>
 
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+
         <form>
             <div class="mb-3">
                 <label for="email" class="form-label">{{ __('Email') }}</label>
@@ -35,7 +41,7 @@
                 @error('password')
                     <small style="color: red;">{{ __($message) }}</small>
                 @enderror
-                <a href="#">{{ __('Forget password?') }}</a>
+                <a href="{{ route('users.forget-password') }}">{{ __('Forget password?') }}</a>
             </div>
 
             <button type="button" wire:click="login" class="btn btn-primary w-100">{{ __('Login') }}</button>
