@@ -3,8 +3,7 @@
         <h2>{{ __('FUTURE ECHO') }}</h2>
         <p>{{ __('Welcome') }}</p>
         <!-- You can add the logo image here -->
-        <img class="logo-img" src="{{ 'http://127.0.0.1:8000' . Storage::url($websiteSettings->logo) }}"
-            alt="Future Echo Logo">
+        <img class="logo-img" src="{{ Storage::url($websiteSettings->logo) }}" alt="Future Echo Logo">
     </div>
     <div class="right-section">
         <h5>{{ __('Welcome back!') }}</h5>
