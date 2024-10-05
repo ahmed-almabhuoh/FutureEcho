@@ -42,7 +42,7 @@ class SettingResource extends Resource
                         ->disk('public')
                         ->directory('logos')
                         ->image()
-                        ->maxSize(1024)
+                        ->maxSize(50000)
                         ->enableOpen()
                         ->columnSpanFull(),
 
@@ -89,21 +89,10 @@ class SettingResource extends Resource
                 //
             ])
             ->filters([
-                //
-                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
-
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\DeleteAction::make(),
-                    Tables\Actions\ForceDeleteAction::make(),
-                    Tables\Actions\RestoreAction::make(),
-                ])
-                    ->label('Delete actions')
-                    ->color('danger')
-                    ->button(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
