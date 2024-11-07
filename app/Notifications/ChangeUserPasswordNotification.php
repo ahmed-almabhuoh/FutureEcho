@@ -28,7 +28,7 @@ class ChangeUserPasswordNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['database', 'mail'];
+        return ['mail'];
     }
 
     /**
@@ -37,7 +37,7 @@ class ChangeUserPasswordNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         // URL for the password reset page with the token
-        $resetUrl = url("/auth/reset-password/{$this->token}");
+        $resetUrl = url("/v1/reset-password/{$this->token}");
 
         return (new MailMessage)
             ->greeting("Hello, {$this->name}")

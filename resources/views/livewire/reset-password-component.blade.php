@@ -1,101 +1,39 @@
-<div class="container forgot-password-container">
-    <div class="forgot-password-box">
-        <h6> {{ __('Reset Password') }} </h6>
-        <p> {{ __('Enter your new password and password confirmation') }} </p>
-        <form>
-
-            <div class="mb-3">
-                <label for="password" class="form-label"> {{ __('New Password') }} </label>
-                <input type="password"
-                    class="form-control
-                    @error('password')
-                        is-invalid
-                    @enderror
-                "
-                    id="password" placeholder="{{ __('Enter your new password') }}" wire:model="password">
-                @error('password')
-                    <span style="color: red;"> {{ __($message) }} </span>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="password_confirmation" class="form-label"> {{ __('Password Confirmation') }} </label>
-                <input type="password"
-                    class="form-control
-                    @error('password_confirmation')
-                        is-invalid
-                    @enderror
-                "
-                    id="password_confirmation" placeholder="{{ __('Enter password confirmation') }}" wire:model="password_confirmation">
-                @error('password_confirmation')
-                    <span style="color: red;"> {{ __($message) }} </span>
-                @enderror
-            </div>
-
-            <div class="d-flex justify-content-between">
-                <button type="button" wire:click="cancel" class="btn btn-cancel"> {{ __('Cancel') }} </button>
-                <button type="button" wire:click="resetPassword" class="btn btn-search"> {{ __('Reset') }} </button>
-            </div>
-
-        </form>
+<form class="form" id="kt_login_forgot_form">
+    <!--begin::Title-->
+    <div class="pb-5 pb-lg-15">
+        <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"> {{ __('Well done!') }} </h3>
+        <p class="text-muted font-weight-bold font-size-h4"> {{ __('Enter your new password') }} </p>
     </div>
-</div>
+    <!--end::Title-->
+    <!--begin::Form group-->
+    <div class="form-group">
+        <input
+            class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('password')
+            is-invalid
+        @enderror"
+            type="password" placeholder="Enter new password" name="password"
+            wire:model="password" autocomplete="off" />
+        @error('password')
+            <small style="color: red">{{ $message }}</small>
+        @enderror
+    </div>
 
-@push('styles')
-    <style>
-        body {
-            background-color: #f5f7f9;
-            /* Adjust to match the image background */
-        }
-
-        .forgot-password-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .forgot-password-box {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 400px;
-        }
-
-        .forgot-password-box h6 {
-            font-weight: bold;
-            background-color: #d3d7dc;
-            /* Light grey header background */
-            padding: 10px;
-            /* border-radius: 5px; */
-            margin-right: -30px;
-            margin-left: -30px;
-            margin-top: -30px;
-            margin-bottom: 20px;
-        }
-
-        .forgot-password-box .btn-cancel {
-            background-color: transparent;
-            border: 1px solid #002d62;
-            /* Dark blue border */
-            color: #002d62;
-        }
-
-        .forgot-password-box .btn-cancel:hover {
-            background-color: #002d62;
-            color: #ffffff;
-        }
-
-        .forgot-password-box .btn-search {
-            background-color: #5a7da1;
-            /* Light blue button */
-            color: #ffffff;
-        }
-
-        .forgot-password-box .btn-search:hover {
-            background-color: #486a8c;
-            /* Darker blue on hover */
-        }
-    </style>
-@endpush
+    <div class="form-group">
+        <input
+            class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('password_confirmation')
+            is-invalid
+        @enderror"
+            type="password" placeholder="Enter password confirmation" name="password_confirmation"
+            wire:model="password_confirmation" autocomplete="off" />
+        @error('password_confirmation')
+            <small style="color: red">{{ $message }}</small>
+        @enderror
+    </div>
+    <!--end::Form group-->
+    <!--begin::Form group-->
+    <div class="form-group d-flex flex-wrap">
+        <button type="button" wire:click="resetPassword" id="kt_login_forgot_form_submit_button"
+            class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"> {{ __('Reset Password') }} </button>
+    </div>
+    <!--end::Form group-->
+</form>

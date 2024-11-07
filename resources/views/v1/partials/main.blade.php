@@ -1,5 +1,4 @@
 <div class="d-flex flex-column flex-root">
-    <x-alert />
 
     <!--begin::Page-->
     <div class="d-flex flex-row flex-column-fluid page">

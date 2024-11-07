@@ -39,7 +39,9 @@
             <!--begin::Signin-->
             <div class="login-form">
                 <!--begin::Form-->
-                <form class="form"  id="kt_login_singin_form">
+                <x-alert />
+
+                <form class="form" id="kt_login_singin_form">
                     <!--begin::Title-->
                     <div class="pb-5 pb-lg-15">
                         <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"> {{ __('Sign In') }} </h3>
@@ -49,7 +51,6 @@
                         </div>
                     </div>
 
-                    <x-alert />
 
                     <!--begin::Form group-->
                     <x-auth-input name="email" type="email" label="Email" :enable-link="true" :link-text="'Forget Email?'"
@@ -57,7 +58,7 @@
                     <!--end::Form group-->
 
                     <x-auth-input name="password" label="Password" type="password" :enable-link="true" :link-text="'Forget Password?'"
-                        :link-route="'#'" />
+                        :link-route="route('forget.password')" />
 
                     <div class="pb-lg-0 pb-5">
                         <button type="button" wire:click="login" id="kt_login_singin_form_submit_button"

@@ -23,6 +23,5 @@
             </span>
         </button>
     </div>
-    <x-alert />
     <!--end::Toolbar-->
 </div>

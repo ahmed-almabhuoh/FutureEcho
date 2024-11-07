@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class ResetPasswordComponent extends Component
 {
-    #[Layout('layouts.auth')]
+    #[Layout('v1.auth.forgot-password')]
 
     public $password;
     public $password_confirmation;
@@ -60,12 +60,23 @@ class ResetPasswordComponent extends Component
 
                 $user->notify(new PasswordRestoredNotification($user->name));
 
-                return redirect()->route('login')->with('message', 'Password restore successfully');
+                session()->flash('message', 'Password restore successfully');
+                session()->flash('status', 200);
+
+                return redirect()->route('login');
             } else {
-                return redirect()->route('login')->with('message', 'We cannot reset your password!');
+
+                session()->flash('message', 'We cannot reset your password!');
+                session()->flash('status', 500);
+
+                return redirect()->route('login');
             }
         } else {
-            return redirect()->route('login')->with('message', 'We cannot reset your password!');
+
+            session()->flash('message', 'We cannot reset your password!');
+            session()->flash('status', 500);
+
+            return redirect()->route('login');
         }
     }
 
