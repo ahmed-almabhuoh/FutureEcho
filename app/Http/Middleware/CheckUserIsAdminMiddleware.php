@@ -19,5 +19,7 @@ class CheckUserIsAdminMiddleware
             return $next($request);
         else
             return abort(403);
+
+        return $next($request);
     }
 }

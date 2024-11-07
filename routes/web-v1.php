@@ -19,6 +19,6 @@ Route::prefix('v1')->middleware(['guest:web'])->group(function () {
     Route::get('login', LoginComponent::class)->name('login');
 });
 
-Route::prefix('v1')->middleware(['auth:web'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth:web'])->group(function () {
     Route::get('', DashboardComponent::class)->name('v1.dashboard');
 });
