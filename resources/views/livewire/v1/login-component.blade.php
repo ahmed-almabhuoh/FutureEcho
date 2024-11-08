@@ -54,7 +54,7 @@
 
                     <!--begin::Form group-->
                     <x-auth-input name="email" type="email" label="Email" :enable-link="true" :link-text="'Forget Email?'"
-                        :link-route="'#'" />
+                        :link-route="route('forget.email')" />
                     <!--end::Form group-->
 
                     <x-auth-input name="password" label="Password" type="password" :enable-link="true" :link-text="'Forget Password?'"

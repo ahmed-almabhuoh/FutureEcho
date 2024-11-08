@@ -3,84 +3,66 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class RestoreEmailComponent extends Component
 {
-    #[Layout('layouts.auth')]
+    #[Layout('v1.auth.forget-email')]
 
     public $name;
-    public $isValidName = false;
-    public $headerTitle;
-    public $headerDescription;
-    public $password;
-    public $userEmail;
-    public $isValidPassword = false;
+    public $showLastPasswordInputs;
+    public $lastPassword;
 
     public function mount()
     {
-        $this->headerTitle = 'Enter your name';
-        $this->headerDescription = 'Please enter your account name you remember';
+        $this->showLastPasswordInputs = false;
     }
 
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'password' => 'required|string',
+            'name' => 'required|string|min:2|max:45',
+            'lastPassword' => 'required|string',
         ];
     }
 
-    public function cancel()
-    {
-        return redirect()->route('login');
-    }
-
-    public function loginWithPassword()
-    {
-        return redirect()->route('login');
-    }
-
-    public function continue()
+    public function forgetEmail()
     {
         $this->validateOnly('name');
-
-        if (User::where('name', $this->name)->exists()) {
-            $this->isValidName = true;
-            $this->headerTitle = 'Enter your password';
-            $this->headerDescription = 'Please enter the last password you remember for your account.';
-        } else {
-            return redirect()->route('login')->with('message', 'We cannot recognize your account!');
-        }
+        $this->showLastPasswordInputs = true;
     }
 
-    public function checkViaPassword()
+    public function ruleAttributes(): array
     {
-        $this->validateOnly('password');
+        return [
+            'name' => 'account name',
+            'lastPassword' => 'last password',
+        ];
+    }
 
-        $users = User::where('name', $this->name)->get();
-        $counter = 0;
+    public function submitForgetEmail()
+    {
+        $this->validate();
+
+        $users = User::where('name', $this->name)->select(['email', 'password'])->get();
+
         foreach ($users as $user) {
-            if (Hash::check($this->password, $user->password)) {
-                $counter++;
-            }
-
-            if ($counter == 1) {
-                $this->userEmail = $user->email;
-                $this->isValidPassword = true;
-
-                $this->headerTitle = 'We get your email finally';
-                $this->headerDescription = 'Your email is: ' . $this->userEmail . ', do not share it with anyone!';
-            } else {
-                return redirect()->route('login')->with('message', 'Sorry, we cannot restore your email address');
+            if (Hash::check($this->lastPassword, $user->password)) {
+                return redirect(route('show.forgotten.email', ['email' => Crypt::encrypt($user->email)]));
             }
         }
+
+        session()->flash('message', 'We cannot recognize your account, please try again!');
+        session()->flash('status', 500);
+
+        return redirect(route('login'));
     }
 
     public function render()
     {
-        return view('livewire.restore-email-component')->title('Future Echo - Restore Email');
+        return view('livewire.restore-email-component')->title('Future Echo - Forgot Email');
     }
 }

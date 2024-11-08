@@ -1,116 +1,78 @@
-<div class="container forgot-password-container">
-    <div class="forgot-password-box">
-        <h6> {{ __($headerTitle) }} </h6>
-        <p> {{ __($headerDescription) }} </p>
+<div>
 
-        @if ($isValidPassword)
-            <button type="button" wire:click="cancel" class="btn btn-search"> {{ __('Back to login') }} </button>
-        @endif
+    @if (!$showLastPasswordInputs)
+        <form class="form" id="kt_login_forgot_form">
+            <!--begin::Title-->
+            <div class="pb-5 pb-lg-15">
+                <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"> {{ __('Forgotten Email?') }} </h3>
+                <p class="text-muted font-weight-bold font-size-h4">
+                    {{ __('Enter your account name to complete the process.') }}
+                </p>
+            </div>
+            <!--end::Title-->
+            <!--begin::Form group-->
+            <div class="form-group">
+                <input
+                    class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('name')
+                is-invalid
+            @enderror"
+                    type="text" placeholder="Enter your account name" name="name" wire:model="name"
+                    autocomplete="off" />
+                @error('name')
+                    <small style="color: red">{{ $message }}</small>
+                @enderror
+            </div>
+            <!--end::Form group-->
+            <!--begin::Form group-->
+            <div class="form-group d-flex flex-wrap">
+                <button type="button" wire:click="forgetEmail" id="kt_login_forgot_form_submit_button"
+                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"> {{ __('Submit') }}
+                </button>
+                <a href="{{ route('login') }}" id="kt_login_forgot_cancel"
+                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"> {{ __('Cancel') }}
+                </a>
+            </div>
+            <!--end::Form group-->
+        </form>
+    @endif
 
-        @if (!$isValidPassword)
-            <form>
+    @if ($showLastPasswordInputs)
+        <form class="form" id="kt_login_forgot_form">
+            <!--begin::Title-->
+            <div class="pb-5 pb-lg-15">
+                <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"> {{ __('Forgotten Email?') }}
+                </h3>
+                <p class="text-muted font-weight-bold font-size-h4">
+                    {{ __('Enter your account name to complete the process.') }}
+                </p>
+            </div>
+            <!--end::Title-->
 
-                @if ($isValidName)
-                    <div class="mb-3">
-                        <label for="password" class="form-label"> {{ __('Password') }} </label>
-                        <input type="password"
-                            class="form-control
-                    @error('password')
-                        is-invalid
-                    @enderror
-                "
-                            id="password" placeholder="{{ __('Enter your password') }}" wire:model="password">
-                        @error('password')
-                            <span style="color: red;"> {{ __($message) }} </span>
-                        @enderror
-                    </div>
-                @else
-                    <div class="mb-3">
-                        <label for="name" class="form-label"> {{ __('Name') }} </label>
-                        <input type="text"
-                            class="form-control
-                    @error('name')
-                        is-invalid
-                    @enderror
-                "
-                            id="name" placeholder="{{ __('Enter your name') }}" wire:model="name">
-                        @error('name')
-                            <span style="color: red;"> {{ __($message) }} </span>
-                        @enderror
-                    </div>
-                @endif
+            <!--begin::Form group-->
+            <div class="form-group">
+                <input
+                    class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('lastPassword')
+                is-invalid
+            @enderror"
+                    type="password" placeholder="Enter your last password you remember" name="lastPassword"
+                    wire:model="lastPassword" autocomplete="off" />
+                @error('lastPassword')
+                    <small style="color: red">{{ $message }}</small>
+                @enderror
+            </div>
 
 
-                <div class="d-flex justify-content-between">
-                    {{-- <button type="button" wire:click="loginWithPassword" class="btn btn-cancel">
-                        {{ __('Login with password?') }} </button> --}}
-                    <button type="button" wire:click="cancel" class="btn btn-cancel"> {{ __('Cancel') }} </button>
-                    <button type="button"
-                        @if (!$isValidName) wire:click="continue" @else wire:click="checkViaPassword" @endif
-                        class="btn btn-search"> {{ __('Continue') }} </button>
-                </div>
-
-            </form>
-        @endif
-
-    </div>
+            <!--end::Form group-->
+            <!--begin::Form group-->
+            <div class="form-group d-flex flex-wrap">
+                <button type="button" wire:click="submitForgetEmail" id="kt_login_forgot_form_submit_button"
+                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"> {{ __('Submit') }}
+                </button>
+                <a href="{{ route('login') }}" id="kt_login_forgot_cancel"
+                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"> {{ __('Cancel') }}
+                </a>
+            </div>
+            <!--end::Form group-->
+        </form>
+    @endif
 </div>
-
-@push('styles')
-    <style>
-        body {
-            background-color: #f5f7f9;
-            /* Adjust to match the image background */
-        }
-
-        .forgot-password-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .forgot-password-box {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 400px;
-        }
-
-        .forgot-password-box h6 {
-            font-weight: bold;
-            background-color: #d3d7dc;
-            /* Light grey header background */
-            padding: 10px;
-            /* border-radius: 5px; */
-            margin-right: -30px;
-            margin-left: -30px;
-            margin-top: -30px;
-            margin-bottom: 20px;
-        }
-
-        .forgot-password-box .btn-cancel {
-            background-color: transparent;
-            border: 1px solid #002d62;
-            /* Dark blue border */
-            color: #002d62;
-        }
-
-        .forgot-password-box .btn-cancel:hover {
-            background-color: #002d62;
-            color: #ffffff;
-        }
-
-        .forgot-password-box .btn-search {
-            background-color: #5a7da1;
-            /* Light blue button */
-            color: #ffffff;
-        }
-
-        .forgot-password-box .btn-search:hover {
-            background-color: #486a8c;
-            /* Darker blue on hover */
-        }
-    </style>
-@endpush
