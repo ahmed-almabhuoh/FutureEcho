@@ -3,6 +3,7 @@
 namespace App\Livewire\V1;
 
 use App\Models\User;
+use App\Notifications\NewLoginNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
@@ -37,7 +38,8 @@ class LoginComponent extends Component
             // Prepare to 2fa
             session()->put('2fa-authenticated', false);
             $code = generate2FA(auth()->id());
-            info($code);
+            $user = Auth::user();
+            $user->notify(new NewLoginNotification($code, $user->name));
             if ($code)
                 return redirect()->route('enter.2fa');
 
