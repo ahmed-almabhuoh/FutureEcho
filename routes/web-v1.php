@@ -1,7 +1,9 @@
 <?php
 
+
 // use Illuminate\Routing\Route;
 
+use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Middleware\Check2FAMiddelware;
 use App\Livewire\ResetPasswordComponent;
@@ -29,4 +31,8 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
     Route::get('enter-2fa', Enter2FAComponent::class)->name('enter.2fa')->withoutMiddleware(Check2FAMiddelware::class);
 
     Route::get('', DashboardComponent::class)->name('v1.dashboard');
+
+    include 'access-management.php';
+
+    Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
 });

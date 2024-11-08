@@ -11,7 +11,7 @@ class NewLoginNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $name;
+    protected $name;
     protected $code;
 
     /**
@@ -19,20 +19,13 @@ class NewLoginNotification extends Notification implements ShouldQueue
      */
     public function __construct(protected string $twoFACode, public string $username)
     {
-        //
         $this->onQueue('auth');
-
         $this->name = $username;
         $this->code = $twoFACode;
-
-        info($this->name);
-        info($this->code);
     }
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
      */
     public function via(object $notifiable): array
     {
@@ -45,20 +38,23 @@ class NewLoginNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Your Two-Factor Authentication (2FA) Code')
+            ->greeting("Hello, {$this->name}!")
+            ->line('You recently attempted to log into your account. For security, please use the following code to complete your login:')
+            ->line("**2FA Code: {$this->code}**")
+            ->line('This code is valid for the next 10 minutes. Do not share this code with anyone.')
+            ->line('If you did not attempt to log in, please secure your account immediately.')
+            ->salutation('Thank you for keeping your account secure!');
     }
 
     /**
      * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'username' => $this->name,
+            'twoFACode' => $this->code,
         ];
     }
 }

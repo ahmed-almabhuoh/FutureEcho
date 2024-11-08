@@ -22,7 +22,7 @@
                     <div class="container">
 
                         <!--begin::Dashboard-->
-                        @yield('content')
+                        {!! $slot !!}
                         <!--end::Dashboard-->
 
                     </div>

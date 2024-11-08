@@ -38,6 +38,10 @@ class LoginComponent extends Component
             // Prepare to 2fa
             session()->put('2fa-authenticated', false);
             $code = generate2FA(auth()->id());
+
+            // Should Be Deleted
+            info($code);
+
             $user = Auth::user();
             $user->notify(new NewLoginNotification($code, $user->name));
             if ($code)

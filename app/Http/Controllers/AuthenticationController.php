@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticationController extends Controller
 {
@@ -13,14 +15,6 @@ class AuthenticationController extends Controller
         $request->session()->forget('web');
         Auth::logout();
 
-        return redirect(route('home'));
-    }
-
-    public function logoutV2()
-    {
-        request()->session()->forget('web');
-        Auth::logout();
-
-        return redirect(route('home'));
+        return redirect()->route('login');
     }
 }
