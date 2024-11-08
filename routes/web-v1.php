@@ -3,9 +3,11 @@
 // use Illuminate\Routing\Route;
 
 use App\Http\Controllers\v1\AuthController;
+use App\Http\Middleware\Check2FAMiddelware;
 use App\Livewire\ResetPasswordComponent;
 use App\Livewire\RestoreEmailComponent;
 use App\Livewire\V1\DashboardComponent;
+use App\Livewire\V1\Enter2FAComponent;
 use App\Livewire\V1\ForgetPasswordComponent;
 use App\Livewire\V1\LoginComponent;
 use App\Livewire\V1\ShowRogottenEmailComponent;
@@ -23,6 +25,8 @@ Route::prefix('v1')->middleware(['guest:web'])->group(function () {
     Route::get('login', LoginComponent::class)->name('login');
 });
 
-Route::prefix('dashboard')->middleware(['auth:web'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])->group(function () {
+    Route::get('enter-2fa', Enter2FAComponent::class)->name('enter.2fa')->withoutMiddleware(Check2FAMiddelware::class);
+
     Route::get('', DashboardComponent::class)->name('v1.dashboard');
 });

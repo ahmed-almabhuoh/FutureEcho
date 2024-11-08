@@ -15,6 +15,13 @@ class TwoFA extends Model
         'user_id',
     ];
 
+    protected static function booted()
+    {
+        self::creating(function ($model) {
+            TwoFA::where('user_id', auth()->id())->delete();
+        });
+    }
+
     /**
      * The name of the "updated at" column.
      *
