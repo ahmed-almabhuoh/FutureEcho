@@ -15,7 +15,7 @@
             <!--end::Header-->
 
             <!--begin::Content-->
-            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+            {{-- <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                 <!--begin::Entry-->
                 <div class="d-flex flex-column-fluid">
                     <!--begin::Container-->
@@ -29,7 +29,8 @@
                     <!--end::Container-->
                 </div>
                 <!--end::Entry-->
-            </div>
+            </div> --}}
+            {!! $slot !!}
             <!--end::Content-->
 
             <!--begin::Footer-->

@@ -3,6 +3,7 @@
 namespace App\Livewire\V1;
 
 use App\Models\TwoFA;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Component;

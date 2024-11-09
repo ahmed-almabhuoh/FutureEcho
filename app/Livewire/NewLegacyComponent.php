@@ -5,13 +5,18 @@ namespace App\Livewire;
 use App\Models\Legacy;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class NewLegacyComponent extends Component
 {
     public $email;
 
-    public function mount() {}
+    public function mount()
+    {
+        if (Auth::user()->legacy()->count())
+            return redirect(route('legacy.confirmation'));
+    }
 
     public function rules(): array
     {
@@ -46,10 +51,11 @@ class NewLegacyComponent extends Component
                     ]);
 
                     session()->flash('status', $legacy ? 200 : 500);
-                    session()->flash('message', $legacy ? __('Legacy added successfully') : __('Failed to add new legacy for your account, please try again later!'));
+                    session()->flash('message', $legacy ? __('Your legacy is pending right now, you have to complete 2-step verification process') : __('Failed to add new legacy for your account, please try again later!'));
 
                     $this->reset(['email']);
-                    $this->render();
+                    // $this->render();
+                    return redirect(route('legacy.confirmation'));
                 } else {
                     session()->flash('status', 500);
                     session()->flash('message', __('You cannot add your account\'s email as a legacy to your account!'));
@@ -68,6 +74,11 @@ class NewLegacyComponent extends Component
 
             $this->render();
         }
+    }
+
+    public function cancel()
+    {
+        return redirect(route('legacy'));
     }
 
     public function render()

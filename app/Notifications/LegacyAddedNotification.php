@@ -43,8 +43,8 @@ class LegacyAddedNotification extends Notification implements ShouldQueue
             ->greeting('Hello ' . $notifiable->name . ',')
             ->line('You have been added as a legacy contact for ' . $this->user->name . '.')
             ->line('To complete this process, please use the following 2FA code:')
-            ->line('**' . $this->twoFaCode . '**') // Display the 2FA code in bold
-            ->action('Complete the Process', url('/complete-legacy')) // Example action URL
+            ->line('**' . $this->twoFaCode . '**')
+            ->action('Complete the Process', route('legacy.confirmation'))
             ->line('Thank you for using our application!');
     }
 

@@ -36,8 +36,10 @@ class Legacy extends Model
 
 
             if ($user)
-                if ($code = generate2FA($user->id))
+                if ($code = generate2FA($user->id)) {
+                    session()->put('legacy-added', false);
                     $user->notify(new LegacyAddedNotification($user, $code));
+                }
         });
 
         static::addGlobalScope(function ($query) {
@@ -49,5 +51,11 @@ class Legacy extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    // Attributes
+    public function getStatusClassAttribute(): string
+    {
+        return $this->status == 'active' ? 'label label-lg font-weight-boldlabel-light-success label-inline' : ($this->status == 'rejected' ? 'label label-lg font-weight-bold label-light-primary label-inline' : 'label label-lg font-weight-boldlabel-light-success label-inline');
     }
 }
