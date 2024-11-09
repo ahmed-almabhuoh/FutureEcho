@@ -27,7 +27,8 @@
             <button type="button" wire:click="confirm" id="kt_login_forgot_form_submit_button"
                 class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"> {{ __('Confirm') }}
             </button>
-            <a href="#" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
+            <a href="{{ route('legacy') }}"
+                class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
                 {{ __('Cancel') }} </a>
         </div>
         <!--end::Form group-->
