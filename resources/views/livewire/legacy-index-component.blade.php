@@ -2,6 +2,9 @@
     <div class="d-flex flex-column-fluid">
         <div class="container">
 
+            <x-index index="Management Access" category="Legacy" sub-category="Legacies" page="Legacies" :category-link="route('legacy')"
+                :sub-category-link="route('legacy')" :page-link="route('legacy')" />
+
 
             <div class="card card-custom gutter-b">
                 <div class="card-header flex-wrap py-3">

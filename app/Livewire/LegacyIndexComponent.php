@@ -30,6 +30,8 @@ class LegacyIndexComponent extends Component
         }
     }
 
+    public function close() {}
+
     public function render()
     {
         return view('livewire.legacy-index-component')->title('Future Echo - Legacy');
