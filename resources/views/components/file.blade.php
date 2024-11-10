@@ -6,7 +6,8 @@
 
     <div></div>
     <div class="custom-file">
-        <input type="file" @if (isset($isDisabled) && $isDisabled) disabled @endif
+        <input type="file" @if ($isImage) accept="image/*" @endif
+            @if (isset($isDisabled) && $isDisabled) disabled @endif
             class="custom-file-input
             @error($model ?? $name)
                 is-invalid

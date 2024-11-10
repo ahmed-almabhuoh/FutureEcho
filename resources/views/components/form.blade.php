@@ -52,6 +52,7 @@
             </div>
             <div class="card-footer">
                 <button type="button" wire:click="{{ $submitAction }}"
+                    @if (isset($isDisabled) && $isDisabled) disabled @endif
                     class="btn btn-primary mr-2">{{ __('Submit') }}</button>
                 <button type="button" wire:click="{{ $cancelAction }}" class="btn btn-secondary"> {{ __('Cancel') }}
                 </button>

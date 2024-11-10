@@ -10,26 +10,40 @@ class IdentityVerificationComponent extends Component
     use WithFileUploads;
 
     public $identity;
+    public $identityPreview;
 
-    public function mount() {}
+    public function mount()
+    {
+        $this->identityPreview = null;
+    }
 
     public function rules(): array
     {
         return [
-            'identity' => '',
+            'identity' => 'required|image|mimes:jpg,jpeg,png|max:2048', // max 2MB
         ];
     }
 
-    public function ruleAttribute(): array
+    public function updatedIdentity()
     {
-        return [
-            'identity' => 'identity image',
-        ];
+        // $this->identityPreview = $this->identity ? $this->identity->temporaryUrl() : null;
+        $this->validate();
     }
 
     public function submitRequest()
     {
         $this->validate();
+
+        $path = $this->identity->store('identities', 'public');
+
+        auth()->user()->identity()->create([
+            'file' => $path,
+        ]);
+
+        session()->flash('message', 'Identity verification request submitted successfully.');
+        session()->flash('status', 200);
+
+        return redirect()->route('v1.dashboard');
     }
 
     public function cancel()

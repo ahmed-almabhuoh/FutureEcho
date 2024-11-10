@@ -10,11 +10,15 @@
             @endif
 
             <x-form title="Identity Verification Request" submit-action="submitRequest" cancel-action="cancel"
-                :classes="'col-xl-12'">
+                :classes="'col-xl-12'" :is-disabled="is_null($identity)">
 
                 <x-alert />
 
-                <x-file label="Identity Image" name="identity" :is-required="true" :is-disabled="auth()->user()->identity()->count() != 0" />
+                <x-file :is-image="true" label="Identity Image" name="identity" :is-required="true" :is-disabled="auth()->user()->identity()->count() != 0" />
+
+                @if (!is_null($identity))
+                    <x-image-preview path="{{ $identity->temporaryUrl() }}" />
+                @endif
 
                 @if (auth()->user()->identity()->count() != 0)
                     <x-notice
