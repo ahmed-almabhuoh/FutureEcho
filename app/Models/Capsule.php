@@ -18,6 +18,17 @@ class Capsule extends Model
         'deleted_at'
     ];
 
+    protected static function booted()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            if (! auth()->user()->is_admin) {
+                $model->user_id = auth()->id();
+            }
+        });
+    }
+
 
     // Relations
     public function owner(): BelongsTo
@@ -49,7 +60,8 @@ class Capsule extends Model
     {
         return $this->hasMany(Message::class, 'capsule_id', 'id');
     }
-    public function contributorPermission(){
+    public function contributorPermission()
+    {
         return $this->hasMany(ContributorPermission::class);
     }
 }
