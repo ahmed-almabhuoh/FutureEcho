@@ -81,9 +81,9 @@
                                             </span>
                                         </button>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2"
-                                            title="Edit details"> <span class="svg-icon svg-icon-md"> <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                        <a href="{{ route('capsules.update', ['position' => 'edit', 'capsule_id' => $capsule->id]) }}"
+                                            class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details"> <span
+                                                class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                                                     height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none"

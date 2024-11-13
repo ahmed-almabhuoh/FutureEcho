@@ -22,6 +22,7 @@ class CreateCapsuleComponent extends Component
                 ['user_id', '=', auth()->id()],
                 ['id', '=', $capsule_id],
             ])->first();
+            $this->title = $this->capsule->title;
 
             if (is_null($this->capsule)) {
                 abort(403); // Capsule not found
@@ -58,8 +59,8 @@ class CreateCapsuleComponent extends Component
             ]);
         } else {
             Capsule::where([
-                ['user_id', '=', $this->capsule_id],
-                ['id', '=', auth()->id()],
+                ['id', '=', $this->capsule_id],
+                ['user_id', '=', auth()->id()],
             ])->update(['title' => $this->title]);
 
             session()->flash('message', 'Capsule updated');

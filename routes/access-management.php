@@ -16,4 +16,4 @@ Route::get('identity-verification', IdentityVerificationComponent::class)->name(
 
 Route::get('create-capsule', CreateCapsuleComponent::class)->name('capsules.create');
 Route::get('capsules', CapsulesComponent::class)->name('capsules.index');
-Route::get('create-capsule/{position?}/{capsule_id?}', CreateCapsuleComponent::class)->name('capsules.update');
+Route::get('edit-capsule/{position?}/{capsule_id?}', CreateCapsuleComponent::class)->name('capsules.update');
