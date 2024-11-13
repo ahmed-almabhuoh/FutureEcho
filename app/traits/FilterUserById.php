@@ -3,7 +3,7 @@
 
 class FilterUserById
 {
-    public static function booted()
+    protected static function booted()
     {
         self::parent();
 
