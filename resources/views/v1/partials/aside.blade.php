@@ -191,7 +191,7 @@
                 </li>
 
                 <li class="menu-item" aria-haspopup="true">
-                    <a href="{{ route('delete.account') }}" class="menu-link">
+                    <a href="{{ route('settings.general') }}" class="menu-link">
                         <span class="svg-icon menu-icon">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Home/Library.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

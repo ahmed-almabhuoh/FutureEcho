@@ -5,6 +5,7 @@
         @endif
     </label>
     <input type="{{ $type ?? 'name' }}" name="{{ $name }}" id="{{ $id ?? $name }}"
+        @if (isset($readOnly) && $readOnly) readonly @endif
         @if (isset($isLive) && $isLive) wire:model.live="{{ $model ?? $name }}"
     @else
     wire:model="{{ $model ?? $name }}" @endif
