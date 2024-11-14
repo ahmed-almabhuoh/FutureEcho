@@ -17,4 +17,12 @@ class AuthenticationController extends Controller
 
         return redirect()->route('login');
     }
+
+    public function logoutGet()
+    {
+        request()->session()->forget('web');
+        Auth::logout();
+
+        return redirect()->route('login');
+    }
 }
