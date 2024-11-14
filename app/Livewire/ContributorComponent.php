@@ -128,7 +128,7 @@ class ContributorComponent extends Component
         $this->contributors = Contributor::whereHas('capsule', function ($query) {
             $query->where('user_id', auth()->id());
         })
-            ->with(['user:id,image,name,email', 'capsule:id,title'])
+            ->with(['user:id,image,name,email', 'capsule:id,title', 'permissions'])
             ->orderBy('added_at', 'desc')
             ->paginate();
         $this->capsules = Capsule::where('user_id', auth()->id())->pluck('title', 'id')->toArray();

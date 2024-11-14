@@ -57,10 +57,21 @@
                                     <th> {{ __('Name') }} </th>
                                     <th> {{ __('Email') }} </th>
                                     <th> {{ __('Capsule') }} </th>
+                                    <th> {{ __('Permission') }} </th>
                                     <th>{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @if (!count($contributors))
+                                    <tr>
+                                        <td colspan="6" nowrap="nowrap">
+                                            <center>
+                                                {{ __('No data found!') }}
+                                            </center>
+                                        </td>
+                                    </tr>
+                                @endif
 
                                 @foreach ($contributors as $contributor)
                                     <tr>
@@ -68,6 +79,21 @@
                                         <td> {{ $contributor->user->name }} </td>
                                         <td> {{ $contributor->user->email }} </td>
                                         <td> {{ $contributor->capsule->title }} </td>
+
+                                        @foreach ($contributor->permissions as $contributorLoopPermission)
+                                            @if (
+                                                $contributor->id == $contributorLoopPermission->contributor_id &&
+                                                    $contributorLoopPermission->capsule_id == $contributor->capsule->id)
+                                                <td>
+                                                    @if ($contributorLoopPermission->permission == 'r')
+                                                        {{ $contributorLoopPermission->permission ?? 'R/W' }}
+                                                    @else
+                                                        W
+                                                    @endif
+                                                </td>
+                                            @endif
+                                        @endforeach
+
                                         <td nowrap="nowrap">
 
                                             <button type="button"
