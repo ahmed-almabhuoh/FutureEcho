@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group {{ isset($classes) ? $classes : 'col-xl-12' }}">
     <label for="{{ $id ?? $name }}">
         {{ __($label) }}
 

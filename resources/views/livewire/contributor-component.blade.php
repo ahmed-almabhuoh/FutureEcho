@@ -13,8 +13,13 @@
 
                     <x-alert />
 
-                    <x-input name="email" label="Contributor Email" :is-required="true"
-                        placeholder="Enter the contributor email" />
+                    <div class="row" style="margin: 0 5px;">
+                        <x-input name="email" label="Contributor Email" :is-required="true" classes="col-xl-6"
+                            placeholder="Enter the contributor email" />
+
+                        <x-select label="Permission" classes="col-xl-6" :is-required="true" name="permission"
+                            :options="$permissions" />
+                    </div>
 
                     <x-select label="Capsules" :is-required="true" name="capsule_ids" :options="$capsules"
                         :is-multi="true" />

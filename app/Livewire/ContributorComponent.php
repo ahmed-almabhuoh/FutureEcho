@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use App\Models\Capsule;
 use App\Models\Contributor;
+use App\Models\ContributorPermission;
 use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
+// use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -17,11 +19,23 @@ class ContributorComponent extends Component
     public $capsule_ids;
     public $shouldDeletedUserId;
     public $shouldDeletedCapsuleId;
+    public $permission;
+    public $permissions;
+
+    public function mount()
+    {
+        $this->permissions = [
+            'w' => __('Write'),
+            'r' => __('Read'),
+        ];
+        $this->permission = 'r';
+    }
 
     public function rules(): array
     {
         return [
             'email' => 'required|email|exists:users,email',
+            'permission' => 'required|string|in:r,w',
             'capsule_ids.*' => [
                 'required',
                 'integer',
@@ -44,6 +58,7 @@ class ContributorComponent extends Component
     {
         return [
             'email' => 'contributor email address',
+            'permission' => 'contributor permission',
         ];
     }
 
@@ -55,10 +70,24 @@ class ContributorComponent extends Component
 
         if (is_array($this->capsule_ids))
             foreach ($this->capsule_ids as $capsuleId) {
-                Contributor::create([
+                $createdContributor = Contributor::create([
                     'user_id' => $selectedContributor,
                     'capsule_id' => $capsuleId,
                 ]);
+
+
+                // HERE IS A PROBLEM SHOULD BE SOLVED
+                ContributorPermission::create([
+                    'permission' => $this->permission ?? 'r',
+                    'contributor_id' => $createdContributor->id,
+                    'capsule_id' => $capsuleId,
+                ]);
+
+                // DB::table('contributor_permissions')->insert([
+                //     'permission' => $this->permission ?? 'r',
+                //     'contributor_id' => $createdContributor->id,
+                //     'capsule_id' => $capsuleId,
+                // ]);
             }
         else {
             session()->flash('message', 'You have to select at least on capsule!');
