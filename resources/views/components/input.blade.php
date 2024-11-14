@@ -5,7 +5,9 @@
         @endif
     </label>
     <input type="{{ $type ?? 'name' }}" name="{{ $name }}" id="{{ $id ?? $name }}"
-        wire:model="{{ $model ?? $name }}"
+        @if (isset($isLive) && $isLive) wire:model.live="{{ $model ?? $name }}"
+    @else
+    wire:model="{{ $model ?? $name }}" @endif
         class="form-control @error($model ?? $name)
             is-invalid
         @enderror"
@@ -16,6 +18,6 @@
     @enderror
 
     @if (isset($description))
-        <span class="form-text text-muted"> {{ __($description) }} </span>
+        <span class="form-text text-muted"> {!! __($description) !!} </span>
     @endif
 </div>

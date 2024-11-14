@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{ __($description) }}
+                {!! __($description) !!}
             </div>
             <div class="modal-footer">
                 <button type="button" wire:click="{{ isset($closeAction) ? $closeAction : 'close' }}"
