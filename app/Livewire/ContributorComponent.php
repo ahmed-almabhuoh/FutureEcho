@@ -79,7 +79,7 @@ class ContributorComponent extends Component
                 // HERE IS A PROBLEM SHOULD BE SOLVED
                 ContributorPermission::create([
                     'permission' => $this->permission ?? 'r',
-                    'contributor_id' => $createdContributor->id,
+                    'contributor_id' => $createdContributor->user_id,
                     'capsule_id' => $capsuleId,
                 ]);
 
@@ -128,10 +128,17 @@ class ContributorComponent extends Component
         $this->contributors = Contributor::whereHas('capsule', function ($query) {
             $query->where('user_id', auth()->id());
         })
-            ->with(['user:id,image,name,email', 'capsule:id,title', 'permissions'])
+            ->with(['user:id,image,name,email', 'capsule:id,title', 'capsule.contributorPermission'])
             ->orderBy('added_at', 'desc')
             ->paginate();
         $this->capsules = Capsule::where('user_id', auth()->id())->pluck('title', 'id')->toArray();
+
+        // Re-establish
+        $this->permissions = [
+            'w' => __('Write'),
+            'r' => __('Read'),
+        ];
+        $this->permission = 'r';
 
         return view('livewire.contributor-component', [
             'capsules' => $this->capsules,

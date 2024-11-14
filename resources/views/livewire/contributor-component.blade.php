@@ -80,19 +80,19 @@
                                         <td> {{ $contributor->user->email }} </td>
                                         <td> {{ $contributor->capsule->title }} </td>
 
-                                        @foreach ($contributor->permissions as $contributorLoopPermission)
-                                            @if (
-                                                $contributor->id == $contributorLoopPermission->contributor_id &&
-                                                    $contributorLoopPermission->capsule_id == $contributor->capsule->id)
-                                                <td>
-                                                    @if ($contributorLoopPermission->permission == 'r')
-                                                        {{ $contributorLoopPermission->permission ?? 'R/W' }}
+                                        <td>
+                                            @foreach ($contributor->capsule->contributorPermission as $contributorLoopPermission)
+                                                @if (
+                                                    $contributorLoopPermission->contributor_id == $contributor->user_id &&
+                                                        $contributorLoopPermission->capsule_id == $contributor->capsule_id)
+                                                    @if ($contributorLoopPermission->permission == 'w')
+                                                        R/W
                                                     @else
-                                                        W
+                                                        R
                                                     @endif
-                                                </td>
-                                            @endif
-                                        @endforeach
+                                                @endif
+                                            @endforeach
+                                        </td>
 
                                         <td nowrap="nowrap">
 

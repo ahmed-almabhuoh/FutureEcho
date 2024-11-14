@@ -41,7 +41,7 @@ class Contributor extends Model
     }
 
     public function permissions(): HasMany
-    { // Contributor has more than one permission on a specific capsule
+    {
         return $this->hasMany(ContributorPermission::class, 'contributor_id', 'id');
     }
 }
