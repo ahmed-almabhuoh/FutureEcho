@@ -33,6 +33,7 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
     Route::get('', DashboardComponent::class)->name('v1.dashboard');
 
     include 'access-management.php';
+    include 'account-settings.php';
 
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
 });
