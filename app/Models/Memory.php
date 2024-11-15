@@ -21,6 +21,10 @@ class Memory extends Model
         'capsule_id'
     ];
 
+    protected $casts = [
+        'medias' => 'array',
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope(function ($query) {

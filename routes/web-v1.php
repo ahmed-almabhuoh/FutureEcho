@@ -4,6 +4,7 @@
 // use Illuminate\Routing\Route;
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\MemoryController;
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Middleware\Check2FAMiddelware;
 use App\Livewire\NewMemoryComponent;
@@ -37,6 +38,7 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
     include 'account-settings.php';
 
     Route::get('new-memory', NewMemoryComponent::class)->name('add.memory');
+    Route::get('/memory-media/{path}', [MemoryController::class, 'serveMedia'])->name('memory.media')->middleware('auth');
     Route::get('memories', NewMemoryComponent::class)->name('memories');
 
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');

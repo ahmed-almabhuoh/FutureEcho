@@ -4,62 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Memory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Response;
 
 class MemoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Inside MemoryController
+    public function serveMedia($path)
     {
-        //
-    }
+        $memory = Memory::whereJsonContains('medias', 'private/memories/' . $path)->firstOrFail();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        if ($memory->user_id !== auth()->id()) {
+            abort(403);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $encryptedContent = Storage::get('private/memories/' . $path);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Memory $memory)
-    {
-        //
-    }
+        $decryptedContent = Crypt::decrypt($encryptedContent);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Memory $memory)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Memory $memory)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Memory $memory)
-    {
-        //
+        return Response::make($decryptedContent, 200, [
+            'Content-Type' => Storage::mimeType('private/memories/' . $path),
+            'Content-Disposition' => 'attachment; filename="' . basename($path) . '"',
+        ]);
     }
 }
