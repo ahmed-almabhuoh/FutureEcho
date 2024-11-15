@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Response;
 
 class MemoryController extends Controller
 {
-    // Inside MemoryController
     public function serveMedia($path)
     {
         $memory = Memory::whereJsonContains('medias', 'private/memories/' . $path)->firstOrFail();

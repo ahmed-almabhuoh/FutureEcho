@@ -61,7 +61,7 @@ class NewMemoryComponent extends Component
         session()->flash('message', 'Memory created successfully!');
         session()->flash('status', 200);
 
-        return redirect()->route('memories');
+        return redirect()->route('memories.timeline');
     }
 
     public function cancel()

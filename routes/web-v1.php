@@ -11,6 +11,7 @@ use App\Livewire\MemoriesComponent;
 use App\Livewire\NewMemoryComponent;
 use App\Livewire\ResetPasswordComponent;
 use App\Livewire\RestoreEmailComponent;
+use App\Livewire\TimelineComponent;
 use App\Livewire\V1\DashboardComponent;
 use App\Livewire\V1\Enter2FAComponent;
 use App\Livewire\V1\ForgetPasswordComponent;
@@ -38,9 +39,12 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
     include 'access-management.php';
     include 'account-settings.php';
 
+    // Memories
     Route::get('new-memory', NewMemoryComponent::class)->name('add.memory');
     Route::get('/memory-media/{path}', [MemoryController::class, 'serveMedia'])->name('memory.media')->middleware('auth');
     Route::get('memories', MemoriesComponent::class)->name('memories');
+
+    Route::get('timeline', TimelineComponent::class)->name('memories.timeline');
 
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
     Route::get('logout', [AuthenticationController::class, 'logoutGet'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');

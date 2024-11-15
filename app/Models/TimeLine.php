@@ -12,6 +12,8 @@ class TimeLine extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = [];
+
     // Relations
     public function memory(): BelongsTo
     {

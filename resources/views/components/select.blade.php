@@ -15,7 +15,11 @@
         @error($model ?? $name)
             is-invalid
         @enderror @endif"
-        id="{{ $id ?? $name }}" wire:model="{{ $model ?? $name }}" name="{{ $name }}">
+        id="{{ $id ?? $name }}"
+        @if (isset($isLive) && $isLive) wire:model.live="{{ $model ?? $name }}"
+            @else
+            wire:model="{{ $model ?? $name }}" @endif
+        name="{{ $name }}">
 
         @foreach ($options as $key => $value)
             <option value="{{ $key }}">{{ __($value) }}</option>
