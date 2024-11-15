@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Memory;
+use App\Models\TimeLine;
 use App\Models\Token;
 use App\Models\TwoFA;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -85,5 +88,13 @@ if (! function_exists('getCurrentRouteName')) {
     function getCurrentRouteName(): string
     {
         return Route::getCurrentRoute()->getName();
+    }
+}
+
+if (! function_exists('getTimeline')) {
+    function getTimeline($id): string
+    {
+        $timeline = TimeLine::findOrFail($id);
+        return !is_null($timeline->to) ? (Carbon::parse($timeline->from)->format('M/d/Y') . ' - ' . Carbon::parse($timeline->to)->format('M/d/Y')) : Carbon::parse($timeline->from)->format('M/d/Y');
     }
 }

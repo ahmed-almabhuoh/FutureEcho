@@ -19,6 +19,7 @@
                             <tr>
                                 <th>{{ __('Title') }}</th>
                                 <th>{{ __('Capsule') }}</th>
+                                <th>{{ __('Timeline') }}</th>
                                 <th>{{ __('Media Downloads') }}</th>
                                 <th>{{ __('Actions') }}</th>
                             </tr>
@@ -36,6 +37,8 @@
                                 <tr>
                                     <td>{{ $memory->message }}</td>
                                     <td>{{ $memory->capsule->title ?? 'No Capsule' }}</td>
+                                    <td>{{ getTimeline(App\Models\TimeLine::where('memory_id', $memory->id)->first()->id) }}
+                                    </td>
 
                                     <td>
                                         @foreach ($memory->medias as $mediaPath)
