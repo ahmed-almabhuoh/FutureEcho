@@ -29,6 +29,7 @@
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="{{ asset('version-1/assets/media/logos/favicon.ico') }}" />
 
+    @stack('styles')
     @livewireStyles
 </head>
 <!--end::Head-->
@@ -156,6 +157,7 @@
     <script src="{{ asset('version-1/assets/js/pages/widgets.js') }}"></script>
     <!--end::Page Scripts-->
 
+    @stack('scripts')
     @livewireScripts
 </body>
 <!--end::Body-->

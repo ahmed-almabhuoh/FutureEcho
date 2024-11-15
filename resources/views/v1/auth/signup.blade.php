@@ -115,7 +115,7 @@
     <script src="{{ asset('version-1/assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Theme Bundle-->
     <!--begin::Page Scripts(used by this page)-->
-    <script src="{{ asset('version-1/assets/js/pages/custom/login/login-3.js') }}"></script>
+    {{-- <script src="{{ asset('version-1/assets/js/pages/custom/login/login-3.js') }}"></script> --}}
     <!--end::Page Scripts-->
 
     @livewireScripts
