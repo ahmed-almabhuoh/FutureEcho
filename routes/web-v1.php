@@ -6,6 +6,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Middleware\Check2FAMiddelware;
+use App\Livewire\NewMemoryComponent;
 use App\Livewire\ResetPasswordComponent;
 use App\Livewire\RestoreEmailComponent;
 use App\Livewire\V1\DashboardComponent;
@@ -34,6 +35,9 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
 
     include 'access-management.php';
     include 'account-settings.php';
+
+    Route::get('new-memory', NewMemoryComponent::class)->name('add.memory');
+    Route::get('memories', NewMemoryComponent::class)->name('memories');
 
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
     Route::get('logout', [AuthenticationController::class, 'logoutGet'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
