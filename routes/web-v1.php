@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\MemoryController;
 use App\Http\Controllers\v1\AuthController;
 use App\Http\Middleware\Check2FAMiddelware;
+use App\Livewire\MemoriesComponent;
 use App\Livewire\NewMemoryComponent;
 use App\Livewire\ResetPasswordComponent;
 use App\Livewire\RestoreEmailComponent;
@@ -39,7 +40,7 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
 
     Route::get('new-memory', NewMemoryComponent::class)->name('add.memory');
     Route::get('/memory-media/{path}', [MemoryController::class, 'serveMedia'])->name('memory.media')->middleware('auth');
-    Route::get('memories', NewMemoryComponent::class)->name('memories');
+    Route::get('memories', MemoriesComponent::class)->name('memories');
 
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
     Route::get('logout', [AuthenticationController::class, 'logoutGet'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');

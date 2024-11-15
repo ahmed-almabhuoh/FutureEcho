@@ -61,12 +61,12 @@ class NewMemoryComponent extends Component
         session()->flash('message', 'Memory created successfully!');
         session()->flash('status', 200);
 
-        return redirect()->route('add.memory');
+        return redirect()->route('memories');
     }
 
     public function cancel()
     {
-        return redirect()->route('add.memory');
+        return redirect()->route('memories');
     }
 
     public function render()
