@@ -10,8 +10,12 @@
                 <x-alert />
 
                 @if (is_null($memory))
-                    <x-notice :description="'Do not have any memory?<a href="'route('add.memory')'">New Memory</a>'" />
+                    <x-notice>
+                        {{ __('Do not have any memory?') }} <a
+                            href="{{ route('add.memory') }}">{{ __('New Memory') }}</a>
+                    </x-notice>
                 @endif
+
 
                 <x-select name="memory" label="Memory" :options="$memories" :is-live="true" />
 

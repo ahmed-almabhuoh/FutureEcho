@@ -22,6 +22,11 @@
         </span>
     </div>
     <div class="alert-text">
-        {!! $description !!}
+
+        @if (isset($slot))
+            {!! $slot !!}
+        @else
+            {!! $description !!}
+        @endif
     </div>
 </div>
