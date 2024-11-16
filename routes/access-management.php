@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\AddMemoryToCapsuleComponent;
 use App\Livewire\CapsulesComponent;
 use App\Livewire\ConfirmAddingLegacyComponent;
 use App\Livewire\ContributorComponent;
@@ -18,5 +19,6 @@ Route::get('identity-verification', IdentityVerificationComponent::class)->name(
 Route::get('create-capsule', CreateCapsuleComponent::class)->name('capsules.create');
 Route::get('capsules', CapsulesComponent::class)->name('capsules.index');
 Route::get('edit-capsule/{position?}/{capsule_id?}', CreateCapsuleComponent::class)->name('capsules.update');
+Route::get('add-memory-to-capsule/{capsule_id?}', AddMemoryToCapsuleComponent::class)->name('memories.to.capsules');
 
 Route::get('contributor', ContributorComponent::class)->name('contributors');

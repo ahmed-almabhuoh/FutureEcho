@@ -35,7 +35,7 @@ class CapsulesComponent extends Component
 
     public function render()
     {
-        $this->capsules = Capsule::where('user_id', auth()->id())->orderBy('created_at', 'desc')->paginate();
+        $this->capsules = Capsule::where('user_id', auth()->id())->with(['contributors.user'])->orderBy('created_at', 'desc')->paginate();
 
         return view('livewire.capsules-component', [
             'capsules' => $this->capsules,
