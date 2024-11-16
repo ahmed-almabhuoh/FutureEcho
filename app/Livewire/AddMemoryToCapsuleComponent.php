@@ -11,7 +11,7 @@ class AddMemoryToCapsuleComponent extends Component
     public $capsule;
     public $memory_ids = [];
 
-    public function mount($capsule_id)
+    public function mount($capsule_id = null)
     {
         $this->capsule = Capsule::findOrFail($capsule_id);
     }
