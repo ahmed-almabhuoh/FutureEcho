@@ -217,7 +217,7 @@
                                 </button>
                             @endif
 
-                            @if ($personalInfo == false || $accountSettings == false)
+                            @if ($personalInfo == true || $accountSettings == true)
                                 <button type="button" wire:click="nextStep"
                                     class="btn btn-primary font-weight-bolder font-size-h6 pl-8 pr-4 py-4 my-3">
                                     {{ __('Next Step') }}
