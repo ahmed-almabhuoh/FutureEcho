@@ -16,7 +16,7 @@ class TimelineComponent extends Component
 
     public function mount()
     {
-        $this->memory = Memory::where('user_id', auth()->id())->select(['id'])->first()->id;
+        $this->memory = Memory::where('user_id', auth()->id())->select(['id'])->first()?->id;
     }
 
     public function updatedMemory()

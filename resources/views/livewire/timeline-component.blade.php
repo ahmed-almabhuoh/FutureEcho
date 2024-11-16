@@ -9,6 +9,10 @@
 
                 <x-alert />
 
+                @if (is_null($memory))
+                    <x-notice :description="'Do not have any memory?<a href="'route('add.memory')'">New Memory</a>'" />
+                @endif
+
                 <x-select name="memory" label="Memory" :options="$memories" :is-live="true" />
 
                 <x-input name="from" label="From Date" :is-required="true" type="date" />
