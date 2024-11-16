@@ -1,6 +1,11 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="d-flex flex-column-fluid">
         <div class="container">
+
+            <x-index index="Content Management - CM" category="Memories" sub-category="Memories" page="Index"
+                :category-link="route('memories')" :sub-category-link="route('memories')" :page-link="route('memories')" />
+
+
             <div class="card card-custom gutter-b">
                 <div class="card-header flex-wrap py-3">
                     <div class="card-title">
@@ -27,7 +32,7 @@
                         <tbody>
                             @if ($memories->isEmpty())
                                 <tr>
-                                    <td colspan="3">
+                                    <td colspan="5">
                                         <center>{{ __('No data found!') }}</center>
                                     </td>
                                 </tr>

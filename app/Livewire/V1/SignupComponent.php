@@ -3,6 +3,7 @@
 namespace App\Livewire\V1;
 
 use App\Models\User;
+use App\Notifications\NewLoginNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
@@ -68,11 +69,20 @@ class SignupComponent extends Component
             'password' => Hash::make($password)
         ]);
 
-        // Should notify the user with the new password & send the 2FA code
-        info($password);
-
-        if ($user)
+        if ($user) {
             Auth::login($user);
+            // Should notify the user with the new password & send the 2FA code
+            info($password);
+
+            // Prepare to 2fa
+            session()->put('2fa-authenticated', false);
+            $code = generate2FA(auth()->id());
+
+            // Should Be Deleted
+            info($code);
+
+            $user->notify(new NewLoginNotification($code, $user->name, $password));
+        }
 
         session()->flash('status', $user ? 200 : 500);
         session()->flash('message', $user ? __('Registration completed') : __('Failed to complete register!'));

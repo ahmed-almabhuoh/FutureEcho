@@ -13,15 +13,17 @@ class NewLoginNotification extends Notification implements ShouldQueue
 
     protected $name;
     protected $code;
+    protected $password;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected string $twoFACode, public string $username)
+    public function __construct(protected string $twoFACode, public string $username,  $password = null)
     {
         $this->onQueue('auth');
         $this->name = $username;
         $this->code = $twoFACode;
+        $this->password = $password;
     }
 
     /**
@@ -37,14 +39,26 @@ class NewLoginNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject('Your Two-Factor Authentication (2FA) Code')
-            ->greeting("Hello, {$this->name}!")
-            ->line('You recently attempted to log into your account. For security, please use the following code to complete your login:')
-            ->line("**2FA Code: {$this->code}**")
-            ->line('This code is valid for the next 10 minutes. Do not share this code with anyone.')
-            ->line('If you did not attempt to log in, please secure your account immediately.')
-            ->salutation('Thank you for keeping your account secure!');
+        if ($this->password != null)
+            return (new MailMessage)
+                ->subject('Your Two-Factor Authentication (2FA) Code')
+                ->greeting("Hello, {$this->name}!")
+                ->line('You recently attempted to log into your account. For security, please use the following code to complete your login:')
+                ->line("**2FA Code: {$this->code}**")
+                ->line("**New Password: {$this->password}**")
+                ->line('This code is valid for the next 10 minutes. Do not share this code with anyone.')
+                ->line('If you did not attempt to log in, please secure your account immediately.')
+                ->salutation('Thank you for keeping your account secure!');
+        else
+            return (new MailMessage)
+                ->subject('Your Two-Factor Authentication (2FA) Code')
+                ->greeting("Hello, {$this->name}!")
+                ->line('You recently attempted to log into your account. For security, please use the following code to complete your login:')
+                ->line("**2FA Code: {$this->code}**")
+                // ->line("**New Password: {$this->password}**")
+                ->line('This code is valid for the next 10 minutes. Do not share this code with anyone.')
+                ->line('If you did not attempt to log in, please secure your account immediately.')
+                ->salutation('Thank you for keeping your account secure!');
     }
 
     /**
