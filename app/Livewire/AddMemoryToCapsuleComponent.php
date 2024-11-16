@@ -19,8 +19,8 @@ class AddMemoryToCapsuleComponent extends Component
     public function rules(): array
     {
         return [
-            'memory_ids' => ['required', 'array', 'min:1'],
-            'memory_ids.*' => ['exists:memories,id'],
+            // 'memory_ids' => ['required', 'array', 'min:1'],
+            // 'memory_ids.*' => ['exists:memories,id'],
         ];
     }
 
@@ -33,7 +33,10 @@ class AddMemoryToCapsuleComponent extends Component
 
     public function addMemory()
     {
-        $this->validate();
+        $this->validate([
+            'memory_ids' => ['required', 'array', 'min:1'],
+            'memory_ids.*' => ['exists:memories,id'],
+        ]);
 
         Memory::whereIn('id', $this->memory_ids)->update(['capsule_id' => $this->capsule->id]);
 
