@@ -23,29 +23,17 @@ class MemoriesComponent extends Component
         session()->flash('message', 'Memory deleted successfully!');
     }
 
-    // public function render()
-    // {
-    //     return view('livewire.memories-component', [
-    //         'memories' => Memory::with('capsule', 'user')
-    //             ->where('user_id', auth()->id())
-    //             ->paginate(10),
-    //     ])->title('Future Echo - Memories');
-    // }
-
     public function render()
     {
-        // DB::enableQueryLog();
-        $memories = Memory::withoutGlobalScopes() // Avoid unintentional duplicate conditions
+        $memories = Memory::withoutGlobalScopes()
             ->with(['capsule', 'user'])
             ->where(function ($query) {
-                $query->where('user_id', auth()->id()) // User is the owner
+                $query->where('user_id', auth()->id())
                     ->orWhereHas('capsule.contributors', function ($subQuery) {
-                        $subQuery->where('user_id', auth()->id()); // User is a contributor
+                        $subQuery->where('user_id', auth()->id());
                     });
             })
             ->paginate(10);
-        // dd(DB::getQueryLog());
-
 
         return view('livewire.memories-component', [
             'memories' => $memories,
