@@ -18,7 +18,7 @@ class ContributorPermission extends Model
     // protected $fillable = ["permission", "contributor_id", "capsule_id", "deleted_at"];
     protected $guarded = [];
 
-    public function  contributor(): BelongsTo
+    public function contributor(): BelongsTo
     {
         return $this->belongsTo(Contributor::class, 'contributor_id', 'id');
     }

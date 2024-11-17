@@ -12,21 +12,63 @@ class CreateCapsuleComponent extends Component
     public $capsule;
     public $capsule_id;
 
+    // public function mount($position = 'create', $capsule_id = null)
+    // {
+    //     if ($position == 'edit') {
+    //         if (is_null($capsule_id))
+    //             abort(403);
+
+    //         $this->capsule = Capsule::where([
+    //             ['user_id', '=', auth()->id()],
+    //             ['id', '=', $capsule_id],
+    //         ])->first();
+    //         $this->title = $this->capsule->title;
+
+    //         if (is_null($this->capsule)) {
+    //             abort(403); // Capsule not found
+    //         }
+    //     }
+    // }
+
     public function mount($position = 'create', $capsule_id = null)
     {
-        if ($position == 'edit') {
-            if (is_null($capsule_id))
+        if ($position === 'edit') {
+            if (is_null($capsule_id)) {
                 abort(403);
+            }
+
+            // $this->capsule = Capsule::where('id', $capsule_id)
+            //     ->where(function ($query) {
+            //         $query->where('user_id', auth()->id()) // Check if user is the owner
+            //             ->orWhereHas('contributors', function ($contributorQuery) {
+            //                 $contributorQuery->where('user_id', auth()->id())
+            //                     ->whereHas('permissions', function ($permissionQuery) {
+            //                         $permissionQuery->where('permission', 'w'); // Check for 'write' permission
+            //                     });
+            //             });
+            //     })
+            //     ->with(['contributors.permissions'])
+            //     ->first();
 
             $this->capsule = Capsule::where([
                 ['user_id', '=', auth()->id()],
                 ['id', '=', $capsule_id],
-            ])->first();
-            $this->title = $this->capsule->title;
+            ])
+                ->orWhereHas('contributors', function ($query) {
+                    $query->where('user_id', auth()->id());
+                })
+                ->with(['contributors.user'])
+                ->with('contributorPermission', function ($query) {
+                    $query->where('permission', 'w');
+                })
+                ->orderBy('created_at', 'desc')
+                ->first();
 
             if (is_null($this->capsule)) {
-                abort(403); // Capsule not found
+                abort(403);
             }
+
+            $this->title = $this->capsule->title;
         }
     }
 

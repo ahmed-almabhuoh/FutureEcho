@@ -38,7 +38,7 @@ class Capsule extends Model
 
     public function contributors(): HasMany
     {
-        return $this->hasMany(Contributor::class, 'user_id', 'id');
+        return $this->hasMany(Contributor::class, 'capsule_id', 'id');
     }
 
     public function memories(): HasMany
