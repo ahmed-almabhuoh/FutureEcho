@@ -88,7 +88,7 @@
 
                                     <td nowrap="nowrap">
                                         @if ($capsule->contributorPermission()->first()->permission == 'w')
-                                            <a href="{{ route('memories.to.capsules', ['capsule' => $capsule->id]) }}"
+                                            <a href="{{ route('memories.to.capsules', ['capsule_id' => $capsule->id]) }}"
                                                 class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details"> <span
                                                     class="svg-icon svg-icon-md">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
