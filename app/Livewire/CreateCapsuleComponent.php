@@ -100,10 +100,17 @@ class CreateCapsuleComponent extends Component
                 'title' => $this->title,
             ]);
         } else {
-            Capsule::where([
-                ['id', '=', $this->capsule_id],
-                ['user_id', '=', auth()->id()],
-            ])->update(['title' => $this->title]);
+            if ($this->capsule->user_id == auth()->id()) {
+                Capsule::where([
+                    ['id', '=', $this->capsule_id],
+                    ['user_id', '=', auth()->id()],
+                ])->update(['title' => $this->title]);
+            } else {
+                Capsule::where([
+                    ['id', '=', $this->capsule_id],
+                    ['user_id', '=', $this->capsule->user_id],
+                ])->update(['title' => $this->title]);
+            }
 
             session()->flash('message', 'Capsule updated');
             session()->flash('status', 200);
