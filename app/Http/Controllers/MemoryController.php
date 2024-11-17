@@ -12,18 +12,33 @@ class MemoryController extends Controller
 {
     public function serveMedia($path)
     {
-        $memory = Memory::whereJsonContains('medias', 'private/memories/' . $path)->firstOrFail();
+        $memory = Memory::withoutGlobalScopes()
+            ->whereJsonContains('medias', 'private/memories/' . $path)
+            ->first();
 
-        if ($memory->user_id !== auth()->id()) {
-            abort(403);
+        if (!$memory) {
+            return abort(404, "Memory not found or file path mismatch.");
         }
 
-        $encryptedContent = Storage::get('private/memories/' . $path);
+        $isAuthorized =
+            $memory->user_id === auth()->id() ||
+            $memory->capsule->contributors()->where('user_id', auth()->id())->exists() ||
+            $memory->capsule->user_id === auth()->id();
 
+        if (!$isAuthorized) {
+            return abort(403, "Unauthorized access.");
+        }
+
+        $fullPath = 'private/memories/' . $path;
+        if (!Storage::exists($fullPath)) {
+            return abort(404, "File not found in storage.");
+        }
+
+        $encryptedContent = Storage::get($fullPath);
         $decryptedContent = Crypt::decrypt($encryptedContent);
 
         return Response::make($decryptedContent, 200, [
-            'Content-Type' => Storage::mimeType('private/memories/' . $path),
+            'Content-Type' => Storage::mimeType($fullPath),
             'Content-Disposition' => 'attachment; filename="' . basename($path) . '"',
         ]);
     }
