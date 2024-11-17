@@ -29,6 +29,9 @@ class MemoriesComponent extends Component
             ->with(['capsule', 'user'])
             ->where(function ($query) {
                 $query->where('user_id', auth()->id())
+                    ->orWhereHas('capsule', function ($subQuery) {
+                        $subQuery->where('user_id', auth()->id());
+                    })
                     ->orWhereHas('capsule.contributors', function ($subQuery) {
                         $subQuery->where('user_id', auth()->id());
                     });
