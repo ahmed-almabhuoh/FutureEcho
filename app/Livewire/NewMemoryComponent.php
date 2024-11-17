@@ -53,7 +53,7 @@ class NewMemoryComponent extends Component
 
         Memory::create([
             'message' => $this->title,
-            'capsule_id' => $this->capsule_id,
+            'capsule_id' => $this->capsule_id == '' ? null : $this->capsule_id,
             'user_id' => auth()->id(),
             'medias' => $storedFiles,
         ]);
@@ -71,8 +71,10 @@ class NewMemoryComponent extends Component
 
     public function render()
     {
+        $capsules = Capsule::where('user_id', auth()->id())->select(['id', 'title'])->get()->pluck('title', 'id')->toArray();
+        $capsules[null] = __('-- Without Capsule --');
         return view('livewire.new-memory-component', [
-            'capsules' => Capsule::where('user_id', auth()->id())->select(['id', 'title'])->get()->pluck('title', 'id')->toArray(),
+            'capsules' => $capsules,
             'memories' => Memory::where('user_id', auth()->id())->get(),
         ])->title('Future Echo - New Memory');
     }

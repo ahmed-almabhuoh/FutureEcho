@@ -105,7 +105,7 @@
                                         </a>
 
                                         <a href="{{ route('memories.receivers', $memory->id) }}"
-                                            class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                            class="btn btn-sm btn-clean btn-icon" title="Add Receivers">
                                             <span class="svg-icon svg-icon-md">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
