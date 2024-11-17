@@ -42,8 +42,18 @@
                                 <tr>
                                     <td>{{ $memory->message }}</td>
                                     <td>{{ $memory->capsule->title ?? 'No Capsule' }}</td>
-                                    <td>{{ getTimeline(App\Models\TimeLine::where('memory_id', $memory->id)->first()->id) }}
+                                    <td>
+                                        @php
+                                            $timeline = App\Models\TimeLine::where('memory_id', $memory->id)->first();
+                                        @endphp
+
+                                        @if ($timeline)
+                                            {{ getTimeline($timeline->id) }}
+                                        @else
+                                            -
+                                        @endif
                                     </td>
+
 
                                     <td>
                                         @foreach ($memory->medias as $mediaPath)
