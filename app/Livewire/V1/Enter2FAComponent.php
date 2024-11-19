@@ -40,7 +40,7 @@ class Enter2FAComponent extends Component
                 TwoFA::where('user_id', auth()->id())->delete();
 
                 session()->put('2fa-authenticated', true);
-                return redirect(route('v1.dashboard'));
+                return redirect(route('memories'));
             }
         }
 
