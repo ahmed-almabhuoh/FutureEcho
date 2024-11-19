@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\TwoFA;
 use App\Models\User;
+use App\Notifications\LegacyAddedNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
@@ -15,7 +16,12 @@ class ConfirmAddingLegacyComponent extends Component
 
     public $twoFA;
 
-    public function mount() {}
+    public function mount()
+    {
+        $user = auth()->user();
+        if ($user->legacy?->status == 'accepted')
+            return redirect(route('legacy'));
+    }
 
     public function rules(): array
     {
@@ -47,8 +53,29 @@ class ConfirmAddingLegacyComponent extends Component
             session()->flash('status', $isSaved ? 200 : 500);
 
             return redirect(route('legacy'));
-        }else {
+        } else {
             session()->flash('message', 'Incorrect Input!');
+            session()->flash('status', 500);
+
+            $this->render();
+        }
+    }
+
+    public function resend2FACode()
+    {
+        $legacy = Auth::user()->legacy;
+        $legacyUser = User::where('email', $legacy->email)->first();
+        $twoFACode = generate2FA($legacyUser->id);
+
+        if ($twoFACode) {
+            $legacyUser->notify(new LegacyAddedNotification($legacyUser, $twoFACode));
+
+            session()->flash('message', '2FA Code Resent Successfully');
+            session()->flash('status', 200);
+
+            $this->render();
+        } else {
+            session()->flash('message', 'Something went wrong, please try again later!');
             session()->flash('status', 500);
 
             $this->render();

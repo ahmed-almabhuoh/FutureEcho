@@ -14,7 +14,11 @@ class NewLegacyComponent extends Component
 
     public function mount()
     {
-        if (Auth::user()->legacy()->count() || auth()->user()->legacy?->status == 'accepted')
+        $user = auth()->user();
+        if ($user->legacy->status == 'accepted')
+            return redirect(route('legacy'));
+
+        if ($user->legacy()->count() && $user()->legacy?->status == 'pending')
             return redirect(route('legacy.confirmation'));
     }
 

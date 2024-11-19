@@ -55,6 +55,12 @@
                     @if (!(isset($enableModaling) && $enableModaling)) wire:click="{{ $submitAction }}" @else data-toggle="modal" data-target="#exampleModalCenter" @endif
                     @if (isset($isDisabled) && $isDisabled) disabled @endif
                     class="btn btn-primary mr-2">{{ __('Submit') }}</button>
+
+                @if (isset($addCustomButton) && $addCustomButton)
+                    <button type="button" wire:click="{{ $customButtonAction }}"
+                        class="btn btn-primary mr-2">{{ __($customButtonTxt) }}</button>
+                @endif
+
                 <button type="button" wire:click="{{ $cancelAction }}" class="btn btn-secondary"> {{ __('Cancel') }}
                 </button>
             </div>
