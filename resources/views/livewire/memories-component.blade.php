@@ -5,7 +5,6 @@
             <x-index index="Content Management - CM" category="Memories" sub-category="Memories" page="Index"
                 :category-link="route('memories')" :sub-category-link="route('memories')" :page-link="route('memories')" />
 
-
             <div class="card card-custom gutter-b">
                 <div class="card-header flex-wrap py-3">
                     <div class="card-title">

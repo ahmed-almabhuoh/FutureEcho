@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\IdentityVerification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,10 +12,12 @@ class IdentityVerificationComponent extends Component
 
     public $identity;
     public $identityPreview;
+    public $uploadedIdentity;
 
     public function mount()
     {
         $this->identityPreview = null;
+        $this->uploadedIdentity = IdentityVerification::where('user_id', auth()->id())->first();
     }
 
     public function rules(): array
@@ -26,7 +29,6 @@ class IdentityVerificationComponent extends Component
 
     public function updatedIdentity()
     {
-        // $this->identityPreview = $this->identity ? $this->identity->temporaryUrl() : null;
         $this->validate();
     }
 
@@ -43,7 +45,7 @@ class IdentityVerificationComponent extends Component
         session()->flash('message', 'Identity verification request submitted successfully.');
         session()->flash('status', 200);
 
-        return redirect()->route('v1.dashboard');
+        return redirect()->route('identity.verification');
     }
 
     public function cancel()

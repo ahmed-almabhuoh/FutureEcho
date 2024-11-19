@@ -23,10 +23,11 @@
     </div>
     <div class="alert-text">
 
-        @if (isset($slot))
+        @if ($slot != '')
             {!! $slot !!}
         @else
             {!! $description !!}
         @endif
+
     </div>
 </div>

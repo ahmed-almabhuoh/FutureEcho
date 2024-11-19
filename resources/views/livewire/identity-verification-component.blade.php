@@ -27,6 +27,10 @@
 
             </x-form>
 
+            @if (!is_null($uploadedIdentity) && $uploadedIdentity->status == 'pending')
+                <livewire:identity-view-component :uploaded-identity="$uploadedIdentity" />
+            @endif
+
         </div>
     </div>
 </div>

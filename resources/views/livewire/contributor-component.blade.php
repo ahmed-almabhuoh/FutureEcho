@@ -75,7 +75,14 @@
 
                                 @foreach ($contributors as $contributor)
                                     <tr>
-                                        <td>{{ $contributor->user->image }}</td>
+                                        <td>
+                                            @if ($contributor->user->image)
+                                                <div class="symbol symbol-50 symbol-lg-120">
+                                                    <img alt="{{ $contributor->user->name }}"
+                                                        src="{{ Storage::url($contributor->user->image) }}">
+                                                </div>
+                                            @endif
+                                        </td>
                                         <td> {{ $contributor->user->name }} </td>
                                         <td> {{ $contributor->user->email }} </td>
                                         <td> {{ $contributor->capsule->title }} </td>

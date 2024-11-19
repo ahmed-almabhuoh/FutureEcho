@@ -72,7 +72,14 @@
                                 @endphp
 
                                 <tr>
-                                    <td>{{ $legacy->image }}</td>
+                                    <td>
+                                        @if ($legacy->image)
+                                            <div class="symbol symbol-50 symbol-lg-120">
+                                                <img alt="{{ $legacy->name }}"
+                                                    src="{{ Storage::url($legacy->image) }}">
+                                            </div>
+                                        @endif
+                                    </td>
                                     <td> {{ $legacy->name }} </td>
                                     <td> {{ $legacy->email }} </td>
                                     <td> {{ Carbon\Carbon::parse(auth()->user()->legacy->created_at)->diffForHumans() }}
