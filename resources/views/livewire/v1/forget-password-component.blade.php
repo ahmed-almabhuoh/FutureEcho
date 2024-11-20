@@ -16,6 +16,9 @@
         @error('email')
             <small style="color: red">{{ $message }}</small>
         @enderror
+
+        <a href="{{ route('verified.account.reset') }}" class="font-weight-bold text-primary font-size-h4 ml-2"
+            id="kt_login_signup">{{ __('Verified Account?') }}</a>
     </div>
     <!--end::Form group-->
     <!--begin::Form group-->

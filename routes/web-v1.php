@@ -11,6 +11,7 @@ use App\Livewire\MemoriesComponent;
 use App\Livewire\MemoryReceiverComponent;
 use App\Livewire\NewMemoryComponent;
 use App\Livewire\ResetPasswordComponent;
+use App\Livewire\ResetVerifiedPasswordComponent;
 use App\Livewire\RestoreEmailComponent;
 use App\Livewire\TimelineComponent;
 use App\Livewire\V1\DashboardComponent;
@@ -29,6 +30,7 @@ Route::prefix('v1')->middleware(['guest:web'])->group(function () {
     Route::get('reset-password/{token?}', ResetPasswordComponent::class)->name('reset.password');
     Route::get('restore-email', RestoreEmailComponent::class)->name('forget.email');
     Route::get('show-forgotten-email/{email}', ShowRogottenEmailComponent::class)->name('show.forgotten.email');
+    Route::get('reset-from-verified-account', ResetVerifiedPasswordComponent::class)->name('verified.account.reset');
     Route::get('login', LoginComponent::class)->name('login');
 });
 
