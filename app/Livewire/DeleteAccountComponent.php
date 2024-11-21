@@ -14,7 +14,7 @@ class DeleteAccountComponent extends Component
     public function rules(): array
     {
         return [
-            'signature' => 'required|string|in:I ware about the when delete my account I cannot access to my content.',
+            'signature' => 'required|string|in:I ware about the when delete my account I cannot access to my content.,أنا على علم أنني بعد عملية حذف الحساب لن أستطيع الوصول الى محتوى حسابي',
         ];
     }
 
@@ -33,6 +33,11 @@ class DeleteAccountComponent extends Component
 
         User::where('id', auth()->id())->delete();
         return redirect(route('login'));
+    }
+
+    public function cancel()
+    {
+        return redirect(route('memories'));
     }
 
     public function render()

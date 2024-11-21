@@ -4,6 +4,7 @@ namespace App\Livewire\V1;
 
 use App\Models\User;
 use App\Notifications\NewLoginNotification;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
@@ -25,13 +26,13 @@ class LoginComponent extends Component
             'password' => $this->password,
         ];
 
-        // $user = User::where([
-        //     ['email', '=', $this->email],
-        // ])->select(['password', 'id'])->first();
+        $user = User::withTrashed()->where('email', '=', $credentials['email'])->first();
+        // Here should add a new condition, to check if the user has 30 days from delete action {Also you have to add a cron job to force delete the soft-deleted users}
+        if (!is_null($user->deleted_at)) {
+            $user->deleted_at = null;
+            $user->save();
+        }
 
-        // if (Hash::check($this->password, $user->password)) {
-        //     generate2FA($user->id);
-        // }
 
         if (Auth::attempt($credentials, false)) {
 
