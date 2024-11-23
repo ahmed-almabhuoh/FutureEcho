@@ -12,22 +12,22 @@ class MemoryReceiverComponent extends Component
     public $receivers = []; // Stores selected user IDs
     public $users = [];     // List of users to display in the dropdown
 
-    public function mount(Memory $memory)
+    public function mount($memory)
     {
-        $this->memory = $memory;
+        $this->memory = Memory::withoutGlobalScopes()->where('id', $memory)->first();
         $this->users = User::all(); // Load users (fetch emails and names)
     }
 
     public function addReceivers()
     {
-        // Save the selected receivers logic here
+        // Sync the selected receivers to the memory's receivers relationship
         $this->memory->receivers()->sync($this->receivers);
-        session()->flash('success', 'Receivers added successfully!');
+        session()->flash('message', 'Receivers added successfully!');
+        session()->flash('status', 500);
     }
 
     public function render()
     {
-        return view('livewire.memory-receiver-component')
-            ->title('Future Echo - Memory Receiver');
+        return view('livewire.memory-receiver-component')->title('Future Echo - Receivers');
     }
 }

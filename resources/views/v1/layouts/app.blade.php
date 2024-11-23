@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
 
 <!--begin::Head-->
 
@@ -28,6 +28,23 @@
     <!--begin::Layout Themes(used by all pages)-->
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="{{ asset('version-1/assets/media/logos/favicon.ico') }}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Cairo", serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings:
+                "slnt" 0;
+        }
+    </style>
 
     @stack('styles')
     @livewireStyles
