@@ -5,10 +5,12 @@ namespace App\Livewire;
 use App\Models\TwoFA;
 use App\Models\User;
 use App\Notifications\LegacyAddedNotification;
+use App\Notifications\SendPassKeyNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class ConfirmAddingLegacyComponent extends Component
 {
@@ -41,13 +43,21 @@ class ConfirmAddingLegacyComponent extends Component
     {
         $this->validate();
 
-        $legacy = Auth::user()->legacy;
+        $user = Auth::user();
+        $legacy = $user->legacy;
         $legacyUser = User::where('email', $legacy->email)->first();
         $code = TwoFA::where('user_id', $legacyUser->id)->first();
 
         if (Hash::check($this->twoFA, $code->code)) {
+
+            // Pass-key here
             $legacy->status = 'accepted';
+            $passKey = Str::random(35);
+            $legacy->pass_key = Hash::make($passKey);
+            info($passKey);
             $isSaved = $legacy->save();
+
+            $user->notify(new SendPassKeyNotification($user, $passKey));
 
             session()->flash('message', $isSaved ? 'Legacy added successfully' : 'Failed to add legacy, please tru again later!');
             session()->flash('status', $isSaved ? 200 : 500);

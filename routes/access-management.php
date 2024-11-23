@@ -8,6 +8,7 @@ use App\Livewire\CreateCapsuleComponent;
 use App\Livewire\IdentityVerificationComponent;
 use App\Livewire\LegacyIndexComponent;
 use App\Livewire\NewLegacyComponent;
+use App\Livewire\RecoverLegacyComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('new-legacy', NewLegacyComponent::class)->name('legacies.new');
@@ -22,3 +23,5 @@ Route::get('edit-capsule/{position?}/{capsule_id?}', CreateCapsuleComponent::cla
 Route::get('add-memory-to-capsule/{capsule_id?}', AddMemoryToCapsuleComponent::class)->name('memories.to.capsules');
 
 Route::get('contributor', ContributorComponent::class)->name('contributors');
+
+Route::get('recover-legacy', RecoverLegacyComponent::class)->name('legacies.recover');
