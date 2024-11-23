@@ -17,6 +17,8 @@
                     </div>
                 </div>
 
+                <x-alert />
+
                 <div class="card-body">
                     <table class="table table-bordered table-checkable" id="kt_datatable">
                         <thead>

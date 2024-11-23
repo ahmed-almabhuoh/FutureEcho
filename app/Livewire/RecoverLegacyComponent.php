@@ -17,7 +17,19 @@ class RecoverLegacyComponent extends Component
 {
     public $pass_key;
 
-    public function mount() {}
+    public function mount()
+    {
+        if (Legacy::withoutGlobalScopes()->where([
+            ['email', '=', auth()->user()->email],
+            ['status', '=', 'accepted'],
+            ['pass_key', '=', null],
+        ])->exists()) {
+            session()->flash('message', 'Legacy was stored before!');
+            session()->flash('status', 500);
+
+            return redirect(route('memories'));
+        }
+    }
 
     public function rules(): array
     {
