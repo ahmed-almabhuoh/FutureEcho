@@ -16,7 +16,7 @@
                 <div class="row">
                     <!-- Full Name Input -->
                     <x-input name="name" label="Full Name" :is-required="true" classes="col-xl-6"
-                        placeholder="Enter your name here" wire:model.defer="name" />
+                        placeholder="Enter your name here" wire:model.defer="name" :read-only="auth()->user()?->identity?->status == 'verified'" />
 
                     <!-- Email Input (Read-Only) -->
                     <x-input name="email" label="E-mail Address" :is-required="true" classes="col-xl-6"
