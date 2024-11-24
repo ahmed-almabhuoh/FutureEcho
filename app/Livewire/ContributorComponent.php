@@ -75,19 +75,11 @@ class ContributorComponent extends Component
                     'capsule_id' => $capsuleId,
                 ]);
 
-
-                // HERE IS A PROBLEM SHOULD BE SOLVED
                 ContributorPermission::create([
                     'permission' => $this->permission ?? 'r',
-                    'contributor_id' => $createdContributor->user_id,
+                    'contributor_id' => $createdContributor->id,
                     'capsule_id' => $capsuleId,
                 ]);
-
-                // DB::table('contributor_permissions')->insert([
-                //     'permission' => $this->permission ?? 'r',
-                //     'contributor_id' => $createdContributor->id,
-                //     'capsule_id' => $capsuleId,
-                // ]);
             }
         else {
             session()->flash('message', 'You have to select at least on capsule!');

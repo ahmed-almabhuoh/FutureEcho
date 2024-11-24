@@ -26,7 +26,7 @@
         @if ($slot != '')
             {!! $slot !!}
         @else
-            {!! $description !!}
+            {!! __($description) !!}
         @endif
 
     </div>

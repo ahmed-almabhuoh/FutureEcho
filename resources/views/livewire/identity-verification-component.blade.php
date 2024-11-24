@@ -5,7 +5,7 @@
             <x-index index="Management Access" category="Identity" sub-category="Identity Verification"
                 page="Uploading Identity" :category-link="route('identity.verification')" :sub-category-link="route('identity.verification')" :page-link="route('identity.verification')" />
 
-            @if ($uploadedIdentity->status == 'verified')
+            @if ($uploadedIdentity?->status == 'verified')
                 <livewire:identity-verified-component />
             @else
                 @if (auth()->user()->identity()->count() == 0)

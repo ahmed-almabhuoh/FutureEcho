@@ -42,7 +42,7 @@
                             @foreach ($memories as $memory)
                                 <tr>
                                     <td>{{ $memory->message }}</td>
-                                    <td>{{ $memory->capsule->title ?? 'No Capsule' }}</td>
+                                    <td>{{ $memory->capsule->title ?? __('No Capsule') }}</td>
                                     <td>
                                         @php
                                             $timeline = App\Models\TimeLine::where('memory_id', $memory->id)->first();
@@ -58,12 +58,6 @@
 
                                     <td>
                                         @foreach ($memory->medias as $mediaPath)
-                                            {{-- <a href="{{ route('memory.media', ['path' => basename($mediaPath)]) }}"
-                                                target="_blank"
-                                                class="btn btn-sm btn-light-primary font-weight-bold my-2">
-                                                {{ __('Download Media') }} {{ $loop->iteration }}
-                                            </a> --}}
-
                                             <a href="{{ route('memory.media', ['path' => basename($mediaPath)]) }}"
                                                 class="btn btn-outline-success my-2">
                                                 <span class="svg-icon">

@@ -11,7 +11,7 @@
             class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('email')
             is-invalid
         @enderror"
-            type="email" placeholder="Enter your email address to restore your password" name="email"
+            type="email" placeholder="{{ __('Enter your email address to restore your password') }}" name="email"
             wire:model="email" autocomplete="off" />
         @error('email')
             <small style="color: red">{{ $message }}</small>

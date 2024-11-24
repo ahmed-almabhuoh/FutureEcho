@@ -90,12 +90,12 @@
                                         <td>
                                             @foreach ($contributor->capsule->contributorPermission as $contributorLoopPermission)
                                                 @if (
-                                                    $contributorLoopPermission->contributor_id == $contributor->user_id &&
+                                                    $contributorLoopPermission->contributor_id == $contributor->id &&
                                                         $contributorLoopPermission->capsule_id == $contributor->capsule_id)
                                                     @if ($contributorLoopPermission->permission == 'w')
-                                                        R/W
+                                                        {{ __('R/W') }}
                                                     @else
-                                                        R
+                                                        {{ __('R') }}
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -132,7 +132,7 @@
                             </tbody>
                         </table>
 
-                        <x-modal title="Delete Capsule" description="Are you sure you need to delete your legacy?!"
+                        <x-modal title="Remove Contributor" description="Are you sure you need to delete your legacy?!"
                             submit-action="delete" submit-text="Delete" />
 
                         <!--end: Datatable-->

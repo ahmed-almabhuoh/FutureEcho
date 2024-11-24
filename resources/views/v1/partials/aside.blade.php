@@ -102,7 +102,7 @@
                             <!--end::Svg Icon-->
                         </span>
                         <span class="menu-text">
-                            {{ __('Identiry Verification') }}
+                            {{ __('Identity Verification') }}
                         </span>
                     </a>
                 </li>
@@ -267,7 +267,7 @@
                 </li>
 
                 <li class="menu-section">
-                    <h4 class="menu-text"> {{ __('Account Setting - AS -') }} </h4>
+                    <h4 class="menu-text"> {{ __('Account Settings - AS -') }} </h4>
                     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                 </li>
 
@@ -290,7 +290,7 @@
                             <!--end::Svg Icon-->
                         </span>
                         <span class="menu-text">
-                            {{ __('Settings') }}
+                            {{ __('General Settings') }}
                         </span>
                     </a>
                 </li>

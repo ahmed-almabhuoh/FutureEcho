@@ -104,11 +104,11 @@
                                 </div>
                             </div>
 
-                            <x-auth-input label="Full Name" name="name" :activate-old="true" />
+                            <x-auth-input label="Full Name" name="name" :activate-old="true" placeholder="Enter your full name" />
 
                             <x-auth-input label="Phone" name="phone" placeholder="+61412345678" :activate-old="true" />
 
-                            <x-auth-input label="Email" name="email" type="email" :activate-old="true" />
+                            <x-auth-input label="Email" name="email" type="email" :activate-old="true" placeholder="Enter the email address" />
 
                         </div>
                     @endif
@@ -147,7 +147,7 @@
                                     {{ __('Complete Your Signup And Become A Member!') }} </div>
                             </div>
 
-                            <h4 class="font-weight-bolder mb-3"> {{ __('Personal Ifno') }} </h4>
+                            <h4 class="font-weight-bolder mb-3"> {{ __('Personal Info') }} </h4>
                             <div class="text-dark-50 font-weight-bold line-height-lg mb-8">
                                 <div>{{ $name }}</div>
                                 <div> {{ $phone }} </div>
@@ -186,7 +186,7 @@
                                             </g>
                                         </svg>
                                         <!--end::Svg Icon-->
-                                    </span>{{ __('Previous') }}
+                                    </span>{{ __('Pervious') }}
                                 </button>
                             </div>
                         @endif

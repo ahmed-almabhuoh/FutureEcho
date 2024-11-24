@@ -14,15 +14,15 @@
             class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('name')
             is-invalid
         @enderror"
-            type="text" placeholder="Enter your email as it's typed in your identity" name="name" wire:model="name"
-            autocomplete="off" />
+            type="text" placeholder="{{ __('Enter your name as it\'s typed in your identity') }}" name="name"
+            wire:model="name" autocomplete="off" />
         @error('name')
             <small style="color: red">{{ $message }}</small>
         @enderror
     </div>
 
     <div class="form-group">
-        <label> {{ __('File Browser') }} </label>
+        <label> {{ __('Upload Identity') }} </label>
         <div></div>
         <div class="custom-file">
             <input type="file" class="custom-file-input @error('identity')

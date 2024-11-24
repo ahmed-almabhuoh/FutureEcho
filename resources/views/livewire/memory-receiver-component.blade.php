@@ -10,17 +10,17 @@
                 <x-alert />
 
                 <div class="form-group row">
-                    <label class="col-form-label text-right col-lg-3 col-sm-12">Receivers</label>
-                    <div class="col-lg-9 col-md-9 col-sm-12">
-                        <select id="kt_select2_3_modal" name="receivers[]" multiple="multiple" wire:model="receivers"
-                            class="form-control">
+                    <label class="col-form-label text-right col-lg-3 col-sm-12"> {{ __('Receivers') }} </label>
+
+                    <select id="js-example-basic-hide-search-multi" wire:ingore
+                        class="js-states form-control select2-hidden-accessible" style="width: 50%;" multiple="">
+                        <optgroup label="{{ __('Users') }}">
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}" data-name="{{ $user->name }}">
-                                    {{ $user->email }}
-                                </option>
+                                <option value="{{ $user->email }}">{{ $user->name }}</option>
                             @endforeach
-                        </select>
-                    </div>
+                        </optgroup>
+                    </select>
+
                 </div>
             </x-form>
         </div>
@@ -28,40 +28,32 @@
 </div>
 
 @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/css/tom-select.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
+        $('#js-example-basic-hide-search-multi').select2();
+
+        // Initialize select2 when the page loads
         document.addEventListener('livewire:load', function() {
-            // Initialize Tom Select for multi-select with search by email
-            const selectElement = document.getElementById('kt_select2_3_modal');
+            $('#js-example-basic-hide-search-multi').select2();
+        });
 
-            new TomSelect(selectElement, {
-                placeholder: 'Select receivers by email',
-                valueField: 'value', // The value (user id) that will be selected
-                labelField: 'label', // The name (user name) that will be displayed
-                searchField: ['email', 'name'], // Searchable fields (email and name)
-                plugins: ['remove_button'], // Enable remove button for selected items
-                create: false, // Disable creating new options
-                maxItems: null, // No limit on the number of selected items
-                render: {
-                    option: function(data, escape) {
-                        return `<div>${escape(data.email)} (${escape(data.name)})</div>`;
-                    },
-                    item: function(data, escape) {
-                        return `<div class="d-flex justify-content-between">
-                                    <span>${escape(data.name)}</span>
-                                    <span>${escape(data.email)}</span>
-                                </div>`;
-                    }
-                }
-            });
+        // Reinitialize select2 when Livewire updates the DOM
+        // Livewire.on('select2Updated', () => {
+        //     alert($('#js-example-basic-hide-search-multi').select2());
+        //     $('#js-example-basic-hide-search-multi').select2();
+        // });
 
-            // Sync with Livewire model
-            selectElement.addEventListener('change', function() {
-                @this.set('receivers', Array.from(this.selectedOptions).map(option => option.value));
+        // Disable search field during opening and closing to enhance UX
+        $('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function(event) {
+            var $searchfield = $(this).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+            Livewire.dispatch('select2Updated', {
+                receivers: $('#js-example-basic-hide-search-multi').select2('data')
             });
         });
     </script>

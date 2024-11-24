@@ -16,7 +16,7 @@
                     class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('name')
                 is-invalid
             @enderror"
-                    type="text" placeholder="Enter your account name" name="name" wire:model="name"
+                    type="text" placeholder="{{ __('Enter your account name') }}" name="name" wire:model="name"
                     autocomplete="off" />
                 @error('name')
                     <small style="color: red">{{ $message }}</small>
@@ -54,7 +54,7 @@
                     class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('lastPassword')
                 is-invalid
             @enderror"
-                    type="password" placeholder="Enter your last password you remember" name="lastPassword"
+                    type="password" placeholder="{{ __('Enter your last password you remember') }}" name="lastPassword"
                     wire:model="lastPassword" autocomplete="off" />
                 @error('lastPassword')
                     <small style="color: red">{{ $message }}</small>

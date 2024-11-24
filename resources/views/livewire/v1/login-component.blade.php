@@ -28,9 +28,10 @@
         <!--begin::Top-->
         <div class="text-right d-flex justify-content-center">
             <div class="top-signin text-right d-flex justify-content-end pt-5 pb-lg-0 pb-10">
-                <span class="font-weight-bold text-muted font-size-h4">Having issues?</span>
-                <a href="javascript:;" class="font-weight-bold text-primary font-size-h4 ml-2" id="kt_login_signup">Get
-                    Help</a>
+                <span class="font-weight-bold text-muted font-size-h4"> {{ __('Having issues?') }} </span>
+                <a href="javascript:;" class="font-weight-bold text-primary font-size-h4 ml-2" id="kt_login_signup">
+                    {{ __('Get Help') }}
+                </a>
             </div>
         </div>
         <!--end::Top-->
