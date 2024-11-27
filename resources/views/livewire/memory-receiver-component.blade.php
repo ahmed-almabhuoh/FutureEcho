@@ -9,16 +9,14 @@
             <x-form title="Receivers" submit-action="addReceivers" cancel-action="cancel" :classes="'col-xl-12'">
                 <x-alert />
 
-                <div class="form-group row">
-                    <label class="col-form-label text-right col-lg-3 col-sm-12"> {{ __('Receivers') }} </label>
+                <div class="form-group row" wire:ignore>
 
-                    <select id="js-example-basic-hide-search-multi" wire:ingore
-                        class="js-states form-control select2-hidden-accessible" style="width: 50%;" multiple="">
-                        <optgroup label="{{ __('Users') }}">
-                            @foreach ($users as $user)
-                                <option value="{{ $user->email }}">{{ $user->name }}</option>
-                            @endforeach
-                        </optgroup>
+                    <label class="col-form-label text-right col-lg-3 col-sm-12"> {{ __('Receivers') }} </label>
+                    <select name="receivers" id="receivers" class="form-control" multiple style="width: 50%;">
+                        @foreach ($users as $user)
+                            <option value="{{ $user->email }}" @if (in_array($user->email, $emails)) selected @endif>
+                                {{ $user->name }}</option>
+                        @endforeach
                     </select>
 
                 </div>
@@ -35,12 +33,12 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-        $('#js-example-basic-hide-search-multi').select2();
+        $('#receivers').select2();
 
         // Initialize select2 when the page loads
-        document.addEventListener('livewire:load', function() {
-            $('#js-example-basic-hide-search-multi').select2();
-        });
+        // document.addEventListener('livewire:load', function() {
+        //     $('#js-example-basic-hide-search-multi').select2();
+        // });
 
         // Reinitialize select2 when Livewire updates the DOM
         // Livewire.on('select2Updated', () => {
@@ -49,12 +47,21 @@
         // });
 
         // Disable search field during opening and closing to enhance UX
-        $('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function(event) {
+        // $('#receivers').on('select2:opening select2:closing', function(event) {
+        $('#receivers').on('select2:closing', function(event) {
             var $searchfield = $(this).parent().find('.select2-search__field');
             $searchfield.prop('disabled', true);
-            Livewire.dispatch('select2Updated', {
-                receivers: $('#js-example-basic-hide-search-multi').select2('data')
-            });
+            // console.log($('#receivers').select2('data').length);
+            // Livewire.dispatch('select2Updated', $('#js-example-basic-hide-search-multi').select2('data'));
+
+            // console.log($('#js-example-basic-hide-search-multi').select2('data'));
+            if ($('#receivers').select2('data').length >= 1) {
+                Livewire.dispatch('select2Updated', {
+                    'receivers': $('#receivers').select2('data')
+                });
+            }
+
+            // console.log(json_encode($('#js-example-basic-hide-search-multi').select2('data')));
         });
     </script>
 @endpush
