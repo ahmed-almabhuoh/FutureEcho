@@ -11,6 +11,8 @@ class Message extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = [];
+
     // Relations
     public function memory(): BelongsTo
     {

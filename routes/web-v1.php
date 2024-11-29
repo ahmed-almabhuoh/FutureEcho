@@ -13,6 +13,7 @@ use App\Livewire\NewMemoryComponent;
 use App\Livewire\ResetPasswordComponent;
 use App\Livewire\ResetVerifiedPasswordComponent;
 use App\Livewire\RestoreEmailComponent;
+use App\Livewire\SequenceMessagesComponent;
 use App\Livewire\TimelineComponent;
 use App\Livewire\V1\DashboardComponent;
 use App\Livewire\V1\Enter2FAComponent;
@@ -48,6 +49,9 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
     Route::get('memories', MemoriesComponent::class)->name('memories');
     Route::get('timeline', TimelineComponent::class)->name('memories.timeline');
     Route::get('memory-receivers/{memory}', MemoryReceiverComponent::class)->name('memories.receivers');
+
+    // Sequence Messages
+    Route::get('sequence-msgs/{memory}', SequenceMessagesComponent::class)->name('memories.seq.msgs');
 
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
     Route::get('logout', [AuthenticationController::class, 'logoutGet'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');

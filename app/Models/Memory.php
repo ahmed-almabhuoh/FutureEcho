@@ -28,8 +28,13 @@ class Memory extends Model
     protected static function booted()
     {
         static::addGlobalScope(function ($query) {
-            if (auth()->check())
-                $query->where('user_id', auth()->id());
+            if (auth()->check()) {
+                $query->where('user_id', auth()->id())->orWhereHas('capsule', function ($query) {
+                    $query->whereHas('contributors', function ($query) {
+                        $query->where('user_id', auth()->id());
+                    });
+                });
+            }
         });
 
         static::created(function ($memory) {
