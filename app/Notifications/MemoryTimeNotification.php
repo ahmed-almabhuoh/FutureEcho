@@ -12,15 +12,17 @@ class MemoryTimeNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    protected $user;
+    protected $memory;
+
     /**
      * Create a new notification instance.
      */
     public function __construct($user, $memory_id)
     {
         $this->onQueue('memories');
-        //
-        info($user);
-        info(Memory::findOrFail($memory_id));
+        $this->user = $user;
+        $this->memory = Memory::findOrFail($memory_id);
     }
 
     /**
@@ -39,20 +41,26 @@ class MemoryTimeNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Your Memory Time Has Arrived!')
+            ->greeting('Hello, ' . $this->user->name)
+            ->line('It is time to revisit a memory you saved.')
+            ->line('Memory Title: ' . $this->memory->title)
+            ->action('View Memory', route('memories.receivers', $this->memory->id))
+            ->line('Thank you for using Future Echo to save your precious moments!');
     }
 
     /**
-     * Get the array representation of the notification.
+     * Get the array representation of the notification for database storage.
      *
      * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'memory_id' => $this->memory->id,
+            'memory_title' => $this->memory->title,
+            'user_id' => $this->user->id,
+            'notification_time' => now(),
         ];
     }
 }
