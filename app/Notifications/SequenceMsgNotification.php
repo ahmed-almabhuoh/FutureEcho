@@ -13,17 +13,18 @@ class SequenceMsgNotification extends Notification implements ShouldQueue
 
     public $user;
     public $memory;
+    public $message;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($user, $memory)
+    public function __construct($user, $memory, $message)
     {
-        //
         $this->onQueue('memories-msg');
 
         $this->user = $user;
         $this->memory = $memory;
+        $this->message = $message;
     }
 
     /**
@@ -42,20 +43,25 @@ class SequenceMsgNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
+            ->subject('Notification Reminder')
+            ->greeting('Hello, ' . $this->user->name)
+            ->line($this->message->message)
+            ->action('View Memory Details', route('memories.seq.msgs', ['memory' => $this->memory->id]))
             ->line('Thank you for using our application!');
     }
 
     /**
-     * Get the array representation of the notification.
+     * Get the array representation of the notification for database storage.
      *
      * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'user_id' => $this->user->id,
+            'memory_id' => $this->memory->id,
+            'message' => $this->message,
+            'timestamp' => now(),
         ];
     }
 }

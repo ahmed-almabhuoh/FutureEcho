@@ -47,7 +47,7 @@ class FireSequenceMsgsCommand extends Command
                         if (((int)Carbon::parse($from)->diffInDays($now)) == $msg->before) {
                             $user = User::findOrFail($user_id);
                             $memory = Memory::findOrFail($memory_id);
-                            $user->notify(new SequenceMsgNotification($user, $memory));
+                            $user->notify(new SequenceMsgNotification($user, $memory, $msg));
 
                             $capsule = $memory->capsule;
 
@@ -56,7 +56,7 @@ class FireSequenceMsgsCommand extends Command
                                 $users = User::whereIn('id', $user_ids)->get();
 
                                 foreach ($users as $user) {
-                                    $user->notify(new SequenceMsgNotification($user, $memory));
+                                    $user->notify(new SequenceMsgNotification($user, $memory, $msg));
                                 }
                             }
                         }
