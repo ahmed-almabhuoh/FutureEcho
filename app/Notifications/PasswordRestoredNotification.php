@@ -12,12 +12,17 @@ class PasswordRestoredNotification extends Notification implements ShouldQueue
     use Queueable;
 
     /**
+     * The name of the user.
+     */
+    public string $name;
+
+    /**
      * Create a new notification instance.
      */
-    public function __construct(public string $name)
+    public function __construct(string $name)
     {
-        //
         $this->onQueue('auth');
+        $this->name = $name;
     }
 
     /**
@@ -27,8 +32,7 @@ class PasswordRestoredNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        // return ['database', 'mail'];
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -37,9 +41,12 @@ class PasswordRestoredNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('Password Restored Successfully')
+            ->greeting('Hello, ' . $this->name)
+            ->line('We are notifying you that your password has been successfully restored.')
+            ->line('If you did not perform this action, please contact our support team immediately.')
+            ->action('Visit Our Website', config('app.url'))
+            ->line('Thank you for trusting us!');
     }
 
     /**
@@ -50,8 +57,9 @@ class PasswordRestoredNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            //
-            'body' => $this->name . ' your password was restored successfully',
+            'message' => 'Your password was restored successfully.',
+            'name' => $this->name,
+            'timestamp' => now(),
         ];
     }
 }
