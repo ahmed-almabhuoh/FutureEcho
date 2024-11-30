@@ -26,8 +26,7 @@
             <!--end::Aside Toggle-->
             <!--begin::Logo-->
             <a href="index.html">
-                <img alt="Logo" src="{{ asset('version-1/assets/media/logos/logo-letter-1.png') }}"
-                    class="logo-sticky max-h-35px" />
+                <img alt="Logo" src="{{ Storage::url($websiteSettings->logo) }}" class="logo-sticky max-h-35px" />
             </a>
             <!--end::Logo-->
             <!--begin::Desktop Search-->
@@ -89,7 +88,8 @@
                         <span class="svg-icon svg-icon-lg">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
                             @if (auth()->user()->image)
-                                <img src="{{ Storage::url(auth()->user()->image) }}" style="width: 25px; height: 25px;" alt="{{ auth()->user()->name }}">
+                                <img src="{{ Storage::url(auth()->user()->image) }}" style="width: 25px; height: 25px;"
+                                    alt="{{ auth()->user()->name }}">
                             @else
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

@@ -5,7 +5,7 @@
         <div class="d-flex flex-column-auto flex-column pt-15 px-30">
             <!--begin::Aside header-->
             <a href="#" class="login-logo py-6">
-                <img src="{{ asset('version-1/assets/media/logos/logo-1.png') }}" class="max-h-70px" alt="" />
+                <img src="{{ Storage::url($websiteSettings->logo) }}" class="max-h-70px" alt="" />
             </a>
             <!--end::Aside header-->
             <!--begin: Wizard Nav-->
@@ -104,11 +104,13 @@
                                 </div>
                             </div>
 
-                            <x-auth-input label="Full Name" name="name" :activate-old="true" placeholder="Enter your full name" />
+                            <x-auth-input label="Full Name" name="name" :activate-old="true"
+                                placeholder="Enter your full name" />
 
                             <x-auth-input label="Phone" name="phone" placeholder="+61412345678" :activate-old="true" />
 
-                            <x-auth-input label="Email" name="email" type="email" :activate-old="true" placeholder="Enter the email address" />
+                            <x-auth-input label="Email" name="email" type="email" :activate-old="true"
+                                placeholder="Enter the email address" />
 
                         </div>
                     @endif

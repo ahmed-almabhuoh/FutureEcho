@@ -27,7 +27,8 @@
     <!--end::Global Theme Styles-->
     <!--begin::Layout Themes(used by all pages)-->
     <!--end::Layout Themes-->
-    <link rel="shortcut icon" href="{{ asset('version-1/assets/media/logos/favicon.ico') }}" />
+    {{-- {{ dd($websiteSettings) }} --}}
+    <link rel="shortcut icon" href="{{ Storage::url($websiteSettings->logo) }}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
