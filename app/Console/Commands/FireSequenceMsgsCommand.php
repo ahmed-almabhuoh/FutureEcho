@@ -2,7 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Contributor;
 use App\Models\Memory;
+use App\Models\Message;
+use App\Models\TimeLine;
+use App\Models\User;
+use App\Notifications\SequenceMsgNotification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -28,20 +33,36 @@ class FireSequenceMsgsCommand extends Command
     public function handle()
     {
         //
-        $memories = Memory::with('messages')->get();
+        $memory_ids = Memory::withoutGlobalScopes()->select(['id', 'user_id'])->get()->pluck('id', 'user_id')->toArray();
 
-        foreach ($memories as $memory) {
-            $timeline = $memory->timeline;
+        foreach ($memory_ids as $user_id => $memory_id) {
+            $timeline = TimeLine::where('memory_id', $memory_id)->first();
+            if (!is_null($timeline)) {
+                $from = $timeline->from;
+                $now = Carbon::now();
+                if ($now >= $from) {
+                    $msgs = Message::where('memory_id', $memory_id)->get();
 
-            // if (!is_null($timeline)) {
-            //     $now = Carbon::now()->format('m-d');
-            //     $from = Carbon::parse($timeline->from)->format('m-d');
-            //     $to = Carbon::parse($timeline->to)->format('m-d');
+                    foreach ($msgs as $msg) {
+                        if (((int)Carbon::parse($from)->diffInDays($now)) == $msg->before) {
+                            $user = User::findOrFail($user_id);
+                            $memory = Memory::findOrFail($memory_id);
+                            $user->notify(new SequenceMsgNotification($user, $memory));
 
-            //     if ($now >= $from && $now <= $to) {
+                            $capsule = $memory->capsule;
 
-            //     }
-            // }
+                            if (!is_null($capsule)) {
+                                $user_ids = Contributor::where('capsule_id', $capsule->id)->select(['user_id'])->get()->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $user_ids)->get();
+
+                                foreach ($users as $user) {
+                                    $user->notify(new SequenceMsgNotification($user, $memory));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
