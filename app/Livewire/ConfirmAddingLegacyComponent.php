@@ -59,7 +59,7 @@ class ConfirmAddingLegacyComponent extends Component
 
             $user->notify(new SendPassKeyNotification($user, $passKey));
 
-            session()->flash('message', $isSaved ? 'Legacy added successfully' : 'Failed to add legacy, please tru again later!');
+            session()->flash('message', $isSaved ? 'Legacy added successfully' : 'Failed to add legacy, please try again later!');
             session()->flash('status', $isSaved ? 200 : 500);
 
             return redirect(route('legacy'));

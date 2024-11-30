@@ -74,7 +74,7 @@
                         </tbody>
                     </table>
 
-                    <x-modal title="Delete Memory" description="Are you sure you want to delete this memory?"
+                    <x-modal title="Delete Message" description="Are you sure you want to delete this message?"
                         submit-action="delete" submit-text="Delete" />
                 </div>
 

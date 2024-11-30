@@ -15,7 +15,7 @@
                 class="form-control h-auto py-7 px-6 border-0 rounded-lg font-size-h6 @error('twoFA')
                 is-invalid
             @enderror"
-                type="number" placeholder="Enter the 2FA code here" name="twoFA" wire:model="twoFA"
+                type="number" placeholder="{{ __('Enter the 2FA code here') }}" name="twoFA" wire:model="twoFA"
                 autocomplete="off" />
             @error('twoFA')
                 <small style="color: red">{{ $message }}</small>

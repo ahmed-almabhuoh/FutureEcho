@@ -302,7 +302,7 @@
                     ])->first();
                 @endphp
 
-                @if (is_null($legacy))
+                @if (! is_null($legacy))
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ route('legacies.recover') }}" class="menu-link">
                             <span class="svg-icon menu-icon">
