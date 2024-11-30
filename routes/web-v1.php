@@ -56,3 +56,7 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
     Route::post('logout', [AuthenticationController::class, 'logout'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
     Route::get('logout', [AuthenticationController::class, 'logoutGet'])->withoutMiddleware(Check2FAMiddelware::class)->name('logout');
 });
+
+Route::get('/', function () {
+    return view('layouts.home');
+});
