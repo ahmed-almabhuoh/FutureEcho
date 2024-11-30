@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Capsule;
 use App\Models\Contributor;
 use App\Models\Memory;
 use App\Models\Message;
@@ -37,34 +38,27 @@ class CheckMemoryCommand extends Command
         //
         $memory_ids = Memory::withoutGlobalScopes()->select(['id', 'user_id'])->get()->pluck('id', 'user_id')->toArray();
 
-        // foreach ($memory_ids as $user_id => $memory_id) {
-        //     $timeline = TimeLine::where('memory_id', $memory_id)->first();
-        //     if (!is_null($timeline)) {
-        //         $from = $timeline->from;
-        //         $now = Carbon::now();
-        //         if ($now >= $from) {
-        //             $msgs = Message::where('memory_id', $memory_id)->get();
+        foreach ($memory_ids as $user_id => $memory_id) {
+            $timeline = TimeLine::where('memory_id', $memory_id)->first();
 
-        //             foreach ($msgs as $msg) {
-        //                 if (((int)Carbon::parse($from)->diffInDays($now)) == $msg->before) {
-        //                     $user = User::findOrFail($user_id);
-        //                     $memory = Memory::findOrFail($memory_id);
-        //                     $user->notify(new SequenceMsgNotification($user, $memory));
+            if (! is_null($timeline)) {
+                $from = Carbon::parse($timeline->from)->format('m-d');
+                $to = Carbon::parse($timeline->to)->format('m-d');
+                $now = Carbon::now()->format('m-d');
 
-        //                     $capsule = $memory->capsule;
+                if ($from <= $now && $to >= $now) {
+                    $user = User::findOrFail($user_id);
+                    $user->notify(new MemoryTimeNotification($user, $memory_id));
 
-        //                     if (!is_null($capsule)) {
-        //                         $user_ids = Contributor::where('capsule_id', $capsule->id)->select(['user_id'])->get()->pluck('user_id')->toArray();
-        //                         $users = User::whereIn('id', $user_ids)->get();
+                    $capsule = Capsule::where('id', Memory::where('id', $memory_id)->select(['capsule_id'])->first()?->capsule_id)->first();
+                    if (!is_null($capsule)) {
+                        $users =  User::whereIn('id', Contributor::where('capsule_id', $capsule->id)->select(['user_id'])->get()->pluck('user_id')->toArray())->get();
 
-        //                         foreach ($users as $user) {
-        //                             $user->notify(new SequenceMsgNotification($user, $memory));
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+                        foreach ($users as $user)
+                            $user->notify(new MemoryTimeNotification($user, $memory_id));
+                    }
+                }
+            }
+        }
     }
 }
