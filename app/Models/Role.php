@@ -18,6 +18,7 @@ class Role extends Model
     protected $fillable = [
         'role_ar',
         'role_en',
+        'user_group_id',
         'deleted_at',
         'updated_at',
         'created_at',
@@ -27,7 +28,7 @@ class Role extends Model
     // Relations
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_roles', 'user_id', 'role_id');
+        return $this->belongsToMany(User::class, 'user_roles', 'role_id', 'user_id');
     }
 
     public function permissions(): BelongsToMany

@@ -17,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoleResource extends Resource
@@ -41,6 +42,28 @@ class RoleResource extends Resource
     {
         return __('Roles');
     }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-role');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-role');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-role');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-roles');
+    }
+
+
 
     public static function form(Form $form): Form
     {

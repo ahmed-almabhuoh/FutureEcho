@@ -14,6 +14,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SettingResource extends Resource
@@ -43,7 +44,27 @@ class SettingResource extends Resource
 
     public static function canCreate(): bool
     {
-        return ! Setting::count() == 1;
+        return (! Setting::count() == 1 && checkAuthority('create-website-configuration'));
+    }
+
+    // public static function canCreate(): bool
+    // {
+    //     return checkAuthority('create-capsule');
+    // }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-website-configuration');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-website-configuration');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-website-configurations');
     }
 
     public static function form(Form $form): Form
@@ -92,7 +113,7 @@ class SettingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
-                ->label('Logo'),
+                    ->label('Logo'),
 
                 Tables\Columns\ToggleColumn::make('sign_up')
                     ->label(__('Sign up')),
@@ -104,8 +125,7 @@ class SettingResource extends Resource
                     ->label(__('Maintenance Mode')),
                 //
             ])
-            ->filters([
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),

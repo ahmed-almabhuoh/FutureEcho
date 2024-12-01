@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Model;
 
 class ResetVerifiedPasswordComponentResource extends Resource
 {
@@ -38,6 +39,26 @@ class ResetVerifiedPasswordComponentResource extends Resource
     public static function getLabel(): ?string
     {
         return __('Reset Password REQ.');
+    }
+
+    // public static function canCreate(): bool
+    // {
+    //     return checkAuthority('create-create-reset-password-request');
+    // }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-reset-password-request');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-reset-password-request');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-reset-password-requests');
     }
 
     public static function form(Forms\Form $form): Forms\Form

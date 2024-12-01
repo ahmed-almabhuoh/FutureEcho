@@ -15,6 +15,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 
 class PermissionResource extends Resource
 {
@@ -40,6 +41,26 @@ class PermissionResource extends Resource
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-no-symbol';
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-permission');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-permission');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-permission');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-permissions');
+    }
 
     public static function form(Forms\Form $form): Forms\Form
     {

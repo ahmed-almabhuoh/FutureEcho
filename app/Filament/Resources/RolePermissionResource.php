@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class RolePermissionResource extends Resource
 {
@@ -38,6 +39,26 @@ class RolePermissionResource extends Resource
     public static function getLabel(): ?string
     {
         return __('Assign Permissions');
+    }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-assign-permission');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-assign-permission');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-assign-permission');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-assign-permissions');
     }
 
     public static function form(Form $form): Form

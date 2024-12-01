@@ -24,6 +24,26 @@ class ContactResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope-open';
 
+    // public static function canCreate(): bool
+    // {
+    //     return checkAuthority('create-capsule');
+    // }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-contact-request');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-contact-request');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-contact-requests');
+    }
+
 
     public static function getNavigationGroup(): ?string
     {
@@ -159,8 +179,8 @@ class ContactResource extends Resource
         return false;
     }
 
-    public static function canEdit(Model $record): bool
-    {
-        return true;
-    }
+    // public static function canEdit(Model $record): bool
+    // {
+    //     return true;
+    // }
 }

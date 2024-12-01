@@ -18,6 +18,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LegacyResource extends Resource
@@ -43,6 +44,26 @@ class LegacyResource extends Resource
     public static function getLabel(): ?string
     {
         return __('Legacy');
+    }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-legacy');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-legacy');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-legacy');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-legacies');
     }
 
     public static function form(Form $form): Form

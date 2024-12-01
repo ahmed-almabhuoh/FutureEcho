@@ -17,6 +17,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 
 class UserGroupResource extends Resource
 {
@@ -41,6 +42,26 @@ class UserGroupResource extends Resource
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-user-group');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-user-group');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-user-group');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-user-groups');
+    }
 
     public static function form(Forms\Form $form): Forms\Form
     {

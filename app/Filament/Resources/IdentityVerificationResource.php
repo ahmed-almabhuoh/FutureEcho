@@ -20,6 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class IdentityVerificationResource extends Resource
@@ -46,6 +47,26 @@ class IdentityVerificationResource extends Resource
     }
 
     protected static ?int $navigationSort = 1;
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-verification-request');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-verification-request');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-verification-request');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-verification-request');
+    }
 
     public static function form(Form $form): Form
     {

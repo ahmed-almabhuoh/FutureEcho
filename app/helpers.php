@@ -1,12 +1,15 @@
 <?php
 
 use App\Models\Memory;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\TimeLine;
 use App\Models\Token;
 use App\Models\TwoFA;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -96,5 +99,40 @@ if (! function_exists('getTimeline')) {
     {
         $timeline = TimeLine::findOrFail($id);
         return !is_null($timeline->to) ? (Carbon::parse($timeline->from)->format('M/d/Y') . ' - ' . Carbon::parse($timeline->to)->format('M/d/Y')) : Carbon::parse($timeline->from)->format('M/d/Y');
+    }
+}
+
+if (! function_exists('unsluging')) {
+    function unsluging($str): string
+    {
+        $array = explode('-', $str);
+        $fullStr = '';
+        foreach ($array as $key => $value) {
+            $fullStr .= ' ' . ucfirst($value);
+        }
+        return trim($fullStr);
+    }
+}
+
+if (! function_exists('checkAuthority')) {
+    function checkAuthority($permission)
+    {
+        $permissionObject = Permission::where('name_en', unsluging($permission))->first();
+
+        if (is_null($permissionObject))
+            return false;
+
+        $roles = auth()->user()->roles;
+        if (count($roles))
+            foreach ($roles as $role)
+                if (DB::table('role_permissions')->where([
+                    ['role_id', '=', $role->id],
+                    ['permission_id', '=', $permissionObject->id],
+                ])->exists())
+                    return 1;
+                else
+                    return false;
+        else
+            return false;
     }
 }

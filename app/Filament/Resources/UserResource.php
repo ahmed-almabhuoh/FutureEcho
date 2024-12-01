@@ -31,6 +31,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Expr\Ternary;
 use Illuminate\Support\Str;
@@ -58,6 +59,26 @@ class UserResource extends Resource
     public static function getLabel(): ?string
     {
         return __('Users');
+    }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-user');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-user');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-user');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-users');
     }
 
     public static function form(Form $form): Form

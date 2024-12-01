@@ -18,6 +18,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContributorPermissionResource extends Resource
@@ -42,6 +43,26 @@ class ContributorPermissionResource extends Resource
     public static function getLabel(): ?string
     {
         return __('Contributor Permissions');
+    }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-contributor-permission');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-contributor-permission');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-contributor-permission');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-contributor-permissions');
     }
 
     public static function form(Form $form): Form

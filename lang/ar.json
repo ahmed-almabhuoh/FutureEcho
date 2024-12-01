@@ -346,7 +346,11 @@
     "inactive": "غير نشط",
     "Roles": "الأدوار",
     "User Groups": "مجموعات المستخدمين",
-    "Ahmad": "",
+    "All of Users use Future Echo System": "كل المستخدمين الذين يستخدمون نظام صدى المستقبل",
+    "Memories that users added, and how traffic in our system deal": "الذكريات التي أضافها المستخدمون, والتي تعبّر عن مدى الضغط على النظام",
+    "Total of the capsules in Future Echo": "عدد الكبسولات المنشئة في صدى المستقبل",
+    "Total of the contributors in user's capsules": "عدد المساهمون في كبسولات المستخدمين",
+    "Total of receivers which receive notification per day": "عدد المستقبلون الذين يستقبلون إشعارات يومياً",
     "Ahmad": "",
     "": ""
 }

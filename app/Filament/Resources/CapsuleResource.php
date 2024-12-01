@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CapsuleResource extends Resource
@@ -35,6 +36,26 @@ class CapsuleResource extends Resource
     public static function getLabel(): ?string
     {
         return __('Capsules');
+    }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-capsule');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-capsule');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-capsule');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-capsules');
     }
 
     public static function form(Form $form): Form

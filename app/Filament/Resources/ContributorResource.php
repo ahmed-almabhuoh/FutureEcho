@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContributorResource extends Resource
@@ -39,6 +40,28 @@ class ContributorResource extends Resource
     {
         return __('Contributors');
     }
+
+    public static function canCreate(): bool
+    {
+        return checkAuthority('create-contributor');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return checkAuthority('edit-contributor');
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return checkAuthority('delete-contributor');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return checkAuthority('read-contributors');
+    }
+
+
 
     public static function form(Form $form): Form
     {
