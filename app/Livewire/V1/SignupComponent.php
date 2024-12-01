@@ -2,6 +2,7 @@
 
 namespace App\Livewire\V1;
 
+use App\Models\Setting;
 use App\Models\User;
 use App\Notifications\NewLoginNotification;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,10 @@ class SignupComponent extends Component
 
     public function mount()
     {
+        $settings = Setting::first();
+        if (! $settings->sign_up)
+            abort(403);
+
         $this->personalInfo = true;
         $this->accountSettings = false;
     }

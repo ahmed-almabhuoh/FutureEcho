@@ -2,6 +2,7 @@
 
 namespace App\Livewire\V1;
 
+use App\Models\Setting;
 use App\Models\User;
 use App\Notifications\NewLoginNotification;
 use Carbon\Carbon;
@@ -16,6 +17,13 @@ class LoginComponent extends Component
 
     public $email;
     public $password;
+
+    public function mount()
+    {
+        $settings = Setting::first();
+        if (! $settings->sign_in)
+            abort(403);
+    }
 
     public function login()
     {
