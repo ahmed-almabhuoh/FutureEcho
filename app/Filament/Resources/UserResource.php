@@ -7,6 +7,7 @@ use App\Enum\UserStatus;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Role;
 use App\Models\User;
 use App\Notifications\AdvertisementNotification;
 use App\Notifications\ChangeUserPasswordNotification;
@@ -178,9 +179,42 @@ class UserResource extends Resource
 
                     ])->columnSpan('full'),
 
+                    // Section::make(__('Authority'))->schema([
+
+                    //     // Select::make('roles')->options(
+                    //     //     config('app.locale') == 'en' ? Role::select(['id', 'role_en'])->get()->pluck('role_en', 'id')->toArray() : Role::select(['id', 'role_ar'])->get()->pluck('role_ar', 'id')->toArray()
+                    //     // )
+                    //     //     ->searchable()
+                    //     //     ->columnSpanFull()
+                    //     //     ->multiple()
+                    //     //     // ->required()
+                    //     //     // ->in(Role::select(['id'])->get()->pluck('id')->toArray())
+                    //     //     ->label(__('Role')),
+
+                    // ])->columnSpan('full'),
+
                 ])->columnSpanFull(),
             ]);
     }
+
+    // protected static function mutateFormDataBeforeSave(array $data): array
+    // {
+    //     if (isset($data['password'])) {
+    //         $data['password'] = Hash::make($data['password']);
+    //     }
+    //     return $data;
+    // }
+
+    protected function afterCreated () : void {
+        info('here');
+    }
+
+    // public static function afterSave(Form $form): void
+    // {
+    //     $user = $form->record; // Get the saved user instance
+    //     $roles = $form->data['roles'] ?? []; // Get selected roles
+    //     $user->roles()->sync($roles); // Sync roles with the user
+    // }
 
     public static function table(Table $table): Table
     {
@@ -203,7 +237,7 @@ class UserResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('timezone')
-                ->label(__('Timezone'))
+                    ->label(__('Timezone'))
                     ->searchable(),
 
                 BooleanColumn::make('is_admin')

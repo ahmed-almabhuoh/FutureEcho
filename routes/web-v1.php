@@ -21,6 +21,7 @@ use App\Livewire\V1\ForgetPasswordComponent;
 use App\Livewire\V1\LoginComponent;
 use App\Livewire\V1\ShowRogottenEmailComponent;
 use App\Livewire\V1\SignupComponent;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 
@@ -59,4 +60,8 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
 
 Route::get('/', function () {
     return view('layouts.home');
+});
+
+Route::get('/test', function () {
+    dd(config('app.locale') == 'en' ? Role::select(['id', 'role_en'])->get()->pluck('role_en', 'id')->toArray() : Role::select(['id', 'role_ar'])->get()->pluck('role_ar', 'id')->toArray());
 });
