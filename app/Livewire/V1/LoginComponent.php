@@ -49,7 +49,7 @@ class LoginComponent extends Component
             $code = generate2FA(auth()->id());
 
             // Should Be Deleted
-            info($code);
+            // info($code);
 
             $user = Auth::user();
             $user->notify(new NewLoginNotification($code, $user->name));
