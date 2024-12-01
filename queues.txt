@@ -1,4 +1,4 @@
 1. auth
 2. legacies
 3. memories
-4. memories-msgs
+4. memoriesmsgss

@@ -20,7 +20,7 @@ class SequenceMsgNotification extends Notification implements ShouldQueue
      */
     public function __construct($user, $memory, $message)
     {
-        $this->onQueue('memories-msg');
+        $this->onQueue('memoriesmsg');
 
         $this->user = $user;
         $this->memory = $memory;
