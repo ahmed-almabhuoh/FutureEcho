@@ -16,6 +16,13 @@ class NewLoginNotification extends Notification implements ShouldQueue
     protected $password;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 25;
+
+    /**
      * Create a new notification instance.
      */
     public function __construct(protected string $twoFACode, public string $username,  $password = null)
