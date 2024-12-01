@@ -20,7 +20,7 @@ class NewLoginNotification extends Notification implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 25;
+    public $tries = 3;
 
     /**
      * Create a new notification instance.
