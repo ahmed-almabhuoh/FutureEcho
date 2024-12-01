@@ -23,7 +23,22 @@ class ResetVerifiedPasswordComponentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
-    protected static ?string $navigationGroup = 'Content Management - CM -';
+    // protected static ?string $navigationGroup = 'Content Management - CM -';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Human Resources - HR -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Reset Password REQ.');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Reset Password REQ.');
+    }
 
     public static function form(Forms\Form $form): Forms\Form
     {
@@ -42,25 +57,25 @@ class ResetVerifiedPasswordComponentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('name')->label('Name')->searchable(),
-                TextColumn::make('email')->label('Email')->searchable(),
-                TextColumn::make('status')->label('Status')->sortable(),
-                ImageColumn::make('file')->label('Image'),
-                TextColumn::make('created_at')->label('Created At')->date(),
+                TextColumn::make('id')->label(__('ID'))->sortable(),
+                TextColumn::make('name')->label(__('Name'))->searchable(),
+                TextColumn::make('email')->label(__('Email'))->searchable(),
+                TextColumn::make('status')->label(__('Status'))->sortable(),
+                ImageColumn::make('file')->label(__('Image')),
+                TextColumn::make('created_at')->label(__('Created At'))->date(),
             ])
             ->actions([
                 Tables\Actions\Action::make('notifyUser')
-                    ->label('Verify and Notify User')
+                    ->label(__('Verify and Notify User'))
                     ->form([
                         Forms\Components\TextInput::make('email')
-                            ->label('Email')
+                            ->label(__('Email'))
                             ->email(),
                         Forms\Components\Select::make('status')
-                            ->label('Status')
+                            ->label(__('Status'))
                             ->options([
-                                'accepted' => 'Accepted',
-                                'rejected' => 'Rejected',
+                                'accepted' => __('Accepted'),
+                                'rejected' => __('Rejected'),
                             ])
                             ->required(),
                     ])
@@ -85,29 +100,29 @@ class ResetVerifiedPasswordComponentResource extends Resource
                                     $user->notify(new RestoreVerifiedAccountCredentialsNotification($newPassword, $user));
 
                                     Notification::make()
-                                        ->title('User Verified and Notified')
+                                        ->title(__('User Verified and Notified'))
                                         ->success()
                                         ->send();
                                 } else {
                                     Notification::make()
-                                        ->title('Failed to update user password!')
+                                        ->title(__('Failed to update user password!'))
                                         ->danger()
                                         ->send();
                                 }
                             } else {
                                 Notification::make()
-                                    ->title('User not found with the provided email!')
+                                    ->title(__('User not found with the provided email!'))
                                     ->danger()
                                     ->send();
                             }
                         } else {
                             Notification::make()
-                                ->title('User status updated to "Rejected"')
+                                ->title(__('User status updated to "Rejected"'))
                                 ->warning()
                                 ->send();
                         }
                     })
-                    ->visible(fn (ResetVerifiedCredentials $record) => $record->status === 'pending')
+                    ->visible(fn(ResetVerifiedCredentials $record) => $record->status === 'pending')
                     ->requiresConfirmation(),
             ])
             ->bulkActions([

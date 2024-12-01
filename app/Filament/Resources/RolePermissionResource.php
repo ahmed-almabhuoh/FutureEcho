@@ -19,26 +19,41 @@ class RolePermissionResource extends Resource
 {
     protected static ?string $model = RolePermission::class;
 
-    protected static ?string $label = 'Assign Permissions';
+    // protected static ?string $label = 'Assign Permissions';
 
     protected static ?string $navigationIcon = 'heroicon-o-plus-circle';
 
-    protected static ?string $navigationGroup = 'Roles & Permissions';
+    // protected static ?string $navigationGroup = 'Roles & Permissions';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Roles & Permissions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Assign Permissions');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Assign Permissions');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Assign Permissions')
+                Section::make(__('Assign Permissions'))
                     ->schema([
                         Select::make('role_id')
-                            ->label('Role')
+                            ->label(__('Role'))
                             ->relationship('role', 'role_en') // Assuming 'role_en' is the field used for Role name
                             ->required()
                             ->searchable(),
 
                         Select::make('permission_id')
-                            ->label('Permission')
+                            ->label(__('Permission'))
                             ->relationship('permission', 'name_en') // Assuming 'name_en' is the field used for Permission name
                             ->required()
                             ->searchable(),
@@ -52,17 +67,17 @@ class RolePermissionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('role.role_en')
-                    ->label('Role')
+                    ->label(__('Role'))
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('permission.name_en')
-                    ->label('Permission')
+                    ->label(__('Permission'))
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('assigned_at')
-                    ->label('Assigned At')
+                    ->label(__('Assigned At'))
                     ->dateTime()
                     ->sortable()
                     ->searchable(),

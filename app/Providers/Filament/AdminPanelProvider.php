@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->darkMode(true)
+            ->darkMode(false)
             ->brandLogo(Storage::url($websiteSettings->logo))
             ->brandLogoHeight('2.9rem')
             ->favicon(Storage::url($websiteSettings->logo))

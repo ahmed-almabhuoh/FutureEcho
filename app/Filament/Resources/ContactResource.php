@@ -24,27 +24,41 @@ class ContactResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope-open';
 
-    protected static ?string $navigationGroup = 'Website Configuration';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Website Configuration');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Contact Requests');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Contact Requests');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
 
-                Section::make('Details')->schema([
+                Section::make(__('Details'))->schema([
 
-                    Forms\Components\TextInput::make('name')->disabled()
+                    Forms\Components\TextInput::make(__('name'))->disabled()
                         ->required()
                         ->maxLength(191)
                         ->disabled(),
 
-                    Forms\Components\TextInput::make('email')->disabled()
+                    Forms\Components\TextInput::make(__('email'))->disabled()
                         ->email()
                         ->required()
                         ->maxLength(191)
                         ->disabled(),
 
-                    Textarea::make('message')->disabled()
+                    Textarea::make(__('message'))->disabled()
                         ->required()
                         ->disabled()
                         ->maxLength(191)
@@ -52,10 +66,10 @@ class ContactResource extends Resource
 
                 ])->columns(2),
 
-                Section::make('Visibility')->schema([
+                Section::make(__('Visibility'))->schema([
 
                     Select::make('STATUS')
-                        ->label('Status')
+                        ->label(__('Status'))
                         ->options([
                             'submitted' => __('Submitted'),
                             'viewed' => __('Viewed'),
@@ -73,22 +87,28 @@ class ContactResource extends Resource
             ->columns([
 
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('email')
+                    ->label(__('E-mail'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('message')
+                    ->label(__('Message'))
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('STATUS'),
+                Tables\Columns\TextColumn::make('STATUS')
+                    ->label(__('Status')),
 
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -106,7 +126,7 @@ class ContactResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
             ])

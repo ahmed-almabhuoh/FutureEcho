@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Expr\Ternary;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
+use PhpParser\Node\Stmt\Label;
 
 class UserResource extends Resource
 {
@@ -42,7 +43,22 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationGroup = 'Human Resources - HR -';
+    // protected static ?string $navigationGroup = 'Human Resources - HR -';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Human Resources - HR -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Users');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Users');
+    }
 
     public static function form(Form $form): Form
     {
@@ -52,12 +68,12 @@ class UserResource extends Resource
 
                 Group::make()->schema([
 
-                    Section::make('General Info')->schema([
+                    Section::make(__('General Info'))->schema([
 
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255)
-                            ->label('User - Full name')
+                            ->label(__('User - Full name'))
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('email')
@@ -69,11 +85,11 @@ class UserResource extends Resource
                             // ->unique(User::class, modifyRuleUsing: function (Unique $rule) {
                             //     return $rule->where('is_active', 1);
                             // })
-                            ->label('E-mail'),
+                            ->label(__('E-mail')),
 
                         Forms\Components\TextInput::make('phone')
-                            ->label('Phone NO.')
-                            ->helperText('NO. for Number')
+                            ->label(__('Phone NO.'))
+                            ->helperText(__('NO. for Number'))
                             ->minValue(7)
                             ->maxValue(25),
 
@@ -83,6 +99,7 @@ class UserResource extends Resource
                         ])
                             ->columnSpanFull()
                             ->required()
+                            ->label(__('Status'))
                             ->in(['active', 'inactive']),
 
                     ])
@@ -93,20 +110,22 @@ class UserResource extends Resource
 
                 Group::make()->schema([
 
-                    Section::make("Account Settings")->schema([
+                    Section::make(__("Account Settings"))->schema([
 
-                        DateTimePicker::make('email_verified_at'),
+                        DateTimePicker::make('email_verified_at')
+                            ->label(__('Email verified at')),
 
                         Select::make('timezone')
                             ->options(config('timezones'))
                             ->default('UTC')
-                            ->label('TimeZone')
-                            ->helperText('Account language & time will set up depending on timezone.')
+                            ->label(__('TimeZone'))
+                            ->helperText(__('Account language & time will set up depending on timezone.'))
                             ->required()
                             ->searchable(),
 
                         TextInput::make('password')
                             ->password()
+                            ->label(__('Password'))
                             ->minValue(8)
                             ->maxValue(191)
                             // ->default(Str::random(10))
@@ -114,9 +133,9 @@ class UserResource extends Resource
                             ->columnSpanFull(),
 
                         Toggle::make('is_admin')
-                            ->label('Admin')
+                            ->label(__('Admin'))
                             ->required()
-                            ->helperText('Admin users will have full permissions!')
+                            ->helperText(__('Admin users will have full permissions!'))
                             ->default(false),
 
                     ])
@@ -126,10 +145,11 @@ class UserResource extends Resource
 
                 Group::make()->schema([
 
-                    Section::make('Media & Attachments')->schema([
+                    Section::make(__('Media & Attachments'))->schema([
 
                         FileUpload::make('image')
                             ->image()
+                            ->label(__('Image'))
                             ->directory('users')
                             ->imageEditor()
                             ->previewable()
@@ -147,26 +167,33 @@ class UserResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
 
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
 
                 Tables\Columns\TextColumn::make('email')
+                    ->label(__('E-mail'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('phone')
+                    ->label(__('Phone'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('timezone')
+                ->label(__('Timezone'))
                     ->searchable(),
 
-                BooleanColumn::make('is_admin')->colors([
-                    'success' => 1,
-                    'danger' => 0,
-                ]),
+                BooleanColumn::make('is_admin')
+                    ->label(__('Admin'))
+                    ->colors([
+                        'success' => 1,
+                        'danger' => 0,
+                    ]),
 
                 IconColumn::make('status')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->options([
                         'heroicon-o-check-circle' => 'active',
                         'heroicon-o-x-circle' => 'inactive',
@@ -179,20 +206,24 @@ class UserResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('email_verified_at')
+                    ->label(__('Verified At'))
                     ->dateTime()
                     ->sortable()->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('Updated At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('deleted_at')
+                    ->label(__('Deleted At'))
                     ->dateTime()
                     ->sortable()
                     ->searchable()
@@ -203,14 +234,14 @@ class UserResource extends Resource
                 //
                 SelectFilter::make('status')
                     ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive',
+                        'active' => __('Active'),
+                        'inactive' => __('Inactive'),
                     ])
-                    ->label('Status'),
+                    ->label(__('Status')),
 
                 Tables\Filters\TrashedFilter::make(),
 
-                TernaryFilter::make('is_admin')->label('Admin'),
+                TernaryFilter::make('is_admin')->label(__('Admin')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -221,42 +252,42 @@ class UserResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
 
                 Tables\Actions\ActionGroup::make([
 
-                    Tables\Actions\Action::make('Change Password')
+                    Tables\Actions\Action::make(__('Change Password'))
                         ->action(function ($record): void {
                             // Change password logic here
                             $record->notify(new ChangeUserPasswordNotification($record->name, generateToken($record->id)));
 
                             Notification::make()
-                                ->title('Sent Successfully')
+                                ->title(__('Sent Successfully'))
                                 ->success()
                                 ->send();
                         })
                         ->icon('heroicon-m-lock-closed')
-                        ->label('Recover Password')
+                        ->label(__('Recover Password'))
                         ->color('warning')
                         ->requiresConfirmation(),
 
-                    Tables\Actions\Action::make('Re-Send 2FA')
+                    Tables\Actions\Action::make(__('Re-Send 2FA'))
                         ->action(function ($record): void {
                             $record->notify(new ResendTwoFANotification($record->name, generate2FA($record->id)));
 
                             Notification::make()
-                                ->title('Sent Successfully')
+                                ->title(__('Sent Successfully'))
                                 ->success()
                                 ->send();
                         })
                         ->icon('heroicon-m-hashtag')
-                        ->label('Recover Password')
+                        ->label(__('Recover Password'))
                         ->color('danger')
                         ->requiresConfirmation(),
                 ])
-                    ->label('Authentication')
+                    ->label(__('Authentication'))
                     ->color('primary')
                     ->button(),
             ])
@@ -266,12 +297,12 @@ class UserResource extends Resource
 
                 ]),
 
-                BulkAction::make('Send Advertisement')
+                BulkAction::make(__('Send Advertisement'))
                     ->form([
                         Forms\Components\Textarea::make('advertisement_text')
-                            ->label('Advertisement Text')
+                            ->label(__('Advertisement Text'))
                             ->required()
-                            ->placeholder('Enter the advertisement text here...')
+                            ->placeholder(__('Enter the advertisement text here...'))
                     ])
                     ->action(function ($records, array $data): void {
                         $advertisementText = $data['advertisement_text'];
@@ -281,7 +312,7 @@ class UserResource extends Resource
                         }
 
                         Notification::make()
-                            ->title('Sent Successfully')
+                            ->title(__('Sent Successfully'))
                             ->success()
                             ->send();
                     }),

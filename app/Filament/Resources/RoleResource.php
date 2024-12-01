@@ -25,23 +25,38 @@ class RoleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
 
-    protected static ?string $navigationGroup = 'Roles & Permissions';
+    // protected static ?string $navigationGroup = 'Roles & Permissions';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Roles & Permissions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Roles');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Roles');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Details')->schema([
+                Section::make(__('Details'))->schema([
 
                     TextInput::make('role_ar')
-                        ->label('Arabic  Role')
+                        ->label(__('Arabic Name'))
                         ->required()
                         ->minValue(2)
                         ->maxValue(191)
                         ->maxLength(191),
 
                     TextInput::make('role_en')
-                        ->label('English Name')
+                        ->label(__('English Name'))
                         ->required()
                         ->minValue(2)
                         ->maxValue(191)
@@ -49,9 +64,9 @@ class RoleResource extends Resource
 
                 ])->columns(2),
 
-                Section::make('Visibility')->schema([
+                Section::make(__('Visibility'))->schema([
                     Select::make('status')
-                        ->label('Status')
+                        ->label(__('Status'))
                         ->options([
                             'active' => __('Active'),
                             'inactive' => __('Inactive'),
@@ -69,17 +84,17 @@ class RoleResource extends Resource
             ->columns([
 
                 TextColumn::make('role_ar')
-                    ->label('Arabic Role')
+                    ->label(__('Arabic Name'))
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('role_en')
-                    ->label('English Role')
+                    ->label(__('English Name'))
                     ->sortable()
                     ->searchable(),
 
                 IconColumn::make('status')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->options([
                         'heroicon-o-check-circle' => 'active',
                         'heroicon-o-x-circle' => 'inactive',
@@ -92,11 +107,13 @@ class RoleResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Deleted At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -106,10 +123,10 @@ class RoleResource extends Resource
                 //
                 SelectFilter::make('status')
                     ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive',
+                        'active' => __('Active'),
+                        'inactive' => __('Inactive'),
                     ])
-                    ->label('Status'),
+                    ->label(__('Status')),
 
                 Tables\Filters\TrashedFilter::make(),
 
@@ -124,7 +141,7 @@ class RoleResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
 

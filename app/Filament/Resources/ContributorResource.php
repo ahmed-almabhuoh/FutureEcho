@@ -23,24 +23,39 @@ class ContributorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-heart';
 
-    protected static ?string $navigationGroup = 'Content Management - CM -';
+    // protected static ?string $navigationGroup = 'Content Management - CM -';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Content Management - CM -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Contributors');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Contributors');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Create Contributor')
+                Section::make(__('Create Contributor'))
                     ->schema([
 
                         Forms\Components\Select::make('capsule_id') // Correct the key here
                             ->relationship('capsule', 'title')
-                            ->label('Capsule')
+                            ->label(__('Capsule'))
                             ->searchable()
                             ->required(),
 
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')
-                            ->label('Contributor')
+                            ->label(__('Contributor'))
                             ->searchable()
                             ->required(),
 
@@ -54,11 +69,11 @@ class ContributorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Contributor'),
+                    ->label(__('Contributor')),
                 Tables\Columns\TextColumn::make('capsule.title')
-                    ->label('Capsule'),
+                    ->label(__('Capsule')),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label(__('Created At'))
                     ->dateTime(),
             ])
             ->filters([
@@ -73,7 +88,7 @@ class ContributorResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
             ])

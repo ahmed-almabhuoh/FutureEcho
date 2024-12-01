@@ -20,11 +20,26 @@ class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
 
-    protected static ?string $navigationGroup = 'Website Configuration';
+    // protected static ?string $navigationGroup = 'Website Configuration';
 
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Website Configuration');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Configuration');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Configuration');
+    }
 
     public static function canCreate(): bool
     {
@@ -37,7 +52,7 @@ class SettingResource extends Resource
             ->schema([
                 Section::make('Settings')->schema([
                     FileUpload::make('logo')
-                        ->label('Logo')
+                        ->label(__('Logo'))
                         ->required()
                         ->disk('public')
                         ->directory('logos')
@@ -47,21 +62,21 @@ class SettingResource extends Resource
                         ->columnSpanFull(),
 
                     Forms\Components\Toggle::make('sign_up')
-                        ->label('Enable Sign Up')
+                        ->label(__('Enable Sign Up'))
                         ->onIcon('heroicon-m-bolt')
                         ->offIcon('heroicon-m-user')
                         ->default(true)
                         ->required(),
 
                     Forms\Components\Toggle::make('sign_in')
-                        ->label('Enable Login')
+                        ->label(__('Enable Login'))
                         ->onIcon('heroicon-m-bolt')
                         ->offIcon('heroicon-m-user')
                         ->default(true)
                         ->required()
                         ->reactive(),
                     Forms\Components\Toggle::make('maintenance')
-                        ->label('Maintenance Mode')
+                        ->label(__('Maintenance Mode'))
                         ->onIcon('heroicon-m-bolt')
                         ->default(true)
                         ->required(),
@@ -76,16 +91,17 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('logo'),
+                Tables\Columns\ImageColumn::make('logo')
+                ->label('Logo'),
 
                 Tables\Columns\ToggleColumn::make('sign_up')
-                    ->label('Sign up'),
+                    ->label(__('Sign up')),
 
                 Tables\Columns\ToggleColumn::make('sign_in')
-                    ->label('Login'),
+                    ->label(__('Login')),
 
                 Tables\Columns\ToggleColumn::make('maintenance')
-                    ->label('Maintenance Mode'),
+                    ->label(__('Maintenance Mode')),
                 //
             ])
             ->filters([

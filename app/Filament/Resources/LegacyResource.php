@@ -26,9 +26,24 @@ class LegacyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-uturn-left';
 
-    protected static ?string $navigationGroup = 'Human Resources - HR -';
+    // protected static ?string $navigationGroup = 'Human Resources - HR -';
 
-    protected static ?int $navigationSort = 2;
+    // protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Human Resources - HR -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Legacies');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Legacy');
+    }
 
     public static function form(Form $form): Form
     {
@@ -37,21 +52,22 @@ class LegacyResource extends Resource
                 //
                 Group::make()->schema([
 
-                    Section::make('Legacy Related Details')->schema([
+                    Section::make(__('Legacy Related Details'))->schema([
 
                         Select::make('user_id')
-                            ->label('For User')
+                            ->label(__('For User'))
                             ->relationship('user', 'name')
                             ->required()
                             ->exists('users', 'id')
                             ->searchable(),
 
                         TextInput::make('email')
-                            ->label('Legacy')
+                            ->label(__('Legacy'))
                             ->required()
                             ->exists('users', 'email'),
 
                         Select::make('status')
+                            ->label(__('Status'))
                             ->disabled()
                             ->options([
                                 'pending' => __('Pending'),
@@ -76,17 +92,17 @@ class LegacyResource extends Resource
                 //
 
                 TextColumn::make('user.name')
-                    ->label('User')
+                    ->label(__('User'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('email')
-                    ->label('Legacy')
+                    ->label(__('Legacy'))
                     ->sortable()
                     ->searchable(),
 
                 BadgeColumn::make('status')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->colors([
                         'primary' => 'pending',
                         'success' => 'accepted',
@@ -96,12 +112,14 @@ class LegacyResource extends Resource
 
                 TextColumn::make('created_at')
                     ->dateTime()
+                    ->label('Created At')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('deleted_at')
                     ->dateTime()
+                    ->label('Deleted At')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -119,7 +137,7 @@ class LegacyResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
             ])

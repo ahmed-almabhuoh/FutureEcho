@@ -28,7 +28,22 @@ class IdentityVerificationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-identification';
 
-    protected static ?string $navigationGroup = 'Content Management - CM -';
+    // protected static ?string $navigationGroup = 'Content Management - CM -';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Content Management - CM -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Identity VEF. REQs');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Verification Requests');
+    }
 
     protected static ?int $navigationSort = 1;
 
@@ -37,32 +52,33 @@ class IdentityVerificationResource extends Resource
         return $form
             ->schema([
 
-                Section::make('Identity Verification')
-                    ->description('User Identity Verification')
+                Section::make(__('Identity Verification'))
+                    ->description(__('User Identity Verification'))
                     ->schema([
                         Select::make('user_id')
-                            ->label('User')
+                            ->label(__('User'))
                             ->options(User::all()->pluck('name', 'id'))
                             ->searchable()
                             ->required(),
 
                         Select::make('status')
-                            ->label('Status')
+                            ->label(__('Status'))
                             ->options([
-                                'pending' => 'Pending',
-                                'verified' => 'Verified',
-                                'rejected' => 'Rejected',
+                                'pending' => __('Pending'),
+                                'verified' => __('Verified'),
+                                'rejected' => __('Rejected'),
                             ])->default('pending')
                             ->required(),
 
                         DateTimePicker::make('submitted_at')
-                            ->label('Submission Date')
+                            ->label(__('Submission Date'))
                             ->default(now())
                             ->disabled()
                             ->required()
                             ->columnSpanFull(),
 
-                        FileUpload::make('file')->required()->columnSpanFull(),
+                        FileUpload::make('file')
+                            ->label(__('File/Image'))->required()->columnSpanFull(),
 
 
 
@@ -77,12 +93,16 @@ class IdentityVerificationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                    ->label('User')
+                    ->label(__('User'))
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('status')
+                    ->label(__('Status'))
                     ->sortable(),
+
                 TextColumn::make('submitted_at')
+                    ->label(__('Submitted At'))
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
@@ -102,7 +122,7 @@ class IdentityVerificationResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
             ])

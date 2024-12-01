@@ -22,7 +22,21 @@ class UserGroupResource extends Resource
 {
     protected static ?string $model = UserGroup::class;
 
-    protected static ?string $navigationGroup = 'Roles & Permissions';
+    // protected static ?string $navigationGroup = 'Roles & Permissions';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Roles & Permissions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('User Groups');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('User Groups');
+    }
 
     protected static ?int $navigationSort = 1;
 
@@ -33,31 +47,31 @@ class UserGroupResource extends Resource
         return $form
             ->schema([
 
-                Section::make('Details')->schema([
+                Section::make(__('Details'))->schema([
                     TextInput::make('name_ar')
-                        ->label('Arabic Name')
+                        ->label(__('Arabic Name'))
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(191),
 
                     TextInput::make('name_en')
-                        ->label('English Name')
+                        ->label(__('English Name'))
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(191),
                 ])->columns(2),
 
-                Section::make('Visibility')->schema([
+                Section::make(__('Visibility'))->schema([
 
                     Select::make('status')
-                        ->label('Status')
+                        ->label(__('Status'))
                         ->options([
-                            'active' => 'Active',
-                            'inactive' => 'Inactive',
+                            'active' => __('Active'),
+                            'inactive' => __('Inactive'),
                         ])
                         ->required()
                         ->in(['active', 'inactive'])
-                        ->helperText('Inactive user group won\'t be shown or used.'),
+                        ->helperText(__('Inactive user group won\'t be shown or used.')),
 
                 ]),
             ]);
@@ -68,17 +82,17 @@ class UserGroupResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name_ar')
-                    ->label('Arabic Name')
+                    ->label(__('Arabic Name'))
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('name_en')
-                    ->label('English Name')
+                    ->label(__('English Name'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('status')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->options([
                         'heroicon-o-check-circle' => 'active',
                         'heroicon-o-x-circle' => 'inactive',
@@ -93,10 +107,12 @@ class UserGroupResource extends Resource
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
+                    ->label('Created At')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
+                    ->label('Updated At')
                     ->dateTime()
                     ->sortable()
                     ->searchable()
@@ -104,6 +120,7 @@ class UserGroupResource extends Resource
 
                 TextColumn::make('deleted_at')
                     ->dateTime()
+                    ->label('Deleted At')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -111,10 +128,10 @@ class UserGroupResource extends Resource
             ->filters([
                 SelectFilter::make('status')
                     ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive',
+                        'active' => __('Active'),
+                        'inactive' => __('Inactive'),
                     ])
-                    ->label('Status'),
+                    ->label(__('Status')),
 
                 Tables\Filters\TrashedFilter::make(),
             ])
@@ -128,7 +145,7 @@ class UserGroupResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
 

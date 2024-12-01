@@ -22,7 +22,20 @@ class CapsuleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
-    protected static ?string $navigationGroup = 'Content Management - CM -';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Content Management - CM -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Capsules');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Capsules');
+    }
 
     public static function form(Form $form): Form
     {
@@ -33,12 +46,12 @@ class CapsuleResource extends Resource
                     ->schema([
 
                         Forms\Components\TextInput::make('title')
-                            ->label('Capsule Title')
+                            ->label(__('Capsule Title'))
                             ->required(),
 
                         Select::make('user_id')
                             ->relationship('owner', 'name')
-                            ->label('Owner')
+                            ->label(__('Owner'))
                             ->searchable()
                             ->required(),
 
@@ -52,17 +65,17 @@ class CapsuleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Capsule Title'),
+                    ->label(__('Capsule Title')),
 
                 Tables\Columns\TextColumn::make('owner.name')
-                    ->label('Owner'),
+                    ->label(__('Owner')),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                    ->label(__('Created At'))
                     ->dateTime(),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Updated At')
+                    ->label(__('Updated At'))
                     ->dateTime(),
             ])
             ->filters([
@@ -77,7 +90,7 @@ class CapsuleResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
             ])

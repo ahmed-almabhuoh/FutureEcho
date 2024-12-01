@@ -26,7 +26,23 @@ class ContributorPermissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-no-symbol';
 
-    protected static ?string $navigationGroup = 'Content Management - CM -';
+    // protected static ?string $navigationGroup = 'Content Management - CM -';
+
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Content Management - CM -');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Contributor Permissions');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return __('Contributor Permissions');
+    }
 
     public static function form(Form $form): Form
     {
@@ -36,17 +52,17 @@ class ContributorPermissionResource extends Resource
 
                 Group::make()->schema([
 
-                    Section::make('Contributor & Capsule')
+                    Section::make(__('Contributor & Capsule'))
                         ->schema([
 
                             Select::make('contributor_id')
                                 ->relationship('contributor.user', 'name')
                                 ->searchable()
-                                ->label("Contributor")
+                                ->label(__("Contributor"))
                                 ->required(),
 
                             Select::make('capsule_id')
-                                ->label("On Capsule")
+                                ->label(__("On Capsule"))
                                 ->relationship('capsule', 'title')
                                 ->searchable()
                                 ->required(),
@@ -58,7 +74,7 @@ class ContributorPermissionResource extends Resource
 
                 Group::make()->schema([
 
-                    Section::make('Permission')
+                    Section::make(__('Permission'))
 
                         ->schema([
 
@@ -67,7 +83,7 @@ class ContributorPermissionResource extends Resource
                                     "r" =>  ucfirst(__("read")),
                                     "w" => ucfirst(__("write"))
                                 ])
-                                ->label("Permission")
+                                ->label(__("Permission"))
                                 ->required(),
 
                         ]),
@@ -81,7 +97,7 @@ class ContributorPermissionResource extends Resource
             ->columns([
 
                 Tables\Columns\TextColumn::make('permission')
-                    ->label("Permission")
+                    ->label(__("Permission"))
                     ->formatStateUsing(function ($record) {
                         if ($record->permission == 'r') {
                             return 'R - Read Only';
@@ -91,7 +107,7 @@ class ContributorPermissionResource extends Resource
                     }),
 
                 Tables\Columns\TextColumn::make('contributor_id')
-                    ->label("Contributor")
+                    ->label(__("Contributor"))
                     ->formatStateUsing(fn($record) => User::where('id', $record->contributor_id)->first()->name)
                     ->sortable(),
 
@@ -101,23 +117,26 @@ class ContributorPermissionResource extends Resource
                 //     ->sortable(),
 
                 Tables\Columns\TextColumn::make('capsule.title')
-                    ->label("Capsule")
+                    ->label(__("Capsule"))
                     ->sortable(),
 
                 TextColumn::make('created_at')
                     ->dateTime()
+                    ->label(__('Created At'))
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
                     ->dateTime()
+                    ->label(__('Updated At'))
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('deleted_at')
                     ->dateTime()
+                    ->label(__('Deleted At'))
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -137,7 +156,7 @@ class ContributorPermissionResource extends Resource
                     Tables\Actions\ForceDeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
                 ])
-                    ->label('Delete actions')
+                    ->label(__('Delete actions'))
                     ->color('danger')
                     ->button(),
             ])
