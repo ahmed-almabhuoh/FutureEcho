@@ -108,4 +108,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasOne(Receiver::class, 'user_id', 'id');
     }
+
+    public function userRule(): HasMany
+    {
+        return $this->hasMany(UserRole::class, 'user_id', 'id');
+    }
 }

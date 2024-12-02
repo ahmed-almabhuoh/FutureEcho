@@ -4,8 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
+use App\Models\Permission;
 use App\Models\Role;
+use App\Models\UserGroup;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -63,8 +66,6 @@ class RoleResource extends Resource
         return checkAuthority('read-roles');
     }
 
-
-
     public static function form(Form $form): Form
     {
         return $form
@@ -85,9 +86,35 @@ class RoleResource extends Resource
                         ->maxValue(191)
                         ->maxLength(191),
 
+                    Select::make('user_group_id')
+                        ->label(__('User Group'))
+                        // ->options([])
+                        // ->options(UserGroup::select(['name_en', 'id'])->get()->pluck('name_en', 'id')->toArray())
+                        ->relationship('userGroup', 'name_en')
+                        ->searchable()
+                        // ->options(config('app.locale') == 'en' ? UserGroup::select(['name_en', 'id'])->get()->pluck('name_en', 'id')->toArray() : UserGroup::select(['name_en', 'id'])->get()->pluck('name_ar', 'id')->toArray())
+                        ->required()
+                        ->columnSpan('full'),
+
                 ])->columns(2),
 
+
+                // Section::make(__('Group & Permissions'))->schema([
+
+                //     ,
+
+                //     // Select::make('rolePermissions.permission_id')
+                //     //     ->label(__('Permissions'))
+                //     //     // ->options(Permission::select(['name_en', 'id'])->get()->pluck('name_en', 'id')->toArray())
+                //     //     ->relationship('rolePermissions.permissions', 'name_en')
+                //     //     ->multiple()
+                //     //     ->searchable()
+                //     //     ->required(),
+
+                // ])->columns(2),
+
                 Section::make(__('Visibility'))->schema([
+
                     Select::make('status')
                         ->label(__('Status'))
                         ->options([

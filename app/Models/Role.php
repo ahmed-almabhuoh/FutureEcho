@@ -40,4 +40,14 @@ class Role extends Model
     {
         return $this->hasMany(RolePermission::class, 'role_id', 'id');
     }
+
+    public function userRole(): HasMany
+    {
+        return $this->hasMany(UserRole::class, 'role_id', 'id');
+    }
+
+    public function userGroup(): BelongsTo
+    {
+        return $this->belongsTo(UserGroup::class, 'user_group_id', 'id');
+    }
 }

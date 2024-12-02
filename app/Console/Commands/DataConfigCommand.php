@@ -180,24 +180,26 @@ class DataConfigCommand extends Command
 
             // Artisan::command('db:seed');
 
-            // Should be removed from here
-            User::factory()->create([
-                'name' => 'Future Echo',
-                'email' => 'f.echo@hophearts.com',
-                'password' => Hash::make('password'),
-                'is_admin' => true,
-                'email_verified_at' => '2024-10-05 15:34:05',
-            ]);
+            if (! User::where('email', 'f.echo@hophearts.com')->exists()) {
+                // Should be removed from here
+                User::factory()->create([
+                    'name' => 'Future Echo',
+                    'email' => 'f.echo@hophearts.com',
+                    'password' => Hash::make('password'),
+                    'is_admin' => true,
+                    'email_verified_at' => '2024-10-05 15:34:05',
+                ]);
 
-            $user = User::where('email', 'f.echo@hophearts.com')->first();
-            $role = Role::where('role_en', 'Super Admin')->first();
+                $user = User::where('email', 'f.echo@hophearts.com')->first();
+                $role = Role::where('role_en', 'Super Admin')->first();
 
-            DB::table('user_roles')->insert([
-                'user_id' => $user->id,
-                'role_id' => $role->id,
-                'assigned_at' => now(),
-            ]);
-            // End to remove
+                DB::table('user_roles')->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                    'assigned_at' => now(),
+                ]);
+                // End to remove
+            }
 
             DB::commit();
             info('All configurations have been setup!');

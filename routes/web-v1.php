@@ -22,6 +22,7 @@ use App\Livewire\V1\LoginComponent;
 use App\Livewire\V1\ShowRogottenEmailComponent;
 use App\Livewire\V1\SignupComponent;
 use App\Models\Role;
+use App\Models\UserGroup;
 use Illuminate\Support\Facades\Route;
 
 
@@ -60,4 +61,12 @@ Route::prefix('dashboard')->middleware(['auth:web', Check2FAMiddelware::class])-
 
 Route::get('/', function () {
     return view('layouts.home');
+});
+
+Route::get('test', function () {
+    // dd(Role::select(['id', 'role_en'])->get()->mapWithKeys(function ($record) {
+    //     return [$record->id => $record->role_en];
+    // }));
+
+    dd(UserGroup::select(['name_en', 'id'])->get()->pluck('name_en', 'id')->toArray() );
 });

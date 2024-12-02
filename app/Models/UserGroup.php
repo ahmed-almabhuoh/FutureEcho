@@ -28,4 +28,9 @@ class UserGroup extends Model
     {
         return $this->hasMany(Permission::class, 'user_group_id', 'id');
     }
+
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class, 'user_group_id', 'id');
+    }
 }

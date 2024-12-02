@@ -78,4 +78,10 @@ return [
     'edit-user-group'  => 'تعديل مجموعة مستخدمين',
     'delete-user-group'  => 'حذف مجموعة مستخدمين',
     'read-user-groups'  => 'قراءة مجموعات المستخدمين',
+
+    // User Roles
+    'create-user-role'  => 'انشاء دور للمستخدم',
+    'edit-user-role'  => 'تعديل دور للمستخدم',
+    'delete-user-role'  => 'حذف دور للمستخدم',
+    'read-user-roles'  => 'قراءة أدوار المستخدمين',
 ];

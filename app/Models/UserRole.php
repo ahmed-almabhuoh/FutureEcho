@@ -6,18 +6,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RolePermission extends Model
+class UserRole extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string|null
+     */
+    protected $table = 'user_roles';
 
     /**
      * The name of the "created at" column.
      *
      * @var string|null
      */
-    const CREATED_AT = 'assigned_at';
+    const CREATED_AT = null;
 
     /**
      * The name of the "updated at" column.
@@ -34,10 +42,12 @@ class RolePermission extends Model
         });
     }
 
+
+
     // Relations
-    public function permission(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Permission::class, 'permission_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function role(): BelongsTo

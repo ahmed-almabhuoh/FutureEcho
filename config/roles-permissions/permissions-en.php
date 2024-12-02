@@ -78,4 +78,10 @@ return [
     'edit-user-group'  => 'Edit User Group',
     'delete-user-group'  => 'Delete User Group',
     'read-user-groups'  => 'Read User Groups',
+
+    // User Roles
+    'create-user-role'  => 'Create User Role',
+    'edit-user-role'  => 'Edit User Role',
+    'delete-user-role'  => 'Delete User Role',
+    'read-user-roles'  => 'Read User Roles',
 ];

@@ -7,6 +7,7 @@ use App\Models\RolePermission;
 use App\Models\Role;
 use App\Models\Permission;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
@@ -67,17 +68,28 @@ class RolePermissionResource extends Resource
             ->schema([
                 Section::make(__('Assign Permissions'))
                     ->schema([
+
                         Select::make('role_id')
                             ->label(__('Role'))
+                            // ->options(Role::select(['role_en', 'id'])->get()->pluck('role_en', 'id')->toArray())
                             ->relationship('role', 'role_en') // Assuming 'role_en' is the field used for Role name
                             ->required()
                             ->searchable(),
 
                         Select::make('permission_id')
                             ->label(__('Permission'))
-                            ->relationship('permission', 'name_en') // Assuming 'name_en' is the field used for Permission name
+                            ->options(Permission::select(['name_en', 'id'])->get()->pluck('name_en', 'id')->toArray())
+                            // ->relationship('permission', 'name_en') // Assuming 'name_en' is the field used for Permission name
                             ->required()
+                            // ->multiple()
                             ->searchable(),
+
+                        DateTimePicker::make('assigned_at')
+                            ->label(__('Assigned At'))
+                            ->default(now())
+                            ->disabled(true)
+                            ->columnSpan('full'),
+
                     ])
                     ->columns(2),
             ]);
