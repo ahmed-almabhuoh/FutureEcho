@@ -87,7 +87,7 @@
                                     <td> {{ Carbon\Carbon::parse($capsule->created_at)->diffForHumans() }} </td>
 
                                     <td nowrap="nowrap">
-                                        @if ($capsule->contributorPermission()->first()->permission == 'w')
+                                        @if ($capsule->contributorPermission()->first()?->permission == 'w')
                                             <a href="{{ route('memories.to.capsules', ['capsule_id' => $capsule->id]) }}"
                                                 class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details"> <span
                                                     class="svg-icon svg-icon-md">
@@ -133,7 +133,7 @@
                                             </button>
                                         @endif
 
-                                        @if ($capsule->contributorPermission()->first()->permission == 'w')
+                                        @if ($capsule->contributorPermission()->first()?->permission == 'w')
                                             <a href="{{ route('capsules.update', ['position' => 'edit', 'capsule_id' => $capsule->id]) }}"
                                                 class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details"> <span
                                                     class="svg-icon svg-icon-md"> <svg

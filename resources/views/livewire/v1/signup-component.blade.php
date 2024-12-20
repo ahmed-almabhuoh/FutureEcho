@@ -91,6 +91,7 @@
                 <form class="form" method="POST" action="{{ route('v1.registration') }}" novalidate="novalidate"
                     id="kt_login_signup_form">
                     @csrf
+
                     <!--begin: Wizard Step 1-->
                     @if ($personalInfo)
                         <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">

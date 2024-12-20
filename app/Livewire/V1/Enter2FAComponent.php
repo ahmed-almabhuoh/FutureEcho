@@ -6,29 +6,31 @@ use App\Models\TwoFA;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class Enter2FAComponent extends Component
 {
     #[Layout('v1.auth.forgot-password')]
 
+    #[Rule('required|string|min:1', as: '2FA')]
     public $twoFA;
 
     public function mount() {}
 
-    public function rules(): array
-    {
-        return [
-            'twoFA' => 'required|string|min:1',
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+    //         'twoFA' => 'required|string|min:1',
+    //     ];
+    // }
 
-    public function ruleAttributes(): array
-    {
-        return [
-            'twoFA' => '2FA',
-        ];
-    }
+    // public function ruleAttribute(): array
+    // {
+    //     return [
+    //         'twoFA' => '2FA',
+    //     ];
+    // }
 
     public function check()
     {
