@@ -18,14 +18,17 @@ class MemoriesComponent extends Component
 
     public function delete()
     {
-        Memory::findOrFail($this->toBeDeletedId)->delete();
-        $this->reset('toBeDeletedId');
+        Memory::where('id', $this->toBeDeletedId)->delete();
+        // $this->reset('toBeDeletedId');
         session()->flash('message', 'Memory deleted successfully!');
+        session()->flash('status', 200);
+        return $this->redirect(route('memories'));
     }
 
     public function render()
     {
         $memories = Memory::withoutGlobalScopes()
+            ->where('deleted_at', '=', null)
             ->with(['capsule', 'user'])
             ->where(function ($query) {
                 $query->where('user_id', auth()->id())

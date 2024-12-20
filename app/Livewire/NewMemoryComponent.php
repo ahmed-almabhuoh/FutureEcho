@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Capsule;
-use App\Models\Memory; // Ensure you have a model for memories
+use App\Models\Memory;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
